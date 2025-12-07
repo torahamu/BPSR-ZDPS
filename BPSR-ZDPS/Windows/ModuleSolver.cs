@@ -98,7 +98,7 @@ namespace BPSR_ZDPS
             float leftWidth = 320;
             ImGui.SetNextWindowSize(windowSize, ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSizeConstraints(new Vector2(1270, 700), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
-            if (ImGui.Begin("Module Solver", ref IsOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
+            if (ImGui.Begin("Module Optimizer", ref IsOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
             {
                 if (RunOnceDelayed == 0)
                 {
@@ -121,7 +121,7 @@ namespace BPSR_ZDPS
 
                 if (ImGui.BeginTabBar("MainTabBar", ImGuiTabBarFlags.None))
                 {
-                    if (ImGui.BeginTabItem("Solver"))
+                    if (ImGui.BeginTabItem("Optimizer"))
                     {
                         DrawSolverTab(ImGui.GetContentRegionAvail(), leftWidth);
                         ImGui.EndTabItem();
@@ -446,7 +446,7 @@ namespace BPSR_ZDPS
             {
                 var partId = item.ModNewAttr.ModParts[i];
                 var level = modInfo.InitLinkNums[i];
-                ImGui.SetCursorPos(pos + new Vector2(100 + (i * 100), -(MOD_ICON_SIZE.Y + 4)));
+                ImGui.SetCursorPos(pos + new Vector2(90 + (i * 102), -(MOD_ICON_SIZE.Y + 4)));
                 DrawModuleStat(partId, level);
             }
 
@@ -468,7 +468,7 @@ namespace BPSR_ZDPS
                 var titleWidth = ImGui.CalcTextSize(statInfo.Name).X;
                 var icon = statInfo.IconRef.Value;
                 ImGui.SetCursorPos(pos + new Vector2((size.X / 2) - (titleWidth / 2), 0));
-                ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], ImGui.GetFontSize());
+                ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], 17);
                 ImGui.TextUnformatted(statInfo.Name);
                 ImGui.SetCursorPos(pos + new Vector2((size.X / 2) - (iconSize.X / 2), 25));
                 ImGui.Image(icon, iconSize);
@@ -671,7 +671,7 @@ namespace BPSR_ZDPS
                                     _ => 0
                                 };
 
-                                var score = Math.Clamp(total, 0, 20) + breakPointBonus * statMul;
+                                var score = (Math.Clamp(total, 0, 20) + breakPointBonus) * statMul;
                                 totalScore += score;
                             }
                             
@@ -870,5 +870,10 @@ namespace BPSR_ZDPS
     {
         public Package ModulesPackage;
         public Mod Mod;
+    }
+
+    public class SolverConfig
+    {
+        public byte[] Qualities;
     }
 }

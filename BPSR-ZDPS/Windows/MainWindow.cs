@@ -350,7 +350,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndMenu();
                     }
 
-                    if (ImGui.MenuItem("Module Solver"))
+                    if (ImGui.MenuItem("Module Optimizer"))
                     {
                         ModuleSolver.Open();
                     }
