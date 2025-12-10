@@ -284,6 +284,11 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TextColored(Colors.Wheat, $"({encounterTuple.Item2})");
                         ImGui.SameLine();
                         ImGui.TextColored(Colors.LightBlue, $"{encounterTuple.Item3}");
+                        if (encounters[i].IsWipe)
+                        {
+                            ImGui.SameLine();
+                            ImGui.TextColored(Colors.LightRed, $"(Wipe)");
+                        }
                     }
 
                     ImGui.EndCombo();
