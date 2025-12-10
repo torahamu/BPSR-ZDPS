@@ -216,6 +216,8 @@ namespace BPSR_ZDPS
                 }
             }
 
+            Log.Information("ZDPS is beginning exit process.");
+
             // Save the current encounter to the database before exiting
             if (EncounterManager.Current != null)
             {
@@ -239,6 +241,8 @@ namespace BPSR_ZDPS
             // Clean up and terminate GLFW
             GLFW.DestroyWindow(window);
             GLFW.Terminate();
+
+            Log.Information("ZDPS has successfully terminated all contexts. Performing final retention policy checks.");
 
             if (Settings.Instance.UseDatabaseForEncounterHistory && Settings.Instance.DatabaseRetentionPolicyDays > 0)
             {
@@ -292,6 +296,8 @@ namespace BPSR_ZDPS
                     }
                 }
             }
+
+            Log.Information("ZDPS has cleanly exited.");
         }
 
         static unsafe void Window_Resized_Callback(Hexa.NET.GLFW.GLFWwindow* window, int width, int height)
