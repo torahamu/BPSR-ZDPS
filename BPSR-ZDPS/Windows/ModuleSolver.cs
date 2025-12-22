@@ -111,6 +111,12 @@ namespace BPSR_ZDPS
             float leftWidth = 320;
             ImGui.SetNextWindowSize(windowSize, ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSizeConstraints(new Vector2(1270, 700), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
+
+            if (Settings.Instance.WindowSettings.ModuleWindow.WindowPosition != new Vector2())
+            {
+                ImGui.SetNextWindowPos(Settings.Instance.WindowSettings.ModuleWindow.WindowPosition, ImGuiCond.FirstUseEver);
+            }
+
             if (ImGui.Begin("Module Optimizer", ref IsOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
             {
                 ShouldTrackOpenState = true;
@@ -274,6 +280,8 @@ namespace BPSR_ZDPS
 
             if (!IsOpen && ShouldTrackOpenState && !IsCalculating)
             {
+                Settings.Instance.WindowSettings.ModuleWindow.WindowPosition = ImGui.GetWindowPos();
+
                 ShouldTrackOpenState = false;
 
                 ResultsPlayerModData = new PlayerModDataSave();
@@ -877,7 +885,7 @@ namespace BPSR_ZDPS
         public SolverConfig Config = new SolverConfig();
     }
 
-    public class ModuleWindowSettings
+    public class ModuleWindowSettings : WindowSettingsBase
     {
         public List<Preset> Presets = [];
         public SolverModes SolverMode = SolverModes.Normal;

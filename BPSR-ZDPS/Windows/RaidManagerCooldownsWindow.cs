@@ -91,6 +91,11 @@ namespace BPSR_ZDPS.Windows
             ImGui.SetNextWindowSize(new Vector2(700, 600), ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSizeConstraints(new Vector2(300, 240), new Vector2(ImGui.GETFLTMAX()));
 
+            if (Settings.Instance.WindowSettings.RaidManagerCooldowns.WindowPosition != new Vector2())
+            {
+                ImGui.SetNextWindowPos(Settings.Instance.WindowSettings.RaidManagerCooldowns.WindowPosition, ImGuiCond.FirstUseEver);
+            }
+
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
 
             ImGuiWindowFlags exWindowFlags = ImGuiWindowFlags.None;
@@ -489,6 +494,7 @@ namespace BPSR_ZDPS.Windows
                 ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
                 if (ImGui.MenuItem($"X##CloseBtn"))
                 {
+                    Settings.Instance.WindowSettings.RaidManagerCooldowns.WindowPosition = ImGui.GetWindowPos();
                     IsOpened = false;
                 }
                 ImGui.PopFont();

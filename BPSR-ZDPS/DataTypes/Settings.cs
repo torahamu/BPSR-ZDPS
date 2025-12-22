@@ -1,6 +1,7 @@
 ﻿using BPSR_ZDPS.DataTypes.External;
 using BPSR_ZDPS.Windows;
 using Newtonsoft.Json;
+using System.Numerics;
 
 namespace BPSR_ZDPS.DataTypes;
 
@@ -10,7 +11,6 @@ public class Settings
     private static string SETTINGS_FILE_NAME = "Settings.json";
 
     public int Version { get; set; } = 0;
-    public System.Numerics.Vector2 MainWindowPosition { get; set; } = new System.Numerics.Vector2();
     public string NetCaptureDeviceName { get; set; } = "";
     public bool NormalizeMeterContributions { get; set; } = true;
     public bool UseShortWidthNumberFormatting { get; set; } = true;
@@ -116,6 +116,8 @@ public class SettingsExternal
 
 public class WindowSettingsBase : ICloneable
 {
+    public Vector2 WindowPosition { get; set; } = new();
+
     public virtual object Clone()
     {
         return this.MemberwiseClone();
@@ -124,6 +126,7 @@ public class WindowSettingsBase : ICloneable
 
 public class WindowSettings : ICloneable
 {
+    public MainWindowWindowSettings MainWindow { get; set; } = new();
     public RaidManagerCooldownsWindowSettings RaidManagerCooldowns { get; set; } = new();
     public EntityCacheViewerWindowSettings EntityCacheViewer { get; set; } = new();
     public SpawnTrackerWindowSettings SpawnTracker { get; set; } = new();
@@ -132,6 +135,7 @@ public class WindowSettings : ICloneable
     public object Clone()
     {
         var cloned = (WindowSettings)this.MemberwiseClone();
+        cloned.MainWindow = (MainWindowWindowSettings)this.MainWindow.Clone();
         cloned.RaidManagerCooldowns = (RaidManagerCooldownsWindowSettings)this.RaidManagerCooldowns.Clone();
         cloned.EntityCacheViewer = (EntityCacheViewerWindowSettings)this.EntityCacheViewer.Clone();
         cloned.SpawnTracker = (SpawnTrackerWindowSettings)this.SpawnTracker.Clone();

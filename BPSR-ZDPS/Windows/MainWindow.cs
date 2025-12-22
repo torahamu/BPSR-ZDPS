@@ -59,9 +59,9 @@ namespace BPSR_ZDPS.Windows
             ImGui.SetNextWindowSize(new Vector2(550, 600), ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSizeConstraints(new Vector2(375, 150), new Vector2(ImGui.GETFLTMAX()));
 
-            if (Settings.Instance.MainWindowPosition != new Vector2())
+            if (Settings.Instance.WindowSettings.MainWindow.WindowPosition != new Vector2())
             {
-                ImGui.SetNextWindowPos(Settings.Instance.MainWindowPosition, ImGuiCond.FirstUseEver);
+                ImGui.SetNextWindowPos(Settings.Instance.WindowSettings.MainWindow.WindowPosition, ImGuiCond.FirstUseEver);
             }
 
             if (NextWindowPosition != new Vector2())
@@ -392,7 +392,7 @@ namespace BPSR_ZDPS.Windows
                     ImGui.Separator();
                     if (ImGui.MenuItem("Exit"))
                     {
-                        Settings.Instance.MainWindowPosition = WindowPosition;
+                        Settings.Instance.WindowSettings.MainWindow.WindowPosition = WindowPosition;
                         p_open = false;
                     }
                     ImGui.EndMenu();
@@ -465,5 +465,10 @@ namespace BPSR_ZDPS.Windows
         {
             AppState.MousePassthrough = !AppState.MousePassthrough;
         }
+    }
+
+    public class MainWindowWindowSettings : WindowSettingsBase
+    {
+
     }
 }
