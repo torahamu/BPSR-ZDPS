@@ -24,8 +24,6 @@ namespace BPSR_ZDPS.Windows
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
 
-        static int DisplayCountLimit = 5;
-
         static bool HasInitFilterList = false;
         static Dictionary<string, bool> MonsterFilters = new();
         static CancellationTokenSource? RealtimeCancellationTokenSource = null;
@@ -195,8 +193,11 @@ namespace BPSR_ZDPS.Windows
                     ImGui.SetNextItemWidth(-1);
                     ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                     ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                    int displayCountLimit = DisplayCountLimit;
-                    ImGui.SliderInt("##DisplayCountLimit", ref DisplayCountLimit, 0, 15, $"{(DisplayCountLimit == 0 ? "All" : DisplayCountLimit)}");
+                    int displayCountLimit = Settings.Instance.WindowSettings.SpawnTracker.DisplayLineCountLimit;
+                    if (ImGui.SliderInt("##DisplayCountLimit", ref displayCountLimit, 0, 15, $"{(displayCountLimit == 0 ? "All" : displayCountLimit)}"))
+                    {
+                        Settings.Instance.WindowSettings.SpawnTracker.DisplayLineCountLimit = displayCountLimit;
+                    }
                     ImGui.PopStyleColor(2);
 
                     ImGui.Separator();
@@ -272,7 +273,7 @@ namespace BPSR_ZDPS.Windows
                                     isDead = true;
                                 }
 
-                                if(DisplayCountLimit > 0 && DisplayCountLimit < currentItemCount)
+                                if(Settings.Instance.WindowSettings.SpawnTracker.DisplayLineCountLimit > 0 && Settings.Instance.WindowSettings.SpawnTracker.DisplayLineCountLimit < currentItemCount)
                                 {
                                     continue;
                                 }
@@ -432,5 +433,6 @@ namespace BPSR_ZDPS.Windows
         public float WindowOpacity = 1.0f;
         public float TextScale = 1.0f;
         public float LineScale = 1.0f;
+        public int DisplayLineCountLimit = 5;
     }
 }
