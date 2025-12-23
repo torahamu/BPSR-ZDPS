@@ -288,7 +288,6 @@ public class NetCap
         if (isCompressed)
         {
             msgData = Decompress(msgData);
-            Log.Information("Compressed");
         }
 
         if (!Enum.IsDefined(typeof(EServiceId), serviceUuid))
@@ -328,7 +327,7 @@ public class NetCap
             (x.RemoteAddress == ip.DestinationAddress.ToString() && x.RemotePort == tcp.DestinationPort)));
 
         sw.Stop();
-        Log.Logger.Information($"Checking {ip.SourceAddress}:{tcp.SourcePort} > {ip.DestinationAddress}:{tcp.DestinationPort} is game connection: {isGameConnection}, took {sw.ElapsedMilliseconds}ms");
+        Log.Logger.Debug($"Checking {ip.SourceAddress}:{tcp.SourcePort} > {ip.DestinationAddress}:{tcp.DestinationPort} is game connection: {isGameConnection}, took {sw.ElapsedMilliseconds}ms");
         
         return isGameConnection;
     }
