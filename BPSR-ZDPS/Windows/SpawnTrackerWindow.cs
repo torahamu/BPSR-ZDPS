@@ -27,6 +27,7 @@ namespace BPSR_ZDPS.Windows
         static bool HasInitFilterList = false;
         static Dictionary<string, bool> MonsterFilters = new();
         static CancellationTokenSource? RealtimeCancellationTokenSource = null;
+        static string RegionName = "";
 
         public static void Open()
         {
@@ -138,8 +139,6 @@ namespace BPSR_ZDPS.Windows
                     }
                 }
 
-                string regionName = "";
-
                 if (!CollapseToContentOnly)
                 {
                     ImGui.PushStyleVarX(ImGuiStyleVar.FramePadding, 4);
@@ -166,7 +165,7 @@ namespace BPSR_ZDPS.Windows
 
                     if (regions.Length > selectedRegionIndex)
                     {
-                        regionName = regions[selectedRegionIndex];
+                        RegionName = regions[selectedRegionIndex];
                     }
 
                     if (ImGui.BeginListBox("##FilterDataListBox", new Vector2(-1, 0)))
@@ -192,7 +191,7 @@ namespace BPSR_ZDPS.Windows
                                     name = mob.MobName;
                                 }
                                 int totalLines = 0;
-                                if (mob.MobMapTotalChannels.TryGetValue(regionName, out var lineCount))
+                                if (mob.MobMapTotalChannels.TryGetValue(RegionName, out var lineCount))
                                 {
                                     totalLines = lineCount;
                                 }
@@ -289,12 +288,17 @@ namespace BPSR_ZDPS.Windows
                             ImGui.EndGroup();
                             var groupSize = ImGui.GetItemRectSize();
 
-                            var statusDescriptors = BPTimerManager.StatusDescriptors.AsValueEnumerable().Where(x => x.MobId == mob.MobId && x.Region == regionName).OrderByDescending(x => x.UpdateTimestamp).OrderBy(x =>
+                            var statusDescriptors = BPTimerManager.StatusDescriptors.AsValueEnumerable().Where(x => x.MobId == mob.MobId && x.Region == RegionName).OrderByDescending(x => x.UpdateTimestamp).OrderBy(x =>
                             {
                                 if (x.UpdateTimestamp?.Subtract(DateTime.Now).TotalMinutes < -5 && x.LastHp != 0)
                                 {
                                     // Put "expired" data at the very end
                                     return 102;
+                                }
+                                if (x.UpdateTimestamp?.Subtract(DateTime.Now).TotalMinutes < -6 && x.LastHp == 0)
+                                {
+                                    // Put old "dead" data behind expired data
+                                    return 103;
                                 }
                                 if (x.LastHp == 0)
                                 {
