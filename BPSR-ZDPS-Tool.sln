@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPSR-DeepsLib", "BPSR-DeepsLib\BPSR-DeepsLib.csproj", "{5EC38379-CC1A-4CCD-B605-2811FCA0E6C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPSR-ZDPSLib", "BPSR-DeepsLib\BPSR-ZDPSLib.csproj", "{5EC38379-CC1A-4CCD-B605-2811FCA0E6C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPSR-ZDPS", "BPSR-ZDPS\BPSR-ZDPS.csproj", "{84A6F172-D569-4E57-AD28-542059FE8D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPSR-DeepsServ", "BPSR-DeepsServ\BPSR-DeepsServ.csproj", "{DD439C66-4F9D-462C-9404-2D91C4CE10A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPSR-ZDPSServ", "BPSR-DeepsServ\BPSR-ZDPSServ.csproj", "{DD439C66-4F9D-462C-9404-2D91C4CE10A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87DC5630-A1E2-48D5-A7B6-54097F15535D}
 	EndGlobalSection
 EndGlobal
