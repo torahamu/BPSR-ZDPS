@@ -377,7 +377,6 @@ namespace BPSR_ZDPS
             Log.Information("DB Migration 1 done");
         }
     }
-}
 
     public class DBCleanUpResults
     {
