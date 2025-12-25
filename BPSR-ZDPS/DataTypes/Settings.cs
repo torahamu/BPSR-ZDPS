@@ -44,6 +44,9 @@ public class Settings
     public string WebhookReportsDeduplicationServerHost { get; set; } = "https://zdps-webfunc.vercel.app";
     public string WebhookReportsDiscordUrl { get; set; } = "";
     public string WebhookReportsCustomUrl { get; set; } = "";
+    public bool CheckForZDPSUpdatesOnStartup { get; set; } = false;
+    public string LatestZDPSVersionCheckURL { get; set; } = "https://raw.githubusercontent.com/Blue-Protocol-Source/BPSR-ZDPS-Metadata/master/LatestVersion.txt";
+    public string ZDPSWebsiteURL { get; set; } = "https://github.com/Blue-Protocol-Source/BPSR-ZDPS";
 
     // Settings specific to External components
     public SettingsExternal External { get; set; } = new();

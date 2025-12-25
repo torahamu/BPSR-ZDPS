@@ -323,5 +323,49 @@ namespace BPSR_ZDPS.Web
 
             return msg;
         }
+
+        public static void CheckForZDPSUpdates()
+        {
+            try
+            {
+                Log.Information("Checking for ZDPS update...");
+                var task = Task.Factory.StartNew(async () =>
+                {
+                    try
+                    {
+                        var url = $"{Settings.Instance.LatestZDPSVersionCheckURL}";
+                        var result = await HttpClient.GetAsync(url);
+                        var response = await result.Content.ReadAsStringAsync();
+                        if (!string.IsNullOrEmpty(response))
+                        {
+                            var latestVersion = Version.Parse(response);
+                            var isRunningLatest = Utils.AppVersion.CompareTo(latestVersion);
+                            if (isRunningLatest >= 0)
+                            {
+                                // Running latest version
+                                Log.Information("ZDPS is running latest version already.");
+                                AppState.IsUpdateAvailable = false;
+                            }
+                            else
+                            {
+                                // Update available
+                                Log.Information($"ZDPS update is available. Found v{latestVersion} online.");
+                                AppState.IsUpdateAvailable = true;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Error checking for ZDPS update.");
+                        AppState.IsUpdateAvailable = false;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error checking for ZDPS update task.");
+                AppState.IsUpdateAvailable = false;
+            }
+        }
     }
 }

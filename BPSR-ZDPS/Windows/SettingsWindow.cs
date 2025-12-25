@@ -62,6 +62,9 @@ namespace BPSR_ZDPS.Windows
         static string webhookReportsDiscordUrl;
         static string webhookReportsCustomUrl;
 
+        static bool checkForZDPSUpdatesOnStartup;
+        static string latestZDPSVersionCheckURL;
+
         // External Settings
         static bool externalBPTimerEnabled;
         static bool externalBPTimerIncludeCharacterId;
@@ -280,6 +283,36 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
+                        ImGui.Unindent();
+
+                        ImGui.SeparatorText("ZDPS Update Checking");
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Check For ZDPS Updates On Startup: ");
+                        ImGui.SameLine();
+                        ImGui.Checkbox("##CheckForZDPSUpdatesOnStartup", ref checkForZDPSUpdatesOnStartup);
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("When enabled, ZDPS will check online for available updates when the application is launched.");
+                        ImGui.EndDisabled();
+                        ImGui.Unindent();
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Latest ZDPS Version Check URL: ");
+                        ImGui.SameLine();
+                        ImGui.SetNextItemWidth(-1);
+                        if (ImGui.InputText("##LatestZDPSVersionCheckURL", ref latestZDPSVersionCheckURL, 512))
+                        {
+                            // If the value was empty, revert back to the default URL
+                            if (string.IsNullOrEmpty(latestZDPSVersionCheckURL))
+                            {
+                                latestZDPSVersionCheckURL = "https://raw.githubusercontent.com/Blue-Protocol-Source/BPSR-ZDPS-Metadata/master/LatestVersion.txt";
+                            }
+                        }
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("The URL to check for ZDPS version updates at.");
+                        ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.SeparatorText("Database");
@@ -1088,11 +1121,15 @@ namespace BPSR_ZDPS.Windows
 
                         if (ImGui.Button("Open GitHub Project Page"))
                         {
-                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo {FileName = "https://github.com/Blue-Protocol-Source/BPSR-ZDPS", UseShellExecute = true });
+                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                            {
+                                FileName = Settings.Instance.ZDPSWebsiteURL,
+                                UseShellExecute = true,
+                            });
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Open a web page to the GitHub Project located at\nhttps://github.com/Blue-Protocol-Source/BPSR-ZDPS");
+                        ImGui.TextWrapped($"Open a web page to the GitHub Project located at\n{Settings.Instance.ZDPSWebsiteURL}");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -1191,6 +1228,9 @@ namespace BPSR_ZDPS.Windows
             webhookReportsDiscordUrl = Settings.Instance.WebhookReportsDiscordUrl;
             webhookReportsCustomUrl = Settings.Instance.WebhookReportsCustomUrl;
 
+            checkForZDPSUpdatesOnStartup = Settings.Instance.CheckForZDPSUpdatesOnStartup;
+            latestZDPSVersionCheckURL = Settings.Instance.LatestZDPSVersionCheckURL;
+
             windowSettings = (WindowSettings)Settings.Instance.WindowSettings.Clone();
 
             logToFile = Settings.Instance.LogToFile;
@@ -1251,6 +1291,9 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.WebhookReportsDeduplicationServerHost = webhookReportsDeduplicationServerUrl;
             Settings.Instance.WebhookReportsDiscordUrl = webhookReportsDiscordUrl;
             Settings.Instance.WebhookReportsCustomUrl = webhookReportsCustomUrl;
+
+            Settings.Instance.CheckForZDPSUpdatesOnStartup = checkForZDPSUpdatesOnStartup;
+            Settings.Instance.LatestZDPSVersionCheckURL = latestZDPSVersionCheckURL;
 
             Settings.Instance.WindowSettings = (WindowSettings)windowSettings.Clone();
 

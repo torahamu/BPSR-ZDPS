@@ -30,6 +30,8 @@ namespace BPSR_ZDPS
 
         public static bool MousePassthrough { get; set; } = false;
 
+        public static bool IsUpdateAvailable { get; set; } = false;
+
         public static void LoadDataTables()
         {
             // Load table data for resolving with in the future

@@ -27,6 +27,8 @@ namespace BPSR_ZDPS.Windows
 
         static int SelectedTabIndex = 0;
 
+        static bool HasPromptedUpdateWindow = false;
+
         List<MeterBase> Meters = new();
         public EntityInspector entityInspector = new();
         public bool IsTopMost = false;
@@ -40,6 +42,7 @@ namespace BPSR_ZDPS.Windows
         {
             DrawContent();
 
+            UpdateAvailableWindow.Draw(this);
             SettingsWindow.Draw(this);
             EncounterHistoryWindow.Draw(this);
             entityInspector.Draw(this);
@@ -167,6 +170,17 @@ namespace BPSR_ZDPS.Windows
                         Managers.External.BPTimerManager.FetchSupportedMobList();
                     }
                 }
+
+                if (Settings.Instance.CheckForZDPSUpdatesOnStartup)
+                {
+                    Web.WebManager.CheckForZDPSUpdates();
+                }
+            }
+
+            if (AppState.IsUpdateAvailable && !HasPromptedUpdateWindow)
+            {
+                HasPromptedUpdateWindow = true;
+                UpdateAvailableWindow.Open();
             }
 
             ImGuiTableFlags table_flags = ImGuiTableFlags.SizingStretchSame;
