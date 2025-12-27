@@ -26,6 +26,7 @@ namespace BPSR_ZDPS.Windows
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
         static int LastPinnedOpacity = 100;
+        static bool IsPinned = false;
 
         static bool HasInitFilterList = false;
         static Dictionary<string, bool> MonsterFilters = new();
@@ -38,6 +39,7 @@ namespace BPSR_ZDPS.Windows
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
             ImGui.OpenPopup(TITLE_ID);
             IsOpened = true;
+            IsPinned = false;
             InitializeBindings();
             ConnectToBPTimer();
             ImGui.PopID();
@@ -74,7 +76,7 @@ namespace BPSR_ZDPS.Windows
             }
         }
 
-        public static void CreateRealtimeConndtion()
+        public static void CreateRealtimeConnection()
         {
             if (RealtimeCancellationTokenSource != null)
             {
@@ -128,6 +130,14 @@ namespace BPSR_ZDPS.Windows
                     RunOnceDelayed++;
                     Utils.SetCurrentWindowIcon();
                     Utils.BringWindowToFront();
+
+                    if (IsTopMost && !IsPinned)
+                    {
+                        IsPinned = true;
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.SpawnTracker.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.SpawnTracker.Opacity;
+                    }
                 }
 
                 DrawMenuBar();
@@ -149,7 +159,7 @@ namespace BPSR_ZDPS.Windows
                     {
                         HasInitFilterList = true;
                         InitalizeFilterList();
-                        CreateRealtimeConndtion();
+                        CreateRealtimeConnection();
                     }
                 }
 
@@ -173,6 +183,7 @@ namespace BPSR_ZDPS.Windows
                     if (ImGui.Combo("##RegionSelectionCombo", ref selectedRegionIndex, regions, regions.Length))
                     {
                         Settings.Instance.WindowSettings.SpawnTracker.SelectedRegionIndex = selectedRegionIndex;
+                        HasInitFilterList = false;
                     }
 
                     ImGui.EndDisabled();
@@ -505,12 +516,14 @@ namespace BPSR_ZDPS.Windows
                         Utils.SetWindowOpacity(Settings.Instance.WindowSettings.SpawnTracker.Opacity * 0.01f);
                         LastPinnedOpacity = Settings.Instance.WindowSettings.SpawnTracker.Opacity;
                         IsTopMost = true;
+                        IsPinned = true;
                     }
                     else
                     {
                         Utils.UnsetWindowTopmost();
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
+                        IsPinned = false;
                     }
                 }
                 if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.SpawnTracker.Opacity)

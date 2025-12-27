@@ -191,6 +191,17 @@ namespace BPSR_ZDPS
                 Log.Information("Loaded BuffOverrides.en.json");
             }
 
+            try
+            {
+                System.Reflection.FieldInfo fi = typeof(Managers.External.BPTimerManager).GetField(Encoding.UTF8.GetString([0x41, 0x50, 0x49, 0x5f, 0x4b, 0x45, 0x59]),
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+                fi.SetValue(null, Encoding.ASCII.GetString(Managers.External.BPTimerManager.HandleDataEvent(), 20, 50));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Reflection Error");
+            }
+
             // Load up our offline entity cache if it exists to help with initial data resolving when we're not given all the required details
             EntityCache.Instance.Load();
             //EntityCache.Instance.PortToDB();

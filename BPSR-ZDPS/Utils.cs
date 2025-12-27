@@ -329,7 +329,13 @@ namespace BPSR_ZDPS
             viewport = viewport ?? ImGui.GetWindowViewport();
             User32.ShowWindow((IntPtr)viewport.Value.PlatformHandleRaw, User32.SW_MINIMIZE);
         }
-        
+
+        public static void RestoreWindow(ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            User32.ShowWindow((IntPtr)viewport.Value.PlatformHandleRaw, User32.SW_RESTORE);
+        }
+
         public static void SetWindowTopmost(IntPtr hWnd)
         {
             User32.SetWindowPos(hWnd, User32.HWND_TOPMOST, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE);

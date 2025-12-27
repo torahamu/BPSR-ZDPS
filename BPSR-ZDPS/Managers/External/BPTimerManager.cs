@@ -11,11 +11,11 @@ using Zproto;
 
 namespace BPSR_ZDPS.Managers.External
 {
-    public static class BPTimerManager
+    public static partial class BPTimerManager
     {
         const int REPORT_HP_INTERVAL = 5;
         const string HOST = "https://db.bptimer.com";
-        const string API_KEY = "o5he1b5mnykg5mursljw18dixak68h1ue9515dvuthoxtih79w";
+        static string API_KEY = "o5he1b5mnykg5mursljw18dixak68h1ue9515dvuthoxtih79w";
 
         static BPTimerHpReport? LastSentRequest = null;
 
@@ -233,7 +233,6 @@ namespace BPSR_ZDPS.Managers.External
                 {
                     var mobs_items = ((Newtonsoft.Json.Linq.JObject)mobs)["items"].ToObject<List<MobsResponse>>();
                     var channel_status_items = ((Newtonsoft.Json.Linq.JObject)mob_channel_status)["items"].ToObject<List<StatusResponse>>();
-                    System.Diagnostics.Debug.WriteLine(channel_status_items);
 
                     foreach (var mob in mobs_items)
                     {
@@ -358,7 +357,12 @@ namespace BPSR_ZDPS.Managers.External
                 {
                     try
                     {
-                        await WebManager.BPTimerOpenRealtimeStream($"{HOST}/api/realtime", API_KEY, cancellationTokenSource.Token);
+                        string selectedRegion = "";
+                        if (BPTimerRegions.Count > 0)
+                        {
+                            selectedRegion = BPTimerRegions[Settings.Instance.WindowSettings.SpawnTracker.SelectedRegionIndex];
+                        }
+                        await WebManager.BPTimerOpenRealtimeStream($"{HOST}/api/realtime", API_KEY, selectedRegion, cancellationTokenSource.Token);
                     }
                     catch (Exception ex)
                     {
@@ -371,7 +375,7 @@ namespace BPSR_ZDPS.Managers.External
             return cancellationTokenSource;
         }
 
-        public static void HandleMobHpUpdateEvent(List<BPTimerMobHpUpdate> updates)
+        public static void HandleMobHpUpdateEvent(List<BPTimerMobHpUpdate> updates, string region)
         {
             foreach (var update in updates)
             {
@@ -379,7 +383,7 @@ namespace BPSR_ZDPS.Managers.External
                 int idx = 0;
                 foreach (var item in StatusDescriptors)
                 {
-                    if (item.MobId == update.MobId && item.ChannelNumber == update.Channel)
+                    if (item.MobId == update.MobId && item.ChannelNumber == update.Channel && item.Region == region)
                     {
                         item.LastHp = update.Hp;
                         DateTime timestamp = DateTime.Now;
@@ -412,7 +416,8 @@ namespace BPSR_ZDPS.Managers.External
                         UpdateTime = timestamp.ToString("yyyy-MM-dd HH:mm:ss.fffZ"),
                         UpdateTimestamp = timestamp,
                         Location = update.Location ?? "",
-                        MonsterId = monsterId
+                        MonsterId = monsterId,
+                        Region = region
                     });
                 }
             }
@@ -441,6 +446,16 @@ namespace BPSR_ZDPS.Managers.External
             {
                 Log.Error($"Error during BPTimer's HandleMobResetEvent.\n{ex.Message}\nStack Trace:{ex.StackTrace}");
             }
+        }
+
+        public static byte[] HandleDataEvent()
+        {
+            byte[] ret = new byte[90];
+            for (int i = 0; i < 90; i++)
+            {
+                ret[i] = (byte)(DataHandle[i] ^ 0x6B);
+            }
+            return ret;
         }
     }
 

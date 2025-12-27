@@ -124,13 +124,11 @@ namespace BPSR_ZDPS
 
             //CurrentEncounter = Encounters.Count - 1;
 
-            if (Current != null)
-            {
-                DB.InsertEncounter(Current);
-            }
-
+            var currentEncounterHolding = Current;
+            
             Current = new Encounter(CurrentBattleId);
-            Current.EncounterId = DB.GetNextEncounterId();
+            // We need to +1 here because when we insert an encounter, it would be taking GetNextEncounterId's value
+            Current.EncounterId = DB.GetNextEncounterId() + 1;
             if ((reason == EncounterStartReason.NewObjective))
             {
                 if (!string.IsNullOrEmpty(priorBossName))
@@ -160,6 +158,11 @@ namespace BPSR_ZDPS
             }
 
             OnEncounterStart(new EventArgs());
+
+            if (currentEncounterHolding != null)
+            {
+                DB.InsertEncounter(currentEncounterHolding);
+            }
         }
 
         public static void StopEncounter(bool isKnownFinal = false)

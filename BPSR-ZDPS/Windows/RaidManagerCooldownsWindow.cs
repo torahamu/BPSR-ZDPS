@@ -25,6 +25,7 @@ namespace BPSR_ZDPS.Windows
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
         static int LastPinnedOpacity = 100;
+        static bool IsPinned = false;
 
         static OrderedDictionary<long, List<TrackedSkill>> TrackedEntities = new();
         static Dictionary<long, TrackedSkill> TrackedSkills = new();
@@ -47,6 +48,7 @@ namespace BPSR_ZDPS.Windows
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
             ImGui.OpenPopup(TITLE_ID);
             IsOpened = true;
+            IsPinned = false;
             InitializeBindings();
             ImGui.PopID();
         }
@@ -129,6 +131,14 @@ namespace BPSR_ZDPS.Windows
                     RunOnceDelayed++;
                     Utils.SetCurrentWindowIcon();
                     Utils.BringWindowToFront();
+
+                    if (IsTopMost && !IsPinned)
+                    {
+                        IsPinned = true;
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity;
+                    }
                 }
 
                 DrawMenuBar();
@@ -517,12 +527,14 @@ namespace BPSR_ZDPS.Windows
                         Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity * 0.01f);
                         LastPinnedOpacity = Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity;
                         IsTopMost = true;
+                        IsPinned = true;
                     }
                     else
                     {
                         Utils.UnsetWindowTopmost();
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
+                        IsPinned = true;
                     }
                 }
                 if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity)

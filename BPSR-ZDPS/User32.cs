@@ -6,10 +6,21 @@ public class User32
 {
     public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
     public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
-    public const uint   SWP_NOMOVE = 0x0002;
-    public const uint   SWP_NOSIZE = 0x0001;
-    public const uint   SWP_SHOWWINDOW = 0x0040;
-    public const int    SW_MINIMIZE = 6;
+    public const uint SWP_NOMOVE = 0x0002;
+    public const uint SWP_NOSIZE = 0x0001;
+    public const uint SWP_SHOWWINDOW = 0x0040;
+    public const int SW_HIDE = 0;
+    public const int SW_SHOWNORMAL = 1;
+    public const int SW_SHOWMINIMIZED = 2;
+    public const int SW_SHOWMAXIMIZED = 3;
+    public const int SW_SHOWNOACTIVATE = 4;
+    public const int SW_SHOW = 5;
+    public const int SW_MINIMIZE = 6;
+    public const int SW_SHOWMINNOACTIVE = 7;
+    public const int SW_SHOWNA = 8;
+    public const int SW_RESTORE = 9;
+    public const int SW_SHOWDEFAULT = 10;
+    public const int SW_FORCEMINIMIZE = 11;
     public const int WH_MSGFILTER = -1;
     public const int WH_JOURNALRECORD = 0;
     public const int WH_JOURNALPLAYBACK = 1;

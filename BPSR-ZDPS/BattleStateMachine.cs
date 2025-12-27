@@ -174,9 +174,12 @@ namespace BPSR_ZDPS
                     AppState.HasBenchmarkBegun = false;
                     AppState.IsBenchmarkMode = false;
 
+                    var endData = new EncounterEndFinalData() { BattleId = EncounterManager.CurrentBattleId, EncounterId = (ulong)EncounterManager.Current.EncounterId, Reason = EncounterStartReason.BenchmarkEnd };
+                    SetDeferredEncounterEndFinalData(DateTime.Now, endData);
+
                     DeferredEncounterEndFinalTime = null;
 
-                    EncounterManager.SignalEncounterEndFinal(new EncounterEndFinalData() { BattleId = EncounterManager.CurrentBattleId, EncounterId = (ulong)EncounterManager.CurrentEncounter, Reason = EncounterStartReason.BenchmarkEnd });
+                    EncounterManager.SignalEncounterEndFinal(endData);
                     EncounterManager.StartEncounter(false, EncounterStartReason.BenchmarkEnd);
                     
                     return;

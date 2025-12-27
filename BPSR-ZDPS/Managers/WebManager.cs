@@ -172,7 +172,7 @@ namespace BPSR_ZDPS.Web
             }
         }
 
-        public static async Task BPTimerOpenRealtimeStream(string endpoint, string apiKey, CancellationToken? cancellationToken = null)
+        public static async Task BPTimerOpenRealtimeStream(string endpoint, string apiKey, string userRegion, CancellationToken? cancellationToken = null)
         {
             Managers.External.BPTimerManager.SpawnDataRealtimeConnection = Managers.External.BPTimerManager.ESpawnDataLoadStatus.InProgress;
             using var client = new HttpClient();
@@ -214,7 +214,7 @@ namespace BPSR_ZDPS.Web
                 {
                     var data = JsonConvert.DeserializeObject(item.Data);
                     string clientId = ((Newtonsoft.Json.Linq.JObject)data)["clientId"].ToString();
-                    var subscribeResult = await BPTimerSubscribe(endpoint, clientId, apiKey);
+                    var subscribeResult = await BPTimerSubscribe(endpoint, clientId, apiKey, userRegion);
                     if (subscribeResult)
                     {
                         Log.Information($"Connected to PocketBase Realtime. Client ID: {clientId}");
@@ -227,10 +227,24 @@ namespace BPSR_ZDPS.Web
                         return;
                     }
                 }
-                else if (item.EventType == "mob_hp_updates")
+                else if (item.EventType.StartsWith("mob_hp_updates", StringComparison.OrdinalIgnoreCase))
                 {
+                    string region = "NA";
+                    try
+                    {
+                        if (item.EventType.StartsWith("mob_hp_updates_", StringComparison.OrdinalIgnoreCase))
+                        {
+                            string sentRegion = item.EventType.Substring(15).ToUpper();
+                            region = sentRegion;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"BPTimerOpenRealtimeStream encountered error trying to resolve Mob HP Update regional indicator: {item.EventType}\n{ex.Message}");
+                    }
+
                     var mobHpUpdate = JsonConvert.DeserializeObject<List<DataTypes.External.BPTimerMobHpUpdate>>(item.Data, new JsonSerializerSettings() { Converters = { new DataTypes.External.BPTimerMobHpUpdateConverter() } });
-                    Managers.External.BPTimerManager.HandleMobHpUpdateEvent(mobHpUpdate);
+                    Managers.External.BPTimerManager.HandleMobHpUpdateEvent(mobHpUpdate, region);
                 }
                 else if (item.EventType.StartsWith("mob_resets", StringComparison.OrdinalIgnoreCase))
                 {
@@ -241,7 +255,6 @@ namespace BPSR_ZDPS.Web
                         {
                             string sentRegion = item.EventType.Substring(11).ToUpper();
                             region = sentRegion;
-                            Log.Information($"BPTimerOpenRealtimeStream got event {item.EventType} as Regional [{region}].");
                         }
                     }
                     catch (Exception ex)
@@ -270,11 +283,20 @@ namespace BPSR_ZDPS.Web
             }
         }
 
-        public static async Task<bool> BPTimerSubscribe(string endpoint, string clientId, string apiKey)
+        public static async Task<bool> BPTimerSubscribe(string endpoint, string clientId, string apiKey, string userRegion)
         {
             try
             {
-                var msgJson = JsonConvert.SerializeObject(new DataTypes.External.BPTimerSubscribe() { ClientId = clientId, Subscriptions = new() { "mob_hp_updates", "mob_resets" } }, Formatting.Indented);
+                List<string> topics = new() { "mob_hp_updates", "mob_resets" };
+                if (!string.IsNullOrEmpty(userRegion) && userRegion != "NA")
+                {
+                    for (int i = 0; i < topics.Count; i++)
+                    {
+                        topics[i] = $"{topics[i]}_{userRegion.ToLower()}";
+                    }
+                }
+
+                var msgJson = JsonConvert.SerializeObject(new DataTypes.External.BPTimerSubscribe() { ClientId = clientId, Subscriptions = topics }, Formatting.Indented);
                 var content = new StringContent(msgJson, Encoding.UTF8, "application/json");
                 var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
                 request.Content = content;

@@ -27,6 +27,7 @@ namespace BPSR_ZDPS
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
         static int LastPinnedOpacity = 100;
+        static bool IsPinned = false;
 
         static KeyValuePair<long, EntityCacheLine>[] EntityFilterMatches = [];
         static string EntityNameFilter = "";
@@ -37,6 +38,7 @@ namespace BPSR_ZDPS
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
             ImGui.OpenPopup(TITLE_ID);
             IsOpened = true;
+            IsPinned = false;
             InitializeBindings();
             ImGui.PopID();
         }
@@ -89,6 +91,14 @@ namespace BPSR_ZDPS
                     RunOnceDelayed++;
                     Utils.SetCurrentWindowIcon();
                     Utils.BringWindowToFront();
+
+                    if (IsTopMost && !IsPinned)
+                    {
+                        IsPinned = true;
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.EntityCacheViewer.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.EntityCacheViewer.Opacity;
+                    }
                 }
 
                 DrawMenuBar();
@@ -156,12 +166,14 @@ namespace BPSR_ZDPS
                         Utils.SetWindowOpacity(Settings.Instance.WindowSettings.EntityCacheViewer.Opacity * 0.01f);
                         LastPinnedOpacity = Settings.Instance.WindowSettings.EntityCacheViewer.Opacity;
                         IsTopMost = true;
+                        IsPinned = true;
                     }
                     else
                     {
                         Utils.UnsetWindowTopmost();
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
+                        IsPinned = false;
                     }
                 }
                 if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.EntityCacheViewer.Opacity)
