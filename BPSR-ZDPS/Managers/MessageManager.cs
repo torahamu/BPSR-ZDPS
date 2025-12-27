@@ -852,39 +852,6 @@ namespace BPSR_ZDPS
                     }
                 }
 
-                if (AppState.IsBenchmarkMode)
-                {
-                    if (isAttackerPlayer && attackerUuid != AppState.PlayerUUID)
-                    {
-                        // Only record benchmarking player related details
-                        // All Monsters and other non-player entities will be processed still
-                        continue;
-                    }
-                    else if (isAttackerPlayer && attackerUuid == AppState.PlayerUUID)
-                    {
-                        if (!AppState.HasBenchmarkBegun)
-                        {
-                            AppState.HasBenchmarkBegun = true;
-                            // This will automatically restart our Encounter Start Time to handle the start of the Benchmark Encounter
-                            EncounterManager.StartEncounter(false, EncounterStartReason.BenchmarkStart);
-                        }
-
-                        if (AppState.BenchmarkSingleTarget && Utils.UuidToEntityType(targetUuid) == (long)EEntityType.EntMonster)
-                        {
-                            if (AppState.BenchmarkSingleTargetUUID == 0)
-                            {
-                                AppState.BenchmarkSingleTargetUUID = targetUuid;
-                            }
-
-                            // Only care about recording details for our first hit target
-                            if (targetUuid != AppState.BenchmarkSingleTargetUUID)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                }
-
                 if (isAttackerPlayer && attackerUuid != 0)
                 {
                     EncounterManager.Current.SetEntityType(attackerUuid, EEntityType.EntChar);
@@ -923,6 +890,39 @@ namespace BPSR_ZDPS
                 string damageElement = syncDamageInfo.Property.ToString();
 
                 EDamageSource damageSource = syncDamageInfo.DamageSource;
+
+                if (AppState.IsBenchmarkMode)
+                {
+                    if (isAttackerPlayer && attackerUuid != AppState.PlayerUUID)
+                    {
+                        // Only record benchmarking player related details
+                        // All Monsters and other non-player entities will be processed still
+                        continue;
+                    }
+                    else if (isAttackerPlayer && attackerUuid == AppState.PlayerUUID)
+                    {
+                        if (!AppState.HasBenchmarkBegun)
+                        {
+                            AppState.HasBenchmarkBegun = true;
+                            // This will automatically restart our Encounter Start Time to handle the start of the Benchmark Encounter
+                            EncounterManager.StartEncounter(false, EncounterStartReason.BenchmarkStart);
+                        }
+
+                        if (AppState.BenchmarkSingleTarget && Utils.UuidToEntityType(targetUuid) == (long)EEntityType.EntMonster && !isHeal)
+                        {
+                            if (AppState.BenchmarkSingleTargetUUID == 0)
+                            {
+                                AppState.BenchmarkSingleTargetUUID = targetUuid;
+                            }
+
+                            // Only care about recording details for our first hit target
+                            if (targetUuid != AppState.BenchmarkSingleTargetUUID)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                }
 
                 if (isHeal)
                 {
