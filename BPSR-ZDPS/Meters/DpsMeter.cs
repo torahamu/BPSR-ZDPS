@@ -96,9 +96,7 @@ namespace BPSR_ZDPS.Meters
                     var startPoint = ImGui.GetCursorPos();
                     // ImGui.GetTextLineHeightWithSpacing();
 
-                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.MeterBarScale);
-
-                    // TODO: Make progress bar fill the entire line just like how the Selectable already is (as seen with hover state)
+                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.WindowSettings.MainWindow.MeterBarScale);
 
                     // Begin the rendering split to overlay elements, we have to do it this way since Hexa.NET.ImGui blocks the normal functions
                     //var drawList = ImGui.GetWindowDrawList();

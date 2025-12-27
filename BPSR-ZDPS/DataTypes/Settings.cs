@@ -24,8 +24,6 @@ public class Settings
     public bool SkipTeleportStateCheckInAutomaticWipeDetection { get; set; } = false;
     public bool SplitEncountersOnNewPhases { get; set; } = true;
     public bool DisplayTruePerSecondValuesInMeters { get; set; } = false;
-    public float WindowOpacity = 1.0f;
-    public float MeterBarScale = 1.0f;
     public bool AllowGamepadNavigationInputInZDPS { get; set; } = false;
     public bool UseDatabaseForEncounterHistory { get; set; } = true;
     public int DatabaseRetentionPolicyDays { get; set; } = 0;
@@ -88,6 +86,7 @@ public class Settings
     {
         if (File.Exists(Path.Combine(Utils.DATA_DIR_NAME, SETTINGS_FILE_NAME)))
         {
+            // TODO: If there is an error loading Settings, instead of crashing, default values should be used and an error prompt displayed to users
             var settingsTxt = File.ReadAllText(Path.Combine(Utils.DATA_DIR_NAME, SETTINGS_FILE_NAME));
             Instance = JsonConvert.DeserializeObject<Settings>(settingsTxt);
         }
@@ -132,6 +131,7 @@ public class WindowSettingsBase : ICloneable
 {
     public Vector2 WindowPosition { get; set; } = new();
     public Vector2 WindowSize { get; set; } = new();
+    public int Opacity = 100;
 
     public virtual object Clone()
     {

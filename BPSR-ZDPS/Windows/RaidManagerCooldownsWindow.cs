@@ -24,6 +24,7 @@ namespace BPSR_ZDPS.Windows
         static int RunOnceDelayed = 0;
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
+        static int LastPinnedOpacity = 100;
 
         static OrderedDictionary<long, List<TrackedSkill>> TrackedEntities = new();
         static Dictionary<long, TrackedSkill> TrackedSkills = new();
@@ -470,7 +471,8 @@ namespace BPSR_ZDPS.Windows
                     if (!IsTopMost)
                     {
                         Utils.SetWindowTopmost();
-                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.WindowOpacity);
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity;
                         IsTopMost = true;
                     }
                     else
@@ -479,6 +481,11 @@ namespace BPSR_ZDPS.Windows
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
                     }
+                }
+                if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity)
+                {
+                    Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity * 0.01f);
+                    LastPinnedOpacity = Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity;
                 }
                 ImGui.PopStyleColor();
                 ImGui.PopFont();
@@ -557,7 +564,7 @@ namespace BPSR_ZDPS.Windows
 
     public class RaidManagerCooldownsWindowSettings : WindowSettingsBase
     {
-        public float WindowOpacity = 1.0f;
+
     }
 
     public class TrackedSkill

@@ -156,7 +156,7 @@ namespace BPSR_ZDPS.Windows
                     if (!IsTopMost)
                     {
                         Utils.SetWindowTopmost();
-                        Utils.SetWindowOpacity(Settings.Instance.WindowOpacity);
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.RaidManagerCooldowns.Opacity);
                         IsTopMost = true;
                     }
                     else

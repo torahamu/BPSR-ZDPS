@@ -25,6 +25,7 @@ namespace BPSR_ZDPS.Windows
         static int RunOnceDelayed = 0;
         static Vector2 MenuBarSize;
         static bool HasInitBindings = false;
+        static int LastPinnedOpacity = 100;
 
         static bool HasInitFilterList = false;
         static Dictionary<string, bool> MonsterFilters = new();
@@ -501,7 +502,8 @@ namespace BPSR_ZDPS.Windows
                     if (!IsTopMost)
                     {
                         Utils.SetWindowTopmost();
-                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.SpawnTracker.WindowOpacity);
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.SpawnTracker.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.SpawnTracker.Opacity;
                         IsTopMost = true;
                     }
                     else
@@ -510,6 +512,11 @@ namespace BPSR_ZDPS.Windows
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
                     }
+                }
+                if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.SpawnTracker.Opacity)
+                {
+                    Utils.SetWindowOpacity(Settings.Instance.WindowSettings.SpawnTracker.Opacity * 0.01f);
+                    LastPinnedOpacity = Settings.Instance.WindowSettings.SpawnTracker.Opacity;
                 }
                 ImGui.PopStyleColor();
                 ImGui.PopFont();
@@ -553,7 +560,6 @@ namespace BPSR_ZDPS.Windows
 
     public class SpawnTrackerWindowSettings : WindowSettingsBase
     {
-        public float WindowOpacity = 1.0f;
         public float TextScale = 1.0f;
         public float LineScale = 1.0f;
         public int DisplayLineCountLimit = 5;

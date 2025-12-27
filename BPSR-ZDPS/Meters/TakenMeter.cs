@@ -84,7 +84,7 @@ namespace BPSR_ZDPS.Meters
                     var startPoint = ImGui.GetCursorPos();
                     // ImGui.GetTextLineHeightWithSpacing();
 
-                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.MeterBarScale);
+                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.WindowSettings.MainWindow.MeterBarScale);
 
                     ImGui.ProgressBar((float)contributionProgressBar / 100.0f, new Vector2(-1, 0), $"##TakenEntryContribution_{i}");
 

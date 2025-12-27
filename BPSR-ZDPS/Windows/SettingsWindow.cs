@@ -29,8 +29,6 @@ namespace BPSR_ZDPS.Windows
         static bool skipTeleportStateCheckInAutomaticWipeDetection;
         static bool splitEncountersOnNewPhases;
         static bool displayTruePerSecondValuesInMeters;
-        static float windowOpacity;
-        static float meterBarScale;
         static bool allowGamepadNavigationInputInZDPS;
         static bool useDatabaseForEncounterHistory;
         static int databaseRetentionPolicyDays;
@@ -562,9 +560,9 @@ namespace BPSR_ZDPS.Windows
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                            if (ImGui.SliderFloat("##MainWindowOpacity", ref windowOpacity, 0.05f, 1.0f, $"{(int)(windowOpacity * 100)}%%"))
+                            if (ImGui.SliderInt("##MainWindowOpacity", ref windowSettings.MainWindow.Opacity, 20, 100, $"{windowSettings.MainWindow.Opacity}%%", ImGuiSliderFlags.ClampOnInput))
                             {
-                                windowOpacity = MathF.Round(windowOpacity, 2);
+                                windowSettings.MainWindow.Opacity = windowSettings.MainWindow.Opacity;
                             }
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
@@ -578,9 +576,9 @@ namespace BPSR_ZDPS.Windows
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                            if (ImGui.SliderFloat("##CooldownPriorityTrackerWindowOpacity", ref windowSettings.RaidManagerCooldowns.WindowOpacity, 0.05f, 1.0f, $"{(int)(windowSettings.RaidManagerCooldowns.WindowOpacity * 100)}%%"))
+                            if (ImGui.SliderInt("##CooldownPriorityTrackerWindowOpacity", ref windowSettings.RaidManagerCooldowns.Opacity, 20, 100, $"{windowSettings.RaidManagerCooldowns.Opacity}%%", ImGuiSliderFlags.ClampOnInput))
                             {
-                                windowSettings.RaidManagerCooldowns.WindowOpacity = MathF.Round(windowSettings.RaidManagerCooldowns.WindowOpacity, 2);
+                                windowSettings.RaidManagerCooldowns.Opacity = windowSettings.RaidManagerCooldowns.Opacity;
                             }
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
@@ -594,9 +592,9 @@ namespace BPSR_ZDPS.Windows
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                            if (ImGui.SliderFloat("##EntityCacheViewerWindowOpacity", ref windowSettings.EntityCacheViewer.WindowOpacity, 0.05f, 1.0f, $"{(int)(windowSettings.EntityCacheViewer.WindowOpacity * 100)}%%"))
+                            if (ImGui.SliderInt("##EntityCacheViewerWindowOpacity", ref windowSettings.EntityCacheViewer.Opacity, 20, 100, $"{windowSettings.EntityCacheViewer.Opacity}%%", ImGuiSliderFlags.ClampOnInput))
                             {
-                                windowSettings.EntityCacheViewer.WindowOpacity = MathF.Round(windowSettings.EntityCacheViewer.WindowOpacity, 2);
+                                windowSettings.EntityCacheViewer.Opacity = windowSettings.EntityCacheViewer.Opacity;
                             }
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
@@ -616,9 +614,9 @@ namespace BPSR_ZDPS.Windows
                                 ImGui.SetNextItemWidth(-1);
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                                if (ImGui.SliderFloat("##BPTimerSpawnTrackerWindowOpacity", ref windowSettings.SpawnTracker.WindowOpacity, 0.05f, 1.0f, $"{(int)(windowSettings.SpawnTracker.WindowOpacity * 100)}%%"))
+                                if (ImGui.SliderInt("##BPTimerSpawnTrackerWindowOpacity", ref windowSettings.SpawnTracker.Opacity, 20, 100, $"{windowSettings.SpawnTracker.Opacity}%%"))
                                 {
-                                    windowSettings.SpawnTracker.WindowOpacity = MathF.Round(windowSettings.SpawnTracker.WindowOpacity, 2);
+                                    windowSettings.SpawnTracker.Opacity = windowSettings.SpawnTracker.Opacity;
                                 }
                                 ImGui.PopStyleColor(2);
                                 ImGui.Indent();
@@ -642,9 +640,9 @@ namespace BPSR_ZDPS.Windows
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
-                            if (ImGui.SliderFloat("##MeterBarScale", ref meterBarScale, 0.80f, 2.0f, $"{(int)(meterBarScale * 100)}%%"))
+                            if (ImGui.SliderFloat("##MeterBarScale", ref windowSettings.MainWindow.MeterBarScale, 0.80f, 2.0f, $"{(int)(windowSettings.MainWindow.MeterBarScale * 100)}%%"))
                             {
-                                meterBarScale = MathF.Round(meterBarScale, 2);
+                                windowSettings.MainWindow.MeterBarScale = MathF.Round(windowSettings.MainWindow.MeterBarScale, 2);
                             }
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
@@ -1288,8 +1286,6 @@ namespace BPSR_ZDPS.Windows
             skipTeleportStateCheckInAutomaticWipeDetection = Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection;
             splitEncountersOnNewPhases = Settings.Instance.SplitEncountersOnNewPhases;
             displayTruePerSecondValuesInMeters = Settings.Instance.DisplayTruePerSecondValuesInMeters;
-            windowOpacity = Settings.Instance.WindowOpacity;
-            meterBarScale = Settings.Instance.MeterBarScale;
             allowGamepadNavigationInputInZDPS = Settings.Instance.AllowGamepadNavigationInputInZDPS;
 
             useDatabaseForEncounterHistory = Settings.Instance.UseDatabaseForEncounterHistory;
@@ -1368,8 +1364,6 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection = skipTeleportStateCheckInAutomaticWipeDetection;
             Settings.Instance.SplitEncountersOnNewPhases = splitEncountersOnNewPhases;
             Settings.Instance.DisplayTruePerSecondValuesInMeters = displayTruePerSecondValuesInMeters;
-            Settings.Instance.WindowOpacity = windowOpacity;
-            Settings.Instance.MeterBarScale = meterBarScale;
             Settings.Instance.AllowGamepadNavigationInputInZDPS = allowGamepadNavigationInputInZDPS;
 
             Settings.Instance.UseDatabaseForEncounterHistory = useDatabaseForEncounterHistory;

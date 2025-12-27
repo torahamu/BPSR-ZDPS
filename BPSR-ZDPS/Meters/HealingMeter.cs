@@ -93,7 +93,7 @@ namespace BPSR_ZDPS.Meters
                     string hps_format = $"{totalHealing} {truePerSecond}({totalHps}) {contribution.ToString("F0").PadLeft(3, ' ')}%";
                     var startPoint = ImGui.GetCursorPos();
 
-                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.MeterBarScale);
+                    ImGui.PushFont(HelperMethods.Fonts["Cascadia-Mono"], 14.0f * Settings.Instance.WindowSettings.MainWindow.MeterBarScale);
 
                     ImGui.PushStyleColor(ImGuiCol.PlotHistogram, Professions.ProfessionColors(profession));
                     ImGui.ProgressBar((float)contributionProgressBar / 100.0f, new Vector2(-1, 0), $"##HpsEntryContribution_{i}");

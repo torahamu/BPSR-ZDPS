@@ -32,6 +32,7 @@ namespace BPSR_ZDPS.Windows
         List<MeterBase> Meters = new();
         public EntityInspector entityInspector = new();
         public bool IsTopMost = false;
+        static int LastPinnedOpacity = 100;
         public Vector2 WindowPosition;
         public Vector2 NextWindowPosition = new();
         public Vector2 DefaultWindowSize = new Vector2(550, 600);
@@ -263,7 +264,8 @@ namespace BPSR_ZDPS.Windows
                     if (!IsTopMost)
                     {
                         Utils.SetWindowTopmost();
-                        Utils.SetWindowOpacity(Settings.Instance.WindowOpacity);
+                        Utils.SetWindowOpacity(Settings.Instance.WindowSettings.MainWindow.Opacity * 0.01f);
+                        LastPinnedOpacity = Settings.Instance.WindowSettings.MainWindow.Opacity;
                         IsTopMost = true;
                     }
                     else
@@ -272,6 +274,11 @@ namespace BPSR_ZDPS.Windows
                         Utils.SetWindowOpacity(1.0f);
                         IsTopMost = false;
                     }
+                }
+                if (IsTopMost && LastPinnedOpacity != Settings.Instance.WindowSettings.MainWindow.Opacity)
+                {
+                    Utils.SetWindowOpacity(Settings.Instance.WindowSettings.MainWindow.Opacity * 0.01f);
+                    LastPinnedOpacity = Settings.Instance.WindowSettings.MainWindow.Opacity;
                 }
                 ImGui.PopStyleColor();
                 ImGui.PopFont();
@@ -517,6 +524,6 @@ namespace BPSR_ZDPS.Windows
 
     public class MainWindowWindowSettings : WindowSettingsBase
     {
-
+        public float MeterBarScale = 1.0f;
     }
 }
