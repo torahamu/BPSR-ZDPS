@@ -92,15 +92,7 @@ namespace BPSR_ZDPS.Windows
 
             Load();
 
-            EncounterResetKey = Settings.Instance.HotkeysEncounterReset;
-            if (EncounterResetKey == 0)
-            {
-                EncounterResetKeyName = "[UNBOUND]";
-            }
-            else
-            {
-                EncounterResetKeyName = ImGui.GetKeyNameS(HotKeyManager.VirtualKeyToImGuiKey((int)EncounterResetKey));
-            }
+            LoadHotkeys();
 
             // Set selection to matching device name (the index could have changed since last time we were here)
             if (!string.IsNullOrEmpty(Settings.Instance.NetCaptureDeviceName))
@@ -1442,6 +1434,29 @@ namespace BPSR_ZDPS.Windows
                 ImGui.TextWrapped($"{text}");
                 ImGui.EndChild();
                 ImGui.PopStyleColor();
+            }
+        }
+
+        static void LoadHotkeys()
+        {
+            EncounterResetKey = Settings.Instance.HotkeysEncounterReset;
+            if (EncounterResetKey == 0)
+            {
+                EncounterResetKeyName = "[UNBOUND]";
+            }
+            else
+            {
+                EncounterResetKeyName = ImGui.GetKeyNameS(HotKeyManager.VirtualKeyToImGuiKey((int)EncounterResetKey));
+            }
+
+            PinnedWindowClickthroughKey = Settings.Instance.HotkeysPinnedWindowClickthrough;
+            if (PinnedWindowClickthroughKey == 0)
+            {
+                PinnedWindowClickthroughKeyName = "[UNBOUND]";
+            }
+            else
+            {
+                PinnedWindowClickthroughKeyName = ImGui.GetKeyNameS(HotKeyManager.VirtualKeyToImGuiKey((int)PinnedWindowClickthroughKey));
             }
         }
 
