@@ -28,6 +28,7 @@ namespace BPSR_ZDPS.Windows
         static int SelectedTabIndex = 0;
 
         static bool HasPromptedUpdateWindow = false;
+        static bool HasPromptedOneTimeEnableUpdateChecks = false;
 
         List<MeterBase> Meters = new();
         public EntityInspector entityInspector = new();
@@ -43,6 +44,7 @@ namespace BPSR_ZDPS.Windows
         {
             DrawContent();
 
+            UpdateCheckPromptWindow.Draw(this);
             UpdateAvailableWindow.Draw(this);
             SettingsWindow.Draw(this);
             EncounterHistoryWindow.Draw(this);
@@ -182,6 +184,12 @@ namespace BPSR_ZDPS.Windows
             {
                 HasPromptedUpdateWindow = true;
                 UpdateAvailableWindow.Open();
+            }
+
+            if (!Settings.Instance.HasPromptedEnableUpdateChecks && !HasPromptedOneTimeEnableUpdateChecks && !Settings.Instance.CheckForZDPSUpdatesOnStartup)
+            {
+                HasPromptedOneTimeEnableUpdateChecks = true;
+                UpdateCheckPromptWindow.Open();
             }
 
             ImGuiTableFlags table_flags = ImGuiTableFlags.SizingStretchSame;
