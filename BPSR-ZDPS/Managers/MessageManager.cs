@@ -76,6 +76,8 @@ namespace BPSR_ZDPS
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_DeepsLib.ServiceMethods.GrpcTeamNtf.NotifyTeamMemBeCallResult, ProcessNotifyTeamMemBeCallResult);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_DeepsLib.ServiceMethods.GrpcTeamNtf.NotifyTeamEnterErr, ProcessNotifyTeamEnterErr);
 
+            netCap.RegisterNotifyHandler((ulong)EServiceId.ChitChatNtf, (uint)BPSR_DeepsLib.ServiceMethods.ChitChatNtf.NotifyNewestChitChatMsgs, Managers.ChatManager.ProcessChatMessage);
+
             // Uncomment to debug print unhandled events
             //netCap.RegisterUnhandledHandler(ProcessUnhandled);
 

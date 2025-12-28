@@ -1,4 +1,5 @@
-﻿using BPSR_ZDPS.DataTypes.External;
+﻿using BPSR_ZDPS.DataTypes.Chat;
+using BPSR_ZDPS.DataTypes.External;
 using BPSR_ZDPS.Windows;
 using Newtonsoft.Json;
 using System.Numerics;
@@ -64,6 +65,8 @@ public class Settings
 
     public uint HotkeysEncounterReset { get; set; }
     public uint HotkeysPinnedWindowClickthrough { get; set; }
+
+    public ChatSettings Chat { get; set; } = new();
 
     public void Apply()
     {
