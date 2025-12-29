@@ -42,9 +42,11 @@ public class Settings
     public string ReadyCheckNotificationSoundPath { get; set; } = "";
     public bool LoopNotificationSoundOnReadyCheck { get; set; } = false;
     public float ReadyCheckNotificationVolume { get; set; } = 1.0f;
+
     public bool SaveEncounterReportToFile { get; set; } = false;
     public int ReportFileRetentionPolicyDays { get; set; } = 0;
     public int MinimumPlayerCountToCreateReport { get; set; } = 0;
+    public bool AlwaysCreateReportAtDungeonEnd { get; set; } = true;
 
     public bool WebhookReportsEnabled { get; set; } = false;
     public EWebhookReportsMode WebhookReportsMode { get; set; } = EWebhookReportsMode.Discord;

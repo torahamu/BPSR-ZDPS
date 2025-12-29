@@ -61,6 +61,8 @@ namespace BPSR_ZDPS.Windows
         static bool saveEncounterReportToFile;
         static int reportFileRetentionPolicyDays;
         static int minimumPlayerCountToCreateReport;
+        static bool alwaysCreateReportAtDungeonEnd;
+
         static bool webhookReportsEnabled;
         static EWebhookReportsMode webhookReportsMode;
         static string webhookReportsDeduplicationServerUrl;
@@ -958,6 +960,16 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Always Create Report At Dungeon End: ");
+                        ImGui.SameLine();
+                        ImGui.Checkbox("##AlwaysCreateReportAtDungeonEnd", ref alwaysCreateReportAtDungeonEnd);
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("When enabled, Reports are created at the end of a Dungeon if one was not created already.\nIf this is disabled Reports may not be created if a Dungeon did not end with a boss fight.");
+                        ImGui.EndDisabled();
+                        ImGui.Unindent();
+
                         ImGui.SeparatorText("ZDPS Report Webhooks");
 
                         ImGui.AlignTextToFramePadding();
@@ -1323,6 +1335,7 @@ namespace BPSR_ZDPS.Windows
             saveEncounterReportToFile = Settings.Instance.SaveEncounterReportToFile;
             reportFileRetentionPolicyDays = Settings.Instance.ReportFileRetentionPolicyDays;
             minimumPlayerCountToCreateReport = Settings.Instance.MinimumPlayerCountToCreateReport;
+            alwaysCreateReportAtDungeonEnd = Settings.Instance.AlwaysCreateReportAtDungeonEnd;
             webhookReportsEnabled = Settings.Instance.WebhookReportsEnabled;
             webhookReportsMode = Settings.Instance.WebhookReportsMode;
             webhookReportsDeduplicationServerUrl = Settings.Instance.WebhookReportsDeduplicationServerHost;
@@ -1401,6 +1414,7 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.SaveEncounterReportToFile = saveEncounterReportToFile;
             Settings.Instance.ReportFileRetentionPolicyDays = reportFileRetentionPolicyDays;
             Settings.Instance.MinimumPlayerCountToCreateReport = minimumPlayerCountToCreateReport;
+            Settings.Instance.AlwaysCreateReportAtDungeonEnd = alwaysCreateReportAtDungeonEnd;
             Settings.Instance.WebhookReportsEnabled = webhookReportsEnabled;
             Settings.Instance.WebhookReportsMode = webhookReportsMode;
             Settings.Instance.WebhookReportsDeduplicationServerHost = webhookReportsDeduplicationServerUrl;
