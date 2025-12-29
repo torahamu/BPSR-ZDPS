@@ -23,7 +23,8 @@ namespace BPSR_ZDPS
         private static ZstdSharp.Decompressor Decompressor = new ZstdSharp.Decompressor();
         private static object DBLock = new object();
         private static readonly List<BaseMigration> Migrations = [
-                new NamespaceMigration_1()
+                new NamespaceMigration_1(),
+                new SkillStatsMigration()
             ];
 
         public static void Init()
@@ -68,51 +69,29 @@ namespace BPSR_ZDPS
 
         public static ulong InsertEncounter(Encounter encounter)
         {
+            using var transaction = DbConn.BeginTransaction();
+            var result = InsertEncounter(encounter, transaction);
+            transaction.Commit();
+
+            return result;
+        }
+
+        public static ulong InsertEncounter(Encounter encounter, SqliteTransaction tx)
+        {
             var sw = Stopwatch.StartNew();
             lock (DBLock)
             {
-                using var transaction = DbConn.BeginTransaction();
-
                 using var encMs = new MemoryStream();
                 ProtoBuf.Serializer.Serialize(encMs, encounter.ExData);
                 encMs.Flush();
                 encounter.ExDataBlob = Compressor.Wrap(encMs.ToArray()).ToArray();
 
-                var encounterId = DbConn.QuerySingle<ulong>(DBSchema.Encounter.Insert, encounter, transaction);
+                var encounterId = DbConn.QuerySingle<ulong>(DBSchema.Encounter.Insert, encounter, tx);
                 encounter.EncounterId = encounterId;
+                var entityBlob = CreateEntityBlobForEncounter(encounter);
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    using (var compStream = new ZstdSharp.CompressionStream(memoryStream))
-                    {
-                        using (var streamWriter = new StreamWriter(compStream, Encoding.UTF8, 1024, true))
-                        {
-                            using (var writer = new JsonTextWriter(streamWriter))
-                            {
-                                JsonSerializer serializer = new JsonSerializer()
-                                {
-                                    Formatting = Formatting.None,
-                                    TypeNameHandling = TypeNameHandling.All,
-                                };
-                                lock (encounter.Entities)
-                                {
-                                    serializer.Serialize(writer, encounter.Entities);
-                                }
-                                writer.Flush();
-                            }
-                            streamWriter.Flush();
-                        }
-                        compStream.Flush();
-                    }
-
-                    var entityBlob = new EntityBlobTable();
-                    entityBlob.EncounterId = encounterId;
-                    entityBlob.Data = memoryStream.ToArray();
-                    Log.Information($"Enounter's entityBlob.Data.Length = {entityBlob.Data.Length}");
-                    DbConn.Execute(DBSchema.Entities.Insert, entityBlob);
-
-                    transaction.Commit();
-                }
+                Log.Information($"Enounter's entityBlob.Data.Length = {entityBlob.Data.Length}");
+                DbConn.Execute(DBSchema.Entities.Insert, entityBlob, tx);
 
                 // Forcefully release the Generation 2 memory that the above just used
                 GC.Collect(2);
@@ -124,6 +103,40 @@ namespace BPSR_ZDPS
                 //File.WriteAllText($"TestJsonEncounters/Encounter_{encounterId}_Write.json", entitiesJson);
 
                 return encounterId;
+            }
+        }
+
+        public static EntityBlobTable CreateEntityBlobForEncounter(Encounter encounter)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var compStream = new ZstdSharp.CompressionStream(memoryStream))
+                {
+                    using (var streamWriter = new StreamWriter(compStream, Encoding.UTF8, 1024, true))
+                    {
+                        using (var writer = new JsonTextWriter(streamWriter))
+                        {
+                            JsonSerializer serializer = new JsonSerializer()
+                            {
+                                Formatting = Formatting.None,
+                                TypeNameHandling = TypeNameHandling.All,
+                            };
+                            lock (encounter.Entities)
+                            {
+                                serializer.Serialize(writer, encounter.Entities);
+                            }
+                            writer.Flush();
+                        }
+                        streamWriter.Flush();
+                    }
+                    compStream.Flush();
+                }
+
+                var entityBlob = new EntityBlobTable();
+                entityBlob.EncounterId = encounter.EncounterId;
+                entityBlob.Data = memoryStream.ToArray();
+
+                return entityBlob;
             }
         }
 

@@ -59,7 +59,7 @@ namespace BPSR_ZDPS.Windows
 
                 int currentMigration = DB.MigrationStatus.CurrentMigrationNum;
                 int totalMigrations = DB.MigrationStatus.TotalMigrationsNeeded;
-                float progress = MathF.Round((float)currentMigration / (float)totalMigrations + 1, 4);
+                float progress = MathF.Round((float)currentMigration / ((float)totalMigrations + 1.0f), 4);
 
                 if (DB.MigrationStatus.State == Database.Migrations.MigrationStatusState.Done)
                 {
@@ -68,6 +68,13 @@ namespace BPSR_ZDPS.Windows
 
                 ImGui.TextUnformatted($"Performing Migration {currentMigration} / {totalMigrations}...");
                 ImGui.ProgressBar(progress, new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetFontSize()), "");
+
+                if (DB.MigrationStatus.CurrentMigration?.Progress >= 0)
+                {
+                    ImGui.TextUnformatted($"Current migration progress");
+                    ImGui.ProgressBar(DB.MigrationStatus.CurrentMigration.Progress, new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetFontSize()), "");
+                }
+
                 if (DB.MigrationStatus.State == Database.Migrations.MigrationStatusState.Error)
                 {
                     ImGui.PushStyleColor(ImGuiCol.Text, Colors.Red);

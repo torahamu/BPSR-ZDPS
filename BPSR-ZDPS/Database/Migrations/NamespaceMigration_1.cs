@@ -13,6 +13,7 @@ namespace BPSR_ZDPS.Database.Migrations
             Description = "Migrate from old namespace to the new";
             MinVersion = 1.0f;
             NewVersion = 1.1f;
+            Progress = -1f;
         }
 
         public override bool RunMigration(DbConnection dbConn, SqliteTransaction tx)
