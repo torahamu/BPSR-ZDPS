@@ -130,7 +130,11 @@ namespace BPSR_ZDPS
             Encounter? priorEncounter = Current;
             if (Current != null)
             {
-                DB.InsertEncounter(Current);
+                if (Current.HasStatsBeenRecorded(true))
+                {
+                    DB.InsertEncounter(Current);
+                }
+                
                 currentDifficulty = Current.ExData.DungeonDifficulty;
             }
 

@@ -399,6 +399,7 @@ namespace BPSR_ZDPS
                 }
 
                 Log.Information("Migrations ran, cleaning up.");
+                MigrationStatus.State = MigrationStatusState.CleanUp;
                 DbConn.Execute("VACUUM");
             }
 

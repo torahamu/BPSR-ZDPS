@@ -13,7 +13,8 @@
     {
         NotStarted,
         Running,
+        CleanUp,
         Done,
-        Error
+        Error,
     }
 }

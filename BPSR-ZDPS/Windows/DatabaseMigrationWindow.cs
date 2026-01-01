@@ -66,12 +66,23 @@ namespace BPSR_ZDPS.Windows
                     progress = 1.0f;
                 }
 
-                ImGui.TextUnformatted($"Performing Migration {currentMigration} / {totalMigrations}...");
+                string overallProgressStr = "";
+                if (DB.MigrationStatus.State == Database.Migrations.MigrationStatusState.CleanUp)
+                {
+                    overallProgressStr = " (Finalizing)";
+                }
+
+                if (DB.MigrationStatus.State == Database.Migrations.MigrationStatusState.Done)
+                {
+                    overallProgressStr = " (Done)";
+                }
+
+                ImGui.TextUnformatted($"Performing Migration {currentMigration} / {totalMigrations}{overallProgressStr}...");
                 ImGui.ProgressBar(progress, new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetFontSize()), "");
 
                 if (DB.MigrationStatus.CurrentMigration?.Progress >= 0)
                 {
-                    ImGui.TextUnformatted($"Current migration progress");
+                    ImGui.TextUnformatted($"Current migration progress ({MathF.Round(DB.MigrationStatus.CurrentMigration.Progress * 100, 2).ToString("00.00")}%)");
                     ImGui.ProgressBar(DB.MigrationStatus.CurrentMigration.Progress, new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetFontSize()), "");
                 }
 
