@@ -530,7 +530,7 @@ namespace BPSR_ZDPS
                 // The field that claims to normally be the UID for non-players is actually their non-unique ID
                 // Only the Attribute named Id (AttrId) is their real type UID which can be resolved into a name
                 // Also can be used to get all of their setup information from the Monsters table
-                entity.UID = (int)attr_id;
+                entity.UpdateUID((int)attr_id);
                 if (HelperMethods.DataTables.Monsters.Data.TryGetValue(attr_id.ToString(), out var monsterEntry))
                 {
                     entity.SetName(monsterEntry.Name);
@@ -548,7 +548,7 @@ namespace BPSR_ZDPS
             // We used to care if the entity already had a name, but there were strange incorrect name issues, so now we don't
             if (key == "AttrId" && entity.EntityType == EEntityType.EntMonster)
             {
-                entity.UID = (int)value;
+                entity.UpdateUID((int)value);
                 if (HelperMethods.DataTables.Monsters.Data.TryGetValue(value.ToString(), out var monsterEntry))
                 {
                     entity.SetName(monsterEntry.Name);
@@ -1030,6 +1030,25 @@ namespace BPSR_ZDPS
                 };
                 ((Entity)cloned).SkillMetrics.AddOrUpdate(container.Key, metrics, (key, value) => metrics);
             }
+
+            foreach (var tracker in this.InteractedEntities)
+            {
+                var statTracker = new StatTracker
+                {
+                    UUID = tracker.Value.UUID,
+                    UID = tracker.Value.UID,
+                    Name = tracker.Value.Name,
+                    ProfessionId = tracker.Value.ProfessionId,
+                    SubProfessionId = tracker.Value.SubProfessionId,
+                    DidDamage = tracker.Value.DidDamage,
+                    DidHealing = tracker.Value.DidHealing,
+                    DidTaken = tracker.Value.DidTaken,
+                    Damage = (TrackedStats)tracker.Value.Damage.Clone(),
+                    Healing = (TrackedStats)tracker.Value.Healing.Clone(),
+                    Taken = (TrackedStats)tracker.Value.Taken.Clone(),
+                };
+                ((Entity)cloned).InteractedEntities.AddOrUpdate(tracker.Key, statTracker, (key, value) => statTracker);
+            }
             return cloned;
         }
 
@@ -1052,6 +1071,12 @@ namespace BPSR_ZDPS
             var cached = EntityCache.Instance.GetOrCreate(uuid);
             if (cached != null)
             {
+                if (UID > 0)
+                {
+                    // Always update the UID in the cache because SetEntityType may have corrected it if the Entity has an overriden value
+                    UpdateUID(UID, cached);
+                }
+
                 if (string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(cached.Name))
                 {
                     SetName(cached.Name);
@@ -1080,6 +1105,23 @@ namespace BPSR_ZDPS
 
             // Ensure cache is updated with latest used name from here
             //SetName(Name);
+        }
+
+        public void UpdateUID(long uid, EntityCacheLine? cached = null)
+        {
+            UID = uid;
+            if (cached != null)
+            {
+                cached.UID = uid;
+            }
+            else
+            {
+                var newCached = EntityCache.Instance.GetOrCreate(UUID);
+                if (newCached != null)
+                {
+                    newCached.UID = uid;
+                }
+            }
         }
 
         public void SetName(string name)
@@ -1671,6 +1713,48 @@ namespace BPSR_ZDPS
                     SkillMetrics.TryAdd(newSkillMetrics.Key, metrics);
                 }
             }
+
+            // Merge InteractedEntities
+            foreach (var newInteractedEntities in newEntity.InteractedEntities)
+            {
+                InteractedEntities.TryGetValue(newInteractedEntities.Key, out var foundInteracted);
+                if (foundInteracted != null)
+                {
+                    if (!foundInteracted.DidDamage)
+                    {
+                        foundInteracted.DidDamage = newInteractedEntities.Value.DidDamage;
+                    }
+                    if (!foundInteracted.DidHealing)
+                    {
+                        foundInteracted.DidHealing = newInteractedEntities.Value.DidHealing;
+                    }
+                    if (!foundInteracted.DidTaken)
+                    {
+                        foundInteracted.DidTaken = newInteractedEntities.Value.DidTaken;
+                    }
+                    foundInteracted.Damage.MergeTrackedStats(newInteractedEntities.Value.Damage);
+                    foundInteracted.Healing.MergeTrackedStats(newInteractedEntities.Value.Healing);
+                    foundInteracted.Taken.MergeTrackedStats(newInteractedEntities.Value.Taken);
+                }
+                else
+                {
+                    var statTracker = new StatTracker
+                    {
+                        UUID = newInteractedEntities.Value.UUID,
+                        UID = newInteractedEntities.Value.UID,
+                        Name = newInteractedEntities.Value.Name,
+                        ProfessionId = newInteractedEntities.Value.ProfessionId,
+                        SubProfessionId = newInteractedEntities.Value.SubProfessionId,
+                        DidDamage = newInteractedEntities.Value.DidDamage,
+                        DidHealing = newInteractedEntities.Value.DidHealing,
+                        DidTaken = newInteractedEntities.Value.DidTaken,
+                        Damage = (TrackedStats)newInteractedEntities.Value.Damage.Clone(),
+                        Healing = (TrackedStats)newInteractedEntities.Value.Healing.Clone(),
+                        Taken = (TrackedStats)newInteractedEntities.Value.Taken.Clone(),
+                    };
+                    InteractedEntities.TryAdd(newInteractedEntities.Key, statTracker);
+                }
+            }
         }
     }
 
@@ -1739,7 +1823,7 @@ namespace BPSR_ZDPS
         public TrackedStats Taken { get; set; } = new();
     }
 
-    public class TrackedStats
+    public class TrackedStats : System.ICloneable
     {
         public ulong TotalValue { get; set; }
         public ulong TotalCritValue { get; set; }
@@ -1752,6 +1836,34 @@ namespace BPSR_ZDPS
         public ulong ImmuneCount { get; set; }
         public ulong MaxValue { get; set; }
         public long MinValue { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public void MergeTrackedStats (TrackedStats newTrackedStats)
+        {
+            TotalValue += newTrackedStats.TotalValue;
+            TotalCritValue += newTrackedStats.TotalCritValue;
+            TotalLuckyValue += newTrackedStats.TotalLuckyValue;
+            HitCount += newTrackedStats.HitCount;
+            NormalCount += newTrackedStats.NormalCount;
+            CritCount += newTrackedStats.CritCount;
+            MissCount += newTrackedStats.MissCount;
+            LuckyCount += newTrackedStats.LuckyCount;
+            ImmuneCount += newTrackedStats.ImmuneCount;
+
+            if (newTrackedStats.MaxValue > MaxValue)
+            {
+                MaxValue = newTrackedStats.MaxValue;
+            }
+
+            if (newTrackedStats.MinValue < MinValue)
+            {
+                MinValue = newTrackedStats.MinValue;
+            }
+        }
     }
 
     public class CombatStats : System.ICloneable
@@ -1915,6 +2027,7 @@ namespace BPSR_ZDPS
                 else if (isCrit && isLucky)
                 {
                     CritLuckyCount++;
+                    ValueCritLuckyTotal += (ulong)value;
                 }
 
                 if (isDead)
@@ -1923,8 +2036,6 @@ namespace BPSR_ZDPS
                 }
 
                 HitsCount++;
-
-                ValueCritLuckyTotal = ValueCritTotal + ValueLuckyTotal;
             }
 
             ValueAverage = HitsCount > 0 ? Math.Round(((double)ValueTotal / (double)HitsCount), 0) : 0.0;
@@ -2076,10 +2187,15 @@ namespace BPSR_ZDPS
                     ValuePerSecond = ValueTotal;
                 }
             }
+
+            foreach (var newSnapshot in newCombatStats.SkillSnapshots)
+            {
+                SkillSnapshots.Add((SkillSnapshot)newSnapshot.Clone());
+            }
         }
     }
 
-    public class SkillSnapshot
+    public class SkillSnapshot : System.ICloneable
     {
         // This is the Attacker or Target UUID depending on if this is from a Damage/Healing or Taken perspective
         public long OtherUUID { get; set; }
@@ -2109,6 +2225,11 @@ namespace BPSR_ZDPS
         public Vector3? InstigatorPos { get; set; } = null;
         // This is always the Target's position at time of event recording
         public Vector3? TargetPos { get; set; } = null;
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 
     public class BuffEvent
