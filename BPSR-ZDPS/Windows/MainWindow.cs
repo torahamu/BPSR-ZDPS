@@ -62,6 +62,7 @@ namespace BPSR_ZDPS.Windows
             EntityCacheViewerWindow.Draw(this);
             RaidManagerRaidWarningWindow.Draw(this);
             RaidManagerCountdownWindow.Draw(this);
+            ChatWindow.Draw(this);
         }
 
         static bool p_open = true;
@@ -496,6 +497,11 @@ namespace BPSR_ZDPS.Windows
                         ModuleSolver.Open();
                     }
                     ImGui.SetItemTooltip("Find the best module combos for your build.");
+
+                    if (ImGui.MenuItem("Chat"))
+                    {
+                        ChatWindow.Open();
+                    }
 
                     ImGui.Separator();
                     if (ImGui.MenuItem("Settings"))

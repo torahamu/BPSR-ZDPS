@@ -159,6 +159,7 @@ public class WindowSettings : ICloneable
     public ModuleWindowSettings ModuleWindow { get; set; } = new();
     public RaidManagerRaidWarningWindowSettings RaidManagerRaidWarning { get; set; } = new();
     public RaidManagerCountdownWindowSettings RaidManagerCountdown { get; set; } = new();
+    public ChatWindowSettings ChatWindow { get; set; } = new();
 
     public object Clone()
     {
@@ -167,6 +168,7 @@ public class WindowSettings : ICloneable
         cloned.RaidManagerCooldowns = (RaidManagerCooldownsWindowSettings)this.RaidManagerCooldowns.Clone();
         cloned.EntityCacheViewer = (EntityCacheViewerWindowSettings)this.EntityCacheViewer.Clone();
         cloned.SpawnTracker = (SpawnTrackerWindowSettings)this.SpawnTracker.Clone();
+        cloned.ChatWindow = (ChatWindowSettings)this.ChatWindow.Clone();
         return cloned;
     }
 }

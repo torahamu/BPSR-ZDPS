@@ -420,6 +420,31 @@ namespace BPSR_ZDPS
             }
         }
 
+        public static string FormatTimeAgo(DateTime time)
+        {
+            var delta = DateTime.UtcNow - time.ToUniversalTime();
+
+            if (delta.TotalSeconds < 60)
+                return $"{Math.Abs((int)delta.TotalSeconds)}s ago";
+
+            if (delta.TotalMinutes < 60)
+                return $"{Math.Abs((int)delta.TotalMinutes)} {(Math.Abs((int)delta.TotalMinutes) == 1 ? "min" : "mins")} ago";
+
+            if (delta.TotalHours < 24)
+                return $"{Math.Abs((int)delta.TotalHours)} hours ago";
+
+            if (delta.TotalDays < 7)
+                return $"{Math.Abs((int)delta.TotalDays)} days ago";
+
+            if (delta.TotalDays < 30)
+                return $"{(Math.Abs((int)delta.TotalDays) / 7)} weeks ago";
+
+            if (delta.TotalDays < 365)
+                return $"{(Math.Abs((int)delta.TotalDays) / 30)} months ago";
+
+            return $"{(Math.Abs((int)delta.TotalDays) / 365)} years ago";
+        }
+
         static unsafe void SetCurrentWindowIcon(Stream IconFileStream)
         {
             using (Image<Rgba32> image = Image.Load<Rgba32>(IconFileStream))
