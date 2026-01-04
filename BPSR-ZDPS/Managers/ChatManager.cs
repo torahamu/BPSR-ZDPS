@@ -66,7 +66,10 @@ namespace BPSR_ZDPS.Managers
 
                                     foreach (var tab in ChatTabs)
                                     {
-                                        tab.MessageIds.Remove(msgId);
+                                        lock (tab.MessageIds)
+                                        {
+                                            tab.MessageIds.Remove(msgId);
+                                        }
                                     }
                                 }
                             }
@@ -164,7 +167,7 @@ namespace BPSR_ZDPS.Managers
             lock (tab.MessageIds)
             {
                 tab.MessageIds.Clear();
-                foreach (var msg in Messages)
+                foreach (var msg in Messages.OrderBy(x => x.Value.TimeStamp))
                 {
                     if (IsFilteredForChatTab(tab, msg.Value))
                     {
