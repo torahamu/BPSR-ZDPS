@@ -253,6 +253,11 @@ namespace BPSR_ZDPS
             res = ff.BindToImGui(18.0f, true);
             ff.Dispose();
 
+            // Korean character supporting font
+            ff = new FontFile("BPSR_ZDPS.Fonts.NotoSansKR-Regular.ttf", new GlyphRange(0x4E00, 0x9FFF));
+            res = ff.BindToImGui(18.0f, true);
+            ff.Dispose();
+
             // Note: Segoe-Bold will not support multi-language when it's used
             HelperMethods.Fonts.Add("Segoe-Bold_Offscreen", io.Fonts.AddFontFromFileTTF(@"C:\Windows\Fonts\segoeuib.ttf", 18.0f));
 
@@ -281,7 +286,12 @@ namespace BPSR_ZDPS
             ff.Dispose();
 
             // Chinese Traditional character supporting monospace font
-            ff = new FontFile("BPSR_ZDPS.Fonts.CascadiaNextSC.wght.ttf");
+            ff = new FontFile("BPSR_ZDPS.Fonts.CascadiaNextTC.wght.ttf");
+            res = ff.BindToImGui(18.0f, true);
+            ff.Dispose();
+
+            // Korean character supporting monospace font
+            ff = new FontFile("BPSR_ZDPS.Fonts.NanumGothicCoding.ttf");
             res = ff.BindToImGui(18.0f, true);
             ff.Dispose();
         }

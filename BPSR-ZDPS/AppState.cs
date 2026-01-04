@@ -61,6 +61,18 @@ namespace BPSR_ZDPS
                 var skills = JsonConvert.DeserializeObject<Dictionary<string, Skill>>(File.ReadAllText(skillTableFile));
                 HelperMethods.DataTables.Skills.Data = skills;
                 Log.Information("Loaded SkillTable.json");
+                foreach (var skill in HelperMethods.DataTables.Skills.Data)
+                {
+                    // This is a useless placeholder value, swap it out for NameDesign which is likely to contain something a bit more useful
+                    if (string.IsNullOrEmpty(skill.Value.Name) || skill.Value.Name == "场地标记01")
+                    {
+                        if (!string.IsNullOrEmpty(skill.Value.NameDesign))
+                        {
+                            skill.Value.Name = skill.Value.NameDesign;
+                        }
+                    }
+                }
+                Log.Information("Finished SkillTable post-processing");
             }
 
             string modTableFile = Path.Combine(Utils.DATA_DIR_NAME, "ModTable.json");
@@ -152,6 +164,18 @@ namespace BPSR_ZDPS
                 var buffs = JsonConvert.DeserializeObject<Dictionary<string, Buff>>(File.ReadAllText(buffTableFile));
                 HelperMethods.DataTables.Buffs.Data = buffs;
                 Log.Information("Loaded BuffTable.json");
+                foreach (var buff in HelperMethods.DataTables.Buffs.Data)
+                {
+                    // This is a useless placeholder value, swap it out for NameDesign which is likely to contain something a bit more useful
+                    if (string.IsNullOrEmpty(buff.Value.Name) || buff.Value.Name == "气刃突刺计数")
+                    {
+                        if (!string.IsNullOrEmpty(buff.Value.NameDesign))
+                        {
+                            buff.Value.Name = buff.Value.NameDesign;
+                        }
+                    }
+                }
+                Log.Information("Finished BuffTable post-processing");
             }
 
             // TODO: Every language can have its own 'Overrides' file

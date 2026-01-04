@@ -395,7 +395,7 @@ namespace BPSR_ZDPS
             ff.Dispose();
 
             // Chinese Traditional character supporting monospace font
-            ff = new FontFile("BPSR_ZDPS.Fonts.CascadiaNextSC.wght.ttf");
+            ff = new FontFile("BPSR_ZDPS.Fonts.CascadiaNextTC.wght.ttf");
             res = ff.BindToImGui(18.0f, true);
             ff.Dispose();
 
