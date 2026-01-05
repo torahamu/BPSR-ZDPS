@@ -539,8 +539,21 @@ namespace BPSR_ZDPS.Windows
                             }
                             ImGui.TextUnformatted($"{Utils.NumberToShorthand(stat.Value.ValueTotal)}");
                             ImGui.EndGroup();
+                            ulong shieldBreakTotal = stat.Value.ShieldBreakTotal;
                             ulong immuneDamageTotal = stat.Value.ValueImmuneTotal;
-                            ImGui.SetItemTooltip($"Type: {stat.Value.DamageMode}\nElement: {Utils.DamagePropertyToString(stat.Value.DamageElement)}{(immuneDamageTotal > 0 ? $"\nImmuned Damage: {Utils.NumberToShorthand(immuneDamageTotal)}" : "")}");
+                            if (ImGui.IsItemHovered() && ImGui.BeginTooltip())
+                            {
+                                ImGui.TextUnformatted($"Type: {stat.Value.DamageMode}\nElement: {Utils.DamagePropertyToString(stat.Value.DamageElement)}");
+                                if (shieldBreakTotal > 0)
+                                {
+                                    ImGui.TextUnformatted($"Shield Break Damage: {Utils.NumberToShorthand(shieldBreakTotal)}");
+                                }
+                                if (immuneDamageTotal > 0)
+                                {
+                                    ImGui.TextUnformatted($"Immuned Damage: {Utils.NumberToShorthand(immuneDamageTotal)}");
+                                }
+                                ImGui.EndTooltip();
+                            }
 
                             ImGui.TableNextColumn();
                             ImGui.TextUnformatted($"{Utils.NumberToShorthand(stat.Value.ValuePerSecond)}");

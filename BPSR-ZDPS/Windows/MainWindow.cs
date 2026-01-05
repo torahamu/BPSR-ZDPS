@@ -62,6 +62,7 @@ namespace BPSR_ZDPS.Windows
             EntityCacheViewerWindow.Draw(this);
             RaidManagerRaidWarningWindow.Draw(this);
             RaidManagerCountdownWindow.Draw(this);
+            RaidManagerThreatWindow.Draw(this);
             ChatWindow.Draw(this);
         }
 
@@ -462,6 +463,11 @@ namespace BPSR_ZDPS.Windows
                         if (ImGui.MenuItem("Countdowns"))
                         {
                             RaidManagerCountdownWindow.Open();
+                        }
+
+                        if (ImGui.MenuItem("Threat Meter"))
+                        {
+                            RaidManagerThreatWindow.Open();
                         }
 
                         ImGui.EndMenu();

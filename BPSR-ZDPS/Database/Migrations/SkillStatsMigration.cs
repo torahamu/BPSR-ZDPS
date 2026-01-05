@@ -87,6 +87,7 @@ namespace BPSR_ZDPS.Database.Migrations
                                         snapshot.IsCrit,
                                         snapshot.IsLucky,
                                         snapshot.Value,
+                                        0,
                                         snapshot.IsCauseLucky,
                                         snapshot.DamageElement,
                                         snapshot.DamageType,

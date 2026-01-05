@@ -584,34 +584,19 @@ namespace BPSR_ZDPS
                         }
                         
                         break;
-                    /*case EAttrType.AttrCombatState:
-                    case EAttrType.AttrInBattleShow:
-                        if (uuid == 285140 && attr.Id == 104 || attr.Id == 186)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"[YOU] had {(EAttrType)attr.Id} = {reader.ReadInt32()}");
-                        }
-                        break;*/
                     case EAttrType.AttrShieldList:
                         {
+                            List<ShieldInfo> shieldList = new();
                             while (!reader.IsAtEnd)
                             {
-                                uint tag = reader.ReadTag();
-                                int fieldNumber = Google.Protobuf.WireFormat.GetTagFieldNumber(tag);
-                                Google.Protobuf.WireFormat.WireType wireType = Google.Protobuf.WireFormat.GetTagWireType(tag);
-
-                                if (wireType != Google.Protobuf.WireFormat.WireType.LengthDelimited)
-                                {
-                                    reader.SkipLastField();
-                                    continue;
-                                }
-
                                 int len = reader.ReadLength();
 
-                                var inf = ShieldInfo.Parser.ParseFrom(reader);
+                                ShieldInfo shield = new();
 
-                                EncounterManager.Current.SetAttrKV(uuid, "AttrShieldList", inf);
+                                reader.ReadMessage(shield);
+                                shieldList.Add(shield);
                             }
-
+                            EncounterManager.Current.SetAttrKV(uuid, "AttrShieldList", shieldList);
                             break;
                         }
                     case EAttrType.AttrActionTime:
@@ -648,24 +633,17 @@ namespace BPSR_ZDPS
                         EncounterManager.Current.SetAttrKV(uuid, "AttrTopSummonerId", reader.ReadInt64());
                         break;
                     case EAttrType.AttrHateList:
-                        // This is called a "List" but it is not a list at all. It's a single item of just a UUID and Threat Value for the current target
+                        List<HateInfo> hateList = new();
                         while (!reader.IsAtEnd)
                         {
-                            uint tag = reader.ReadTag();
-                            int fieldNumber = Google.Protobuf.WireFormat.GetTagFieldNumber(tag);
-                            Google.Protobuf.WireFormat.WireType wireType = Google.Protobuf.WireFormat.GetTagWireType(tag);
+                            int len = reader.ReadLength();
 
-                            if (wireType != Google.Protobuf.WireFormat.WireType.LengthDelimited)
-                            {
-                                reader.SkipLastField();
-                                continue;
-                            }
+                            HateInfo hate = new();
 
-                            var len = reader.ReadLength();
-
-                            var info = HateInfo.Parser.ParseFrom(reader);
-                            EncounterManager.Current.SetAttrKV(uuid, "AttrHateList", info);
+                            reader.ReadMessage(hate);
+                            hateList.Add(hate);
                         }
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrHateList", hateList);
                         break;
                     default:
                         string attr_name = ((EAttrType)attr.Id).ToString();
@@ -767,16 +745,7 @@ namespace BPSR_ZDPS
 
             if (attrCollection?.Attrs != null && attrCollection.Attrs.Any())
             {
-                if (isTargetPlayer)
-                {
-                    //EncounterManager.Current.SetEntityType(targetUuid, EEntityType.EntChar);
-                    ProcessAttrs(targetUuid, attrCollection.Attrs);
-                }
-                else
-                {
-                    //System.Diagnostics.Debug.WriteLine($"ProcessAoiSyncDelta Uuid={targetUuidRaw},Res={targetUuid}");
-                    ProcessAttrs(targetUuid, attrCollection.Attrs);
-                }
+                ProcessAttrs(targetUuid, attrCollection.Attrs);
             }
 
             if (delta.TempAttrs != null && delta.TempAttrs.Attrs.Any())
@@ -823,15 +792,24 @@ namespace BPSR_ZDPS
                     {
                         if (EncounterManager.Current.Entities.TryGetValue(targetUuid, out var targetEntity))
                         {
-                            var attrShieldList = targetEntity.GetAttrKV("AttrShieldList");
+                            List<ShieldInfo>? attrShieldList = targetEntity.GetAttrKV("AttrShieldList") as List<ShieldInfo>;
+
                             if (attrShieldList != null)
                             {
-                                if (((ShieldInfo)attrShieldList).Uuid == buffEffect.BuffUuid)
+                                var matches = attrShieldList.Where(x => x.Uuid == buffEffect.BuffUuid);
+                                if (matches.Any())
                                 {
                                     // Shield is being removed from this Damage instance, we can consider the previously remaining Value to be how much was mitigated with (Shield Breakthrough)
                                     // If no damage events occur against the target in this event then the Shield expired instead of being removed via Breakthrough
-                                    
-                                    buffBasedShieldBreakValue = ((ShieldInfo)attrShieldList).Value;
+
+                                    var match = matches.First();
+
+                                    buffBasedShieldBreakValue = match.Value;
+
+                                    attrShieldList.Remove(match);
+
+                                    // Remove the old shields now that the buff containing it is gone
+                                    targetEntity.SetAttrKV("AttrShieldList", attrShieldList);
                                 }
                             }
                         }
@@ -939,12 +917,28 @@ namespace BPSR_ZDPS
                 EDamageSource damageSource = syncDamageInfo.DamageSource;
 
                 // Handle rewriting the event to account for Shield Breakthrough
-                if (buffBasedShieldBreakValue > 0 && targetUuid != attackerUuid)
+                long shieldBreak = 0;
+                if (syncDamageInfo.Type == EDamageType.Absorbed)
                 {
-                    syncDamageInfo.Type = EDamageType.Absorbed;
-                    // This will be the only time both HpLessen and Value exist on an Absorbed "event"
-                    hpLessen = hpLessen - buffBasedShieldBreakValue;
-                    damage = buffBasedShieldBreakValue;
+                    shieldBreak = damage;
+                }
+                else if (buffBasedShieldBreakValue > 0 && targetUuid != attackerUuid)
+                {
+                    if (hpLessen >= buffBasedShieldBreakValue)
+                    {
+                        // This will be the only time both HpLessen and Value exist on an Absorbed "event"
+                        syncDamageInfo.Type = EDamageType.Absorbed;
+
+                        // Lower the HP modified to being the true HP change rather than keeping the Shield Damage in it like the game normally does
+                        hpLessen = hpLessen - buffBasedShieldBreakValue;
+                        shieldBreak = buffBasedShieldBreakValue;
+                    }
+                    else
+                    {
+                        // This should not be possible
+                        //Log.Warning($"TargetUid {targetUid} (UUID:{targetUuid}) hit by Skill Id ({skillId}) had greater Shield Breakthrough than HP modified! Damage: {damage}, HpLessen: {hpLessen}, Breakthrough: {buffBasedShieldBreakValue}");
+                        shieldBreak = 0;
+                    }
 
                     buffBasedShieldBreakValue = 0;
                 }
@@ -984,14 +978,16 @@ namespace BPSR_ZDPS
 
                 if (isHeal)
                 {
-                    EncounterManager.Current.AddHealing((isAttackerPlayer ? attackerUuid : 0), targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
+                    EncounterManager.Current.AddHealing((isAttackerPlayer ? attackerUuid : 0), targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
                 }
                 else
                 {
-                    EncounterManager.Current.AddDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
+                    EncounterManager.Current.AddDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
 
-                    EncounterManager.Current.AddTakenDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
+                    EncounterManager.Current.AddTakenDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
                 }
+
+                buffBasedShieldBreakValue = 0;
             }
 
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
