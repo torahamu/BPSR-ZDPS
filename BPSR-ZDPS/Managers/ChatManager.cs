@@ -2,7 +2,6 @@
 using BPSR_ZDPS.DataTypes.Chat;
 using BPSR_ZDPSLib;
 using System.Collections.Concurrent;
-using System.IO.Enumeration;
 using Zproto;
 using static Zproto.ChitChatNtf.Types;
 
@@ -153,8 +152,8 @@ namespace BPSR_ZDPS.Managers
                     return isFromChannel && isOverLevel;
                 }
 
-                bool matchesContains = string.IsNullOrWhiteSpace(tab.Config.Contains) || FileSystemName.MatchesSimpleExpression(tab.Config.Contains, msg.Msg.MsgText);
-                bool matchesDoesNotContain = string.IsNullOrWhiteSpace(tab.Config.DoesNotContain) || !FileSystemName.MatchesSimpleExpression(tab.Config.DoesNotContain, msg.Msg.MsgText);
+                bool matchesContains = string.IsNullOrWhiteSpace(tab.Config.Contains) || Utils.SafeRegexIsMatch(msg.Msg.MsgText, tab.Config.Contains);
+                bool matchesDoesNotContain = string.IsNullOrWhiteSpace(tab.Config.DoesNotContain) || !Utils.SafeRegexIsMatch(msg.Msg.MsgText, tab.Config.DoesNotContain);
 
                 return isFromChannel && isOverLevel && matchesContains && matchesDoesNotContain;
             }

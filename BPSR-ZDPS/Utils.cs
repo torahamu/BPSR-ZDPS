@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.IO.Hashing;
 using ZLinq;
+using System.Text.RegularExpressions;
 
 namespace BPSR_ZDPS
 {
@@ -417,6 +418,20 @@ namespace BPSR_ZDPS
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        // Wraps Regex.IsMatch in a try catch, and returns false if it throws
+        public static bool SafeRegexIsMatch(string text, string pattern)
+        {
+            try
+            {
+                var isMatch = Regex.IsMatch(text, pattern);
+                return isMatch;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
