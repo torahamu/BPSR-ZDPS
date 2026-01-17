@@ -25,16 +25,17 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CitzdHJ1X3BsYWNlX2hvbGRlcl9maXNoX3BlcnNvbmFsX3RvdGFsLnByb3Rv",
-            "EgZ6cHJvdG8i8AEKHFBsYWNlSG9sZGVyRmlzaFBlcnNvbmFsVG90YWwSDQoF",
+            "EgZ6cHJvdG8ilgIKHFBsYWNlSG9sZGVyRmlzaFBlcnNvbmFsVG90YWwSDQoF",
             "dG90YWwYASABKAMSEgoKbXl0aF90b3RhbBgCIAEoAxIVCg1zdW1fZmlzaF90",
             "eXBlGAMgASgFEhkKEXN1bV9zZWFfbGlmZV90eXBlGAQgASgFEhYKDnN1bV90",
             "cmFzaF90eXBlGAUgASgFEhQKDG1vc3RfZmlzaF9pZBgGIAEoBRITCgtmYXZv",
             "dXJfemVybxgHIAEoBRIRCgl1c2VyX25hbWUYCCABKAkSEgoKdW5pb25fbmFt",
-            "ZRgJIAEoCRIRCglpc19uZXdiaWUYCiABKAhiBnByb3RvMw=="));
+            "ZRgJIAEoCRIRCglpc19uZXdiaWUYCiABKAgSDwoHZmlzaF9sdhgLIAEoBRIT",
+            "Cgtpc19iYWNrZmxvdxgMIAEoCGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.PlaceHolderFishPersonalTotal), global::Zproto.PlaceHolderFishPersonalTotal.Parser, new[]{ "Total", "MythTotal", "SumFishType", "SumSeaLifeType", "SumTrashType", "MostFishId", "FavourZero", "UserName", "UnionName", "IsNewbie" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.PlaceHolderFishPersonalTotal), global::Zproto.PlaceHolderFishPersonalTotal.Parser, new[]{ "Total", "MythTotal", "SumFishType", "SumSeaLifeType", "SumTrashType", "MostFishId", "FavourZero", "UserName", "UnionName", "IsNewbie", "FishLv", "IsBackflow" }, null, null, null, null)
           }));
     }
     #endregion
@@ -86,6 +87,8 @@ namespace Zproto {
       userName_ = other.userName_;
       unionName_ = other.unionName_;
       isNewbie_ = other.isNewbie_;
+      fishLv_ = other.fishLv_;
+      isBackflow_ = other.isBackflow_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -215,6 +218,30 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "fish_lv" field.</summary>
+    public const int FishLvFieldNumber = 11;
+    private int fishLv_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int FishLv {
+      get { return fishLv_; }
+      set {
+        fishLv_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "is_backflow" field.</summary>
+    public const int IsBackflowFieldNumber = 12;
+    private bool isBackflow_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsBackflow {
+      get { return isBackflow_; }
+      set {
+        isBackflow_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -240,6 +267,8 @@ namespace Zproto {
       if (UserName != other.UserName) return false;
       if (UnionName != other.UnionName) return false;
       if (IsNewbie != other.IsNewbie) return false;
+      if (FishLv != other.FishLv) return false;
+      if (IsBackflow != other.IsBackflow) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -257,6 +286,8 @@ namespace Zproto {
       if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (UnionName.Length != 0) hash ^= UnionName.GetHashCode();
       if (IsNewbie != false) hash ^= IsNewbie.GetHashCode();
+      if (FishLv != 0) hash ^= FishLv.GetHashCode();
+      if (IsBackflow != false) hash ^= IsBackflow.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -315,6 +346,14 @@ namespace Zproto {
         output.WriteRawTag(80);
         output.WriteBool(IsNewbie);
       }
+      if (FishLv != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(FishLv);
+      }
+      if (IsBackflow != false) {
+        output.WriteRawTag(96);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -365,6 +404,14 @@ namespace Zproto {
         output.WriteRawTag(80);
         output.WriteBool(IsNewbie);
       }
+      if (FishLv != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(FishLv);
+      }
+      if (IsBackflow != false) {
+        output.WriteRawTag(96);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -403,6 +450,12 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(UnionName);
       }
       if (IsNewbie != false) {
+        size += 1 + 1;
+      }
+      if (FishLv != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FishLv);
+      }
+      if (IsBackflow != false) {
         size += 1 + 1;
       }
       if (_unknownFields != null) {
@@ -446,6 +499,12 @@ namespace Zproto {
       }
       if (other.IsNewbie != false) {
         IsNewbie = other.IsNewbie;
+      }
+      if (other.FishLv != 0) {
+        FishLv = other.FishLv;
+      }
+      if (other.IsBackflow != false) {
+        IsBackflow = other.IsBackflow;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -506,6 +565,14 @@ namespace Zproto {
             IsNewbie = input.ReadBool();
             break;
           }
+          case 88: {
+            FishLv = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            IsBackflow = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -563,6 +630,14 @@ namespace Zproto {
           }
           case 80: {
             IsNewbie = input.ReadBool();
+            break;
+          }
+          case 88: {
+            FishLv = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            IsBackflow = input.ReadBool();
             break;
           }
         }

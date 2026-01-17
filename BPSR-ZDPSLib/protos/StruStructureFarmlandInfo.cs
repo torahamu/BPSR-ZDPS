@@ -27,7 +27,7 @@ namespace Zproto {
             "CiJzdHJ1X3N0cnVjdHVyZV9mYXJtbGFuZF9pbmZvLnByb3RvEgZ6cHJvdG8a",
             "GXN0cnVfZHJvdWdodF9yZWNvcmQucHJvdG8aG2VudW1fZV9mYXJtbGFuZF9z",
             "dGF0ZS5wcm90bxoic3RydV9ob21lX2xhbmRfaXRlbV9pbnN0YW5jZS5wcm90",
-            "byKeBQoVU3RydWN0dXJlRmFybWxhbmRJbmZvEhgKEG9wZXJhdG9yX2NoYXJf",
+            "byLNBgoVU3RydWN0dXJlRmFybWxhbmRJbmZvEhgKEG9wZXJhdG9yX2NoYXJf",
             "aWQYASABKAMSMwoNc2VlZF9pbnN0YW5jZRgCIAEoCzIcLnpwcm90by5Ib21l",
             "TGFuZEl0ZW1JbnN0YW5jZRISCgpuZWVkX3dhdGVyGAMgASgIEi4KDmZhcm1s",
             "YW5kX3N0YXRlGAQgASgOMhYuenByb3RvLkVGYXJtbGFuZFN0YXRlEhQKDHNl",
@@ -40,13 +40,17 @@ namespace Zproto {
             "enByb3RvLkRyb3VnaHRSZWNvcmQSEgoKZmVydGlsaXplcxgPIAMoBRI1Cg9w",
             "b2xsZW5faW5zdGFuY2UYECABKAsyHC56cHJvdG8uSG9tZUxhbmRJdGVtSW5z",
             "dGFuY2USSQoPcGlja191cF9wbGF5ZXJzGBEgAygLMjAuenByb3RvLlN0cnVj",
-            "dHVyZUZhcm1sYW5kSW5mby5QaWNrVXBQbGF5ZXJzRW50cnkaNAoSUGlja1Vw",
-            "UGxheWVyc0VudHJ5EgsKA2tleRgBIAEoAxINCgV2YWx1ZRgCIAEoBToCOAFi",
-            "BnByb3RvMw=="));
+            "dHVyZUZhcm1sYW5kSW5mby5QaWNrVXBQbGF5ZXJzRW50cnkSFwoPbmV3X3Nl",
+            "ZWRpbmdfc2VjGBIgASgDEhgKEG5ld19ncm93X2VuZF9zZWMYEyABKAMSHwoX",
+            "bmV3X3BvbGxpbmF0ZV9iZWdpbl9zZWMYFCABKAMSHQoVbmV3X3BvbGxpbmF0",
+            "ZV9lbmRfc2VjGBUgASgDEh0KFW5ld19oYXJ2ZXN0X2JlZ2luX3NlYxgWIAEo",
+            "AxIbChNuZXdfaGFydmVzdF9lbmRfc2VjGBcgASgDGjQKElBpY2tVcFBsYXll",
+            "cnNFbnRyeRILCgNrZXkYASABKAMSDQoFdmFsdWUYAiABKAU6AjgBYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruDroughtRecordReflection.Descriptor, global::Zproto.EnumEFarmlandStateReflection.Descriptor, global::Zproto.StruHomeLandItemInstanceReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.StructureFarmlandInfo), global::Zproto.StructureFarmlandInfo.Parser, new[]{ "OperatorCharId", "SeedInstance", "NeedWater", "FarmlandState", "SeedingTime", "GrowEndTime", "PollinateBeginTime", "PollinateEndTime", "HarvestBeginTime", "HarvestEndTime", "IsEnd", "FlowerInstance", "NextSegmentIndex", "Records", "Fertilizes", "PollenInstance", "PickUpPlayers" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.StructureFarmlandInfo), global::Zproto.StructureFarmlandInfo.Parser, new[]{ "OperatorCharId", "SeedInstance", "NeedWater", "FarmlandState", "SeedingTime", "GrowEndTime", "PollinateBeginTime", "PollinateEndTime", "HarvestBeginTime", "HarvestEndTime", "IsEnd", "FlowerInstance", "NextSegmentIndex", "Records", "Fertilizes", "PollenInstance", "PickUpPlayers", "NewSeedingSec", "NewGrowEndSec", "NewPollinateBeginSec", "NewPollinateEndSec", "NewHarvestBeginSec", "NewHarvestEndSec" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -105,6 +109,12 @@ namespace Zproto {
       fertilizes_ = other.fertilizes_.Clone();
       pollenInstance_ = other.pollenInstance_ != null ? other.pollenInstance_.Clone() : null;
       pickUpPlayers_ = other.pickUpPlayers_.Clone();
+      newSeedingSec_ = other.newSeedingSec_;
+      newGrowEndSec_ = other.newGrowEndSec_;
+      newPollinateBeginSec_ = other.newPollinateBeginSec_;
+      newPollinateEndSec_ = other.newPollinateEndSec_;
+      newHarvestBeginSec_ = other.newHarvestBeginSec_;
+      newHarvestEndSec_ = other.newHarvestEndSec_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -315,6 +325,78 @@ namespace Zproto {
       get { return pickUpPlayers_; }
     }
 
+    /// <summary>Field number for the "new_seeding_sec" field.</summary>
+    public const int NewSeedingSecFieldNumber = 18;
+    private long newSeedingSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewSeedingSec {
+      get { return newSeedingSec_; }
+      set {
+        newSeedingSec_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_grow_end_sec" field.</summary>
+    public const int NewGrowEndSecFieldNumber = 19;
+    private long newGrowEndSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewGrowEndSec {
+      get { return newGrowEndSec_; }
+      set {
+        newGrowEndSec_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_pollinate_begin_sec" field.</summary>
+    public const int NewPollinateBeginSecFieldNumber = 20;
+    private long newPollinateBeginSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewPollinateBeginSec {
+      get { return newPollinateBeginSec_; }
+      set {
+        newPollinateBeginSec_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_pollinate_end_sec" field.</summary>
+    public const int NewPollinateEndSecFieldNumber = 21;
+    private long newPollinateEndSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewPollinateEndSec {
+      get { return newPollinateEndSec_; }
+      set {
+        newPollinateEndSec_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_harvest_begin_sec" field.</summary>
+    public const int NewHarvestBeginSecFieldNumber = 22;
+    private long newHarvestBeginSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewHarvestBeginSec {
+      get { return newHarvestBeginSec_; }
+      set {
+        newHarvestBeginSec_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_harvest_end_sec" field.</summary>
+    public const int NewHarvestEndSecFieldNumber = 23;
+    private long newHarvestEndSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewHarvestEndSec {
+      get { return newHarvestEndSec_; }
+      set {
+        newHarvestEndSec_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -347,6 +429,12 @@ namespace Zproto {
       if(!fertilizes_.Equals(other.fertilizes_)) return false;
       if (!object.Equals(PollenInstance, other.PollenInstance)) return false;
       if (!PickUpPlayers.Equals(other.PickUpPlayers)) return false;
+      if (NewSeedingSec != other.NewSeedingSec) return false;
+      if (NewGrowEndSec != other.NewGrowEndSec) return false;
+      if (NewPollinateBeginSec != other.NewPollinateBeginSec) return false;
+      if (NewPollinateEndSec != other.NewPollinateEndSec) return false;
+      if (NewHarvestBeginSec != other.NewHarvestBeginSec) return false;
+      if (NewHarvestEndSec != other.NewHarvestEndSec) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -371,6 +459,12 @@ namespace Zproto {
       hash ^= fertilizes_.GetHashCode();
       if (pollenInstance_ != null) hash ^= PollenInstance.GetHashCode();
       hash ^= PickUpPlayers.GetHashCode();
+      if (NewSeedingSec != 0L) hash ^= NewSeedingSec.GetHashCode();
+      if (NewGrowEndSec != 0L) hash ^= NewGrowEndSec.GetHashCode();
+      if (NewPollinateBeginSec != 0L) hash ^= NewPollinateBeginSec.GetHashCode();
+      if (NewPollinateEndSec != 0L) hash ^= NewPollinateEndSec.GetHashCode();
+      if (NewHarvestBeginSec != 0L) hash ^= NewHarvestBeginSec.GetHashCode();
+      if (NewHarvestEndSec != 0L) hash ^= NewHarvestEndSec.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -448,6 +542,30 @@ namespace Zproto {
         output.WriteMessage(PollenInstance);
       }
       pickUpPlayers_.WriteTo(output, _map_pickUpPlayers_codec);
+      if (NewSeedingSec != 0L) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt64(NewSeedingSec);
+      }
+      if (NewGrowEndSec != 0L) {
+        output.WriteRawTag(152, 1);
+        output.WriteInt64(NewGrowEndSec);
+      }
+      if (NewPollinateBeginSec != 0L) {
+        output.WriteRawTag(160, 1);
+        output.WriteInt64(NewPollinateBeginSec);
+      }
+      if (NewPollinateEndSec != 0L) {
+        output.WriteRawTag(168, 1);
+        output.WriteInt64(NewPollinateEndSec);
+      }
+      if (NewHarvestBeginSec != 0L) {
+        output.WriteRawTag(176, 1);
+        output.WriteInt64(NewHarvestBeginSec);
+      }
+      if (NewHarvestEndSec != 0L) {
+        output.WriteRawTag(184, 1);
+        output.WriteInt64(NewHarvestEndSec);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -517,6 +635,30 @@ namespace Zproto {
         output.WriteMessage(PollenInstance);
       }
       pickUpPlayers_.WriteTo(ref output, _map_pickUpPlayers_codec);
+      if (NewSeedingSec != 0L) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt64(NewSeedingSec);
+      }
+      if (NewGrowEndSec != 0L) {
+        output.WriteRawTag(152, 1);
+        output.WriteInt64(NewGrowEndSec);
+      }
+      if (NewPollinateBeginSec != 0L) {
+        output.WriteRawTag(160, 1);
+        output.WriteInt64(NewPollinateBeginSec);
+      }
+      if (NewPollinateEndSec != 0L) {
+        output.WriteRawTag(168, 1);
+        output.WriteInt64(NewPollinateEndSec);
+      }
+      if (NewHarvestBeginSec != 0L) {
+        output.WriteRawTag(176, 1);
+        output.WriteInt64(NewHarvestBeginSec);
+      }
+      if (NewHarvestEndSec != 0L) {
+        output.WriteRawTag(184, 1);
+        output.WriteInt64(NewHarvestEndSec);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -572,6 +714,24 @@ namespace Zproto {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(PollenInstance);
       }
       size += pickUpPlayers_.CalculateSize(_map_pickUpPlayers_codec);
+      if (NewSeedingSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewSeedingSec);
+      }
+      if (NewGrowEndSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewGrowEndSec);
+      }
+      if (NewPollinateBeginSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewPollinateBeginSec);
+      }
+      if (NewPollinateEndSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewPollinateEndSec);
+      }
+      if (NewHarvestBeginSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewHarvestBeginSec);
+      }
+      if (NewHarvestEndSec != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(NewHarvestEndSec);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -638,6 +798,24 @@ namespace Zproto {
         PollenInstance.MergeFrom(other.PollenInstance);
       }
       pickUpPlayers_.MergeFrom(other.pickUpPlayers_);
+      if (other.NewSeedingSec != 0L) {
+        NewSeedingSec = other.NewSeedingSec;
+      }
+      if (other.NewGrowEndSec != 0L) {
+        NewGrowEndSec = other.NewGrowEndSec;
+      }
+      if (other.NewPollinateBeginSec != 0L) {
+        NewPollinateBeginSec = other.NewPollinateBeginSec;
+      }
+      if (other.NewPollinateEndSec != 0L) {
+        NewPollinateEndSec = other.NewPollinateEndSec;
+      }
+      if (other.NewHarvestBeginSec != 0L) {
+        NewHarvestBeginSec = other.NewHarvestBeginSec;
+      }
+      if (other.NewHarvestEndSec != 0L) {
+        NewHarvestEndSec = other.NewHarvestEndSec;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -735,6 +913,30 @@ namespace Zproto {
             pickUpPlayers_.AddEntriesFrom(input, _map_pickUpPlayers_codec);
             break;
           }
+          case 144: {
+            NewSeedingSec = input.ReadInt64();
+            break;
+          }
+          case 152: {
+            NewGrowEndSec = input.ReadInt64();
+            break;
+          }
+          case 160: {
+            NewPollinateBeginSec = input.ReadInt64();
+            break;
+          }
+          case 168: {
+            NewPollinateEndSec = input.ReadInt64();
+            break;
+          }
+          case 176: {
+            NewHarvestBeginSec = input.ReadInt64();
+            break;
+          }
+          case 184: {
+            NewHarvestEndSec = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -830,6 +1032,30 @@ namespace Zproto {
           }
           case 138: {
             pickUpPlayers_.AddEntriesFrom(ref input, _map_pickUpPlayers_codec);
+            break;
+          }
+          case 144: {
+            NewSeedingSec = input.ReadInt64();
+            break;
+          }
+          case 152: {
+            NewGrowEndSec = input.ReadInt64();
+            break;
+          }
+          case 160: {
+            NewPollinateBeginSec = input.ReadInt64();
+            break;
+          }
+          case 168: {
+            NewPollinateEndSec = input.ReadInt64();
+            break;
+          }
+          case 176: {
+            NewHarvestBeginSec = input.ReadInt64();
+            break;
+          }
+          case 184: {
+            NewHarvestEndSec = input.ReadInt64();
             break;
           }
         }

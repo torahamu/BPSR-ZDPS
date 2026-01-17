@@ -25,16 +25,17 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CiVzdHJ1X2hvbWVfbGFuZF9wbGF5ZXJfdGFza19pbmZvLnByb3RvEgZ6cHJv",
-            "dG8aGXN0cnVfaG9tZV9sYW5kX3Rhc2sucHJvdG8i3wEKFkhvbWVMYW5kUGxh",
+            "dG8aGXN0cnVfaG9tZV9sYW5kX3Rhc2sucHJvdG8iggIKFkhvbWVMYW5kUGxh",
             "eWVyVGFza0luZm8SHgoWbmV4dF90YXNrX3JlZmx1c2hfdGltZRgBIAEoAxIW",
             "Cg5jdXJfbGVmdF90aW1lcxgCIAEoBRJECgxjdXJfdGFza19tYXAYAyADKAsy",
             "Li56cHJvdG8uSG9tZUxhbmRQbGF5ZXJUYXNrSW5mby5DdXJUYXNrTWFwRW50",
-            "cnkaRwoPQ3VyVGFza01hcEVudHJ5EgsKA2tleRgBIAEoBRIjCgV2YWx1ZRgC",
-            "IAEoCzIULnpwcm90by5Ib21lTGFuZFRhc2s6AjgBYgZwcm90bzM="));
+            "cnkSIQoZbmV3X25leHRfdGFza19yZWZsdXNoX3NlYxgEIAEoAxpHCg9DdXJU",
+            "YXNrTWFwRW50cnkSCwoDa2V5GAEgASgFEiMKBXZhbHVlGAIgASgLMhQuenBy",
+            "b3RvLkhvbWVMYW5kVGFzazoCOAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruHomeLandTaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.HomeLandPlayerTaskInfo), global::Zproto.HomeLandPlayerTaskInfo.Parser, new[]{ "NextTaskReflushTime", "CurLeftTimes", "CurTaskMap" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.HomeLandPlayerTaskInfo), global::Zproto.HomeLandPlayerTaskInfo.Parser, new[]{ "NextTaskReflushTime", "CurLeftTimes", "CurTaskMap", "NewNextTaskReflushSec" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -79,6 +80,7 @@ namespace Zproto {
       nextTaskReflushTime_ = other.nextTaskReflushTime_;
       curLeftTimes_ = other.curLeftTimes_;
       curTaskMap_ = other.curTaskMap_.Clone();
+      newNextTaskReflushSec_ = other.newNextTaskReflushSec_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -123,6 +125,18 @@ namespace Zproto {
       get { return curTaskMap_; }
     }
 
+    /// <summary>Field number for the "new_next_task_reflush_sec" field.</summary>
+    public const int NewNextTaskReflushSecFieldNumber = 4;
+    private long newNextTaskReflushSec_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long NewNextTaskReflushSec {
+      get { return newNextTaskReflushSec_; }
+      set {
+        newNextTaskReflushSec_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -141,6 +155,7 @@ namespace Zproto {
       if (NextTaskReflushTime != other.NextTaskReflushTime) return false;
       if (CurLeftTimes != other.CurLeftTimes) return false;
       if (!CurTaskMap.Equals(other.CurTaskMap)) return false;
+      if (NewNextTaskReflushSec != other.NewNextTaskReflushSec) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -151,6 +166,7 @@ namespace Zproto {
       if (NextTaskReflushTime != 0L) hash ^= NextTaskReflushTime.GetHashCode();
       if (CurLeftTimes != 0) hash ^= CurLeftTimes.GetHashCode();
       hash ^= CurTaskMap.GetHashCode();
+      if (NewNextTaskReflushSec != 0L) hash ^= NewNextTaskReflushSec.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -178,6 +194,10 @@ namespace Zproto {
         output.WriteInt32(CurLeftTimes);
       }
       curTaskMap_.WriteTo(output, _map_curTaskMap_codec);
+      if (NewNextTaskReflushSec != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(NewNextTaskReflushSec);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -197,6 +217,10 @@ namespace Zproto {
         output.WriteInt32(CurLeftTimes);
       }
       curTaskMap_.WriteTo(ref output, _map_curTaskMap_codec);
+      if (NewNextTaskReflushSec != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(NewNextTaskReflushSec);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -214,6 +238,9 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurLeftTimes);
       }
       size += curTaskMap_.CalculateSize(_map_curTaskMap_codec);
+      if (NewNextTaskReflushSec != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(NewNextTaskReflushSec);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -233,6 +260,9 @@ namespace Zproto {
         CurLeftTimes = other.CurLeftTimes;
       }
       curTaskMap_.MergeFrom(other.curTaskMap_);
+      if (other.NewNextTaskReflushSec != 0L) {
+        NewNextTaskReflushSec = other.NewNextTaskReflushSec;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -264,6 +294,10 @@ namespace Zproto {
             curTaskMap_.AddEntriesFrom(input, _map_curTaskMap_codec);
             break;
           }
+          case 32: {
+            NewNextTaskReflushSec = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -293,6 +327,10 @@ namespace Zproto {
           }
           case 26: {
             curTaskMap_.AddEntriesFrom(ref input, _map_curTaskMap_codec);
+            break;
+          }
+          case 32: {
+            NewNextTaskReflushSec = input.ReadInt64();
             break;
           }
         }

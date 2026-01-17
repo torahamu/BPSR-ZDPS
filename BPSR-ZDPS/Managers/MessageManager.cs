@@ -754,12 +754,11 @@ namespace BPSR_ZDPS
             }
 
             long buffBasedShieldBreakValue = 0;
-
+            
             List<int> EventHandledBuffs = new();
             if (delta.BuffEffect != null)
             {
                 //System.Diagnostics.Debug.WriteLine($"delta.BuffEffect={delta.BuffEffect.BuffEffects.Count}");
-
                 for (int buffIdx = 0; buffIdx < delta.BuffEffect.BuffEffects.Count; buffIdx++)
                 {
                     // Shield buffs appear to use Type == BuffEventAddTo and BuffEventRemove
@@ -769,22 +768,36 @@ namespace BPSR_ZDPS
                     //System.Diagnostics.Debug.WriteLine($"BuffEffect: {buffEffect}");
                     // When a buff effect event occurs, a specific buff is being modified by the BuffUuid indicator.
                     // However, the same payload can contain other buffs which are being updated at the same time, such as Layer modifications without their own event.
-
-                    if (delta.BuffInfos != null)
+                    if (buffEffect.LogicEffect != null && buffEffect.LogicEffect.Count > 0)
                     {
-                        //System.Diagnostics.Debug.WriteLine($"BuffInfos: {delta.BuffInfos}");
-
-                        var matchInfo = delta.BuffInfos.BuffInfos.AsValueEnumerable().Where(x => x.BuffUuid == buffEffect.BuffUuid);
-                        if (matchInfo.Any())
+                        for (int logicIdx = 0; logicIdx < buffEffect.LogicEffect.Count; logicIdx++)
                         {
-                            var buffInfo = matchInfo.First();
-                            EncounterManager.Current.NotifyBuffEvent(targetUuid, buffEffect.Type, buffEffect.BuffUuid, buffInfo.BaseId, buffInfo.Level, buffInfo.FireUuid, buffInfo.Layer, buffInfo.Duration, buffInfo.FightSourceInfo.SourceConfigId, extraData);
+                            var logicEffect = buffEffect.LogicEffect[logicIdx];
+                            var reader = new Google.Protobuf.CodedInputStream(logicEffect.RawData.ToByteArray());
+                            if (logicEffect.EffectType == EBuffEffectLogicPbType.BuffEffectAddBuff)
+                            {
+                                var buffInfo = BuffInfo.Parser.ParseFrom(reader);
+                                //System.Diagnostics.Debug.WriteLine($"({buffEffect.Type}) buffEffect[{buffIdx}].logicEffect[{logicIdx}] (Type:{logicEffect.EffectType}) = (BuffUUID:{buffEffect.BuffUuid}){buffInfo}");
+                                EncounterManager.Current.NotifyBuffEvent(targetUuid, buffEffect.Type, buffEffect.BuffUuid, buffInfo.BaseId, buffInfo.Level, buffInfo.FireUuid, buffInfo.Layer, buffInfo.Duration, buffInfo.FightSourceInfo.SourceConfigId, extraData);
+                            }
+                            else if (logicEffect.EffectType == EBuffEffectLogicPbType.BuffEffectBuffChange)
+                            {
+                                // Layer, Duration, CreateTime
+                                var changeInfo = BuffChange.Parser.ParseFrom(reader);
+                                //System.Diagnostics.Debug.WriteLine($"({buffEffect.Type}) buffEffect[{buffIdx}].logicEffect[{logicIdx}] (Type:{logicEffect.EffectType}) = (BuffUUID:{buffEffect.BuffUuid}){changeInfo}");
+                                EncounterManager.Current.NotifyBuffEvent(targetUuid, buffEffect.Type, buffEffect.BuffUuid, 0, 0, 0, changeInfo.Layer, (int)changeInfo.Duration, 0, extraData);
+                            }
+                            else if (logicEffect.EffectType == null)
+                            {
+                                //System.Diagnostics.Debug.WriteLine($"Unhandled Logic Effect {buffEffect}");
+                                EncounterManager.Current.NotifyBuffEvent(targetUuid, buffEffect.Type, buffEffect.BuffUuid, 0, 0, 0, 0, 0, 0, extraData);
+                            }
                         }
                     }
                     else
                     {
                         // Most commonly appears to include EBuffEventType.BuffEventRemove, EBuffEventType.BuffEventAddTo, EBuffEventType.BuffEventRemoveLayer
-
+                        //System.Diagnostics.Debug.WriteLine($"No Logic Effect {buffEffect}");
                         EncounterManager.Current.NotifyBuffEvent(targetUuid, buffEffect.Type, buffEffect.BuffUuid, 0, 0, 0, 0, 0, 0, extraData);
                     }
 
@@ -812,22 +825,6 @@ namespace BPSR_ZDPS
                                     targetEntity.SetAttrKV("AttrShieldList", attrShieldList);
                                 }
                             }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (delta.BuffInfos != null && delta.BuffInfos.BuffInfos != null)
-                {
-                    //System.Diagnostics.Debug.WriteLine($"Updating {delta.BuffInfos.BuffInfos.Count} Unhandled Buffs!");
-                    //System.Diagnostics.Debug.WriteLine($"BuffInfos: {delta.BuffInfos}");
-                    foreach (var buffInfo in delta.BuffInfos.BuffInfos)
-                    {
-                        if (!EventHandledBuffs.Contains(buffInfo.BuffUuid))
-                        {
-                            // There was a potential modification to this buff but it was not part of the actual event sent
-                            EncounterManager.Current.NotifyBuffEvent(targetUuid, EBuffEventType.BuffEventUnknown, buffInfo.BuffUuid, buffInfo.BaseId, buffInfo.Level, buffInfo.FireUuid, buffInfo.Layer, buffInfo.Duration, buffInfo.FightSourceInfo.SourceConfigId, extraData);
                         }
                     }
                 }

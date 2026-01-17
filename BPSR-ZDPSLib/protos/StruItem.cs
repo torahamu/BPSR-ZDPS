@@ -28,7 +28,7 @@ namespace Zproto {
             "b3RvGhtlbnVtX2VfaXRlbV9iaW5kX2ZsYWcucHJvdG8aFXN0cnVfZXF1aXBf",
             "YXR0ci5wcm90bxobc3RydV9pdGVtX2V4dGVuZF9kYXRhLnByb3RvGhNzdHJ1",
             "X21vZF9hdHRyLnByb3RvGhdzdHJ1X21vZF9uZXdfYXR0ci5wcm90bxoVc3Ry",
-            "dV9kaXJ0eV9tYXNrLnByb3RvIvQECgRJdGVtEgwKBHV1aWQYASABKAMSEQoJ",
+            "dV9kaXJ0eV9tYXNrLnByb3RvIpkFCgRJdGVtEgwKBHV1aWQYASABKAMSEQoJ",
             "Y29uZmlnX2lkGAIgASgFEg0KBWNvdW50GAMgASgDEg8KB2ludmFsaWQYBCAB",
             "KAUSKAoJYmluZF9mbGFnGAUgASgOMhUuenByb3RvLkVJdGVtQmluZEZsYWcS",
             "EwoLY3JlYXRlX3RpbWUYBiABKAMSEwoLZXhwaXJlX3RpbWUYByABKAMSDwoH",
@@ -39,14 +39,15 @@ namespace Zproto {
             "CmFmZml4X2RhdGEYDiABKAsyES56cHJvdG8uQWZmaXhEYXRhEjEKC2V4dGVu",
             "ZF9hdHRyGA8gAygLMhwuenByb3RvLkl0ZW0uRXh0ZW5kQXR0ckVudHJ5EhEK",
             "CXJld2FyZF9pZBgQIAEoBRI1Cg1nZW5lX3NlcXVlbmNlGBEgAygLMh4uenBy",
-            "b3RvLkl0ZW0uR2VuZVNlcXVlbmNlRW50cnkaSQoPRXh0ZW5kQXR0ckVudHJ5",
-            "EgsKA2tleRgBIAEoBRIlCgV2YWx1ZRgCIAEoCzIWLnpwcm90by5JdGVtRXh0",
-            "ZW5kRGF0YToCOAEaMwoRR2VuZVNlcXVlbmNlRW50cnkSCwoDa2V5GAEgASgF",
-            "Eg0KBXZhbHVlGAIgASgFOgI4AWIGcHJvdG8z"));
+            "b3RvLkl0ZW0uR2VuZVNlcXVlbmNlRW50cnkSEwoLZ2VuZV9zb3VyY2UYEiAB",
+            "KAUSDgoGbG9ja2VkGBMgASgIGkkKD0V4dGVuZEF0dHJFbnRyeRILCgNrZXkY",
+            "ASABKAUSJQoFdmFsdWUYAiABKAsyFi56cHJvdG8uSXRlbUV4dGVuZERhdGE6",
+            "AjgBGjMKEUdlbmVTZXF1ZW5jZUVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1",
+            "ZRgCIAEoBToCOAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruAffixDataReflection.Descriptor, global::Zproto.EnumEItemBindFlagReflection.Descriptor, global::Zproto.StruEquipAttrReflection.Descriptor, global::Zproto.StruItemExtendDataReflection.Descriptor, global::Zproto.StruModAttrReflection.Descriptor, global::Zproto.StruModNewAttrReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.Item), global::Zproto.Item.Parser, new[]{ "Uuid", "ConfigId", "Count", "Invalid", "BindFlag", "CreateTime", "ExpireTime", "OptSrc", "Quality", "EquipAttr", "ModAttr", "CoolDownExpireTime", "ModNewAttr", "AffixData", "ExtendAttr", "RewardId", "GeneSequence" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.Item), global::Zproto.Item.Parser, new[]{ "Uuid", "ConfigId", "Count", "Invalid", "BindFlag", "CreateTime", "ExpireTime", "OptSrc", "Quality", "EquipAttr", "ModAttr", "CoolDownExpireTime", "ModNewAttr", "AffixData", "ExtendAttr", "RewardId", "GeneSequence", "GeneSource", "Locked" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
           }));
     }
     #endregion
@@ -105,6 +106,8 @@ namespace Zproto {
       extendAttr_ = other.extendAttr_.Clone();
       rewardId_ = other.rewardId_;
       geneSequence_ = other.geneSequence_.Clone();
+      geneSource_ = other.geneSource_;
+      locked_ = other.locked_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -316,6 +319,30 @@ namespace Zproto {
       get { return geneSequence_; }
     }
 
+    /// <summary>Field number for the "gene_source" field.</summary>
+    public const int GeneSourceFieldNumber = 18;
+    private int geneSource_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int GeneSource {
+      get { return geneSource_; }
+      set {
+        geneSource_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "locked" field.</summary>
+    public const int LockedFieldNumber = 19;
+    private bool locked_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Locked {
+      get { return locked_; }
+      set {
+        locked_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -348,6 +375,8 @@ namespace Zproto {
       if (!ExtendAttr.Equals(other.ExtendAttr)) return false;
       if (RewardId != other.RewardId) return false;
       if (!GeneSequence.Equals(other.GeneSequence)) return false;
+      if (GeneSource != other.GeneSource) return false;
+      if (Locked != other.Locked) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -372,6 +401,8 @@ namespace Zproto {
       hash ^= ExtendAttr.GetHashCode();
       if (RewardId != 0) hash ^= RewardId.GetHashCode();
       hash ^= GeneSequence.GetHashCode();
+      if (GeneSource != 0) hash ^= GeneSource.GetHashCode();
+      if (Locked != false) hash ^= Locked.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -452,6 +483,14 @@ namespace Zproto {
         output.WriteInt32(RewardId);
       }
       geneSequence_.WriteTo(output, _map_geneSequence_codec);
+      if (GeneSource != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt32(GeneSource);
+      }
+      if (Locked != false) {
+        output.WriteRawTag(152, 1);
+        output.WriteBool(Locked);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -524,6 +563,14 @@ namespace Zproto {
         output.WriteInt32(RewardId);
       }
       geneSequence_.WriteTo(ref output, _map_geneSequence_codec);
+      if (GeneSource != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt32(GeneSource);
+      }
+      if (Locked != false) {
+        output.WriteRawTag(152, 1);
+        output.WriteBool(Locked);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -581,6 +628,12 @@ namespace Zproto {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(RewardId);
       }
       size += geneSequence_.CalculateSize(_map_geneSequence_codec);
+      if (GeneSource != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(GeneSource);
+      }
+      if (Locked != false) {
+        size += 2 + 1;
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -652,6 +705,12 @@ namespace Zproto {
         RewardId = other.RewardId;
       }
       geneSequence_.MergeFrom(other.geneSequence_);
+      if (other.GeneSource != 0) {
+        GeneSource = other.GeneSource;
+      }
+      if (other.Locked != false) {
+        Locked = other.Locked;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -751,6 +810,14 @@ namespace Zproto {
             geneSequence_.AddEntriesFrom(input, _map_geneSequence_codec);
             break;
           }
+          case 144: {
+            GeneSource = input.ReadInt32();
+            break;
+          }
+          case 152: {
+            Locked = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -848,6 +915,14 @@ namespace Zproto {
           }
           case 138: {
             geneSequence_.AddEntriesFrom(ref input, _map_geneSequence_codec);
+            break;
+          }
+          case 144: {
+            GeneSource = input.ReadInt32();
+            break;
+          }
+          case 152: {
+            Locked = input.ReadBool();
             break;
           }
         }

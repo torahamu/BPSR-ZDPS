@@ -24,7 +24,7 @@ namespace Zproto {
     static EnumEFunctionTypeReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChplbnVtX2VfZnVuY3Rpb25fdHlwZS5wcm90bxIGenByb3RvKroFCg1FRnVu",
+            "ChplbnVtX2VfZnVuY3Rpb25fdHlwZS5wcm90bxIGenByb3RvKtkFCg1FRnVu",
             "Y3Rpb25UeXBlEhQKEEZ1bmN0aW9uVHlwZU51bGwQABIdChdGdW5jdGlvblR5",
             "cGVNb25zdGVySHVudBDEkwYSGwoVRnVuY3Rpb25UeXBlVGVhbVZvaWNlEJCV",
             "BhIgChpGdW5jdGlvblR5cGVUZWFtVm9pY2VTcGVhaxCRlQYSFgoQRnVuY3Rp",
@@ -33,14 +33,15 @@ namespace Zproto {
             "YXJEdW5nZW9uEMSoEhIjCh1GdW5jdGlvblR5cGVIZXJvRHVuZ2Vvbk5vcm1h",
             "bBCpqRISJgogRnVuY3Rpb25UeXBlSGVyb0R1bmdlb25DaGFsbGVuZ2UQqqkS",
             "Eh4KGEZ1bmN0aW9uVHlwZVBsYW5ldE1lbW9yeRCNqhISGwoVRnVuY3Rpb25U",
-            "eXBlVW5pb25IdW50ELfDHhIaChRGdW5jdGlvblR5cGVUcmVhc3VyZRDRyx4S",
-            "HAoWRnVuY3Rpb25UeXBlQ2hhbmdlTmFtZRDG3SoSHAoWRnVuY3Rpb25UeXBl",
-            "V29ybGRFdmVudBDk6jASHQoXRnVuY3Rpb25UeXBlU2Vhc29uUXVlc3QQ9e0w",
-            "EhwKFkZ1bmN0aW9uVHlwZVNlYXNvblJhbmsQ9+0wEiMKHUZ1bmN0aW9uVHlw",
-            "ZVNlYXNvbkFjaGlldmVtZW50EPjtMBIiChxGdW5jdGlvblR5cGVTZWFzb25B",
-            "Y3RpdmF0aW9uEPntMBItCidGdW5jdGlvblR5cGVFeGNoYW5nZURpYW1vbmRU",
-            "b1NpbHZlckNvaW4Qve8wEi0KJ0Z1bmN0aW9uVHlwZUV4Y2hhbmdlRGlhbW9u",
-            "ZFRvQ29wcGVyQ29pbhC+7zBiBnByb3RvMw=="));
+            "eXBlVW5pb25IdW50ELfDHhIdChdGdW5jdGlvblR5cGVKdW1wQ2xpbWJVcBCZ",
+            "yR4SGgoURnVuY3Rpb25UeXBlVHJlYXN1cmUQ0cseEhwKFkZ1bmN0aW9uVHlw",
+            "ZUNoYW5nZU5hbWUQxt0qEhwKFkZ1bmN0aW9uVHlwZVdvcmxkRXZlbnQQ5Oow",
+            "Eh0KF0Z1bmN0aW9uVHlwZVNlYXNvblF1ZXN0EPXtMBIcChZGdW5jdGlvblR5",
+            "cGVTZWFzb25SYW5rEPftMBIjCh1GdW5jdGlvblR5cGVTZWFzb25BY2hpZXZl",
+            "bWVudBD47TASIgocRnVuY3Rpb25UeXBlU2Vhc29uQWN0aXZhdGlvbhD57TAS",
+            "LQonRnVuY3Rpb25UeXBlRXhjaGFuZ2VEaWFtb25kVG9TaWx2ZXJDb2luEL3v",
+            "MBItCidGdW5jdGlvblR5cGVFeGNoYW5nZURpYW1vbmRUb0NvcHBlckNvaW4Q",
+            "vu8wYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Zproto.EFunctionType), }, null, null));
@@ -62,6 +63,7 @@ namespace Zproto {
     [pbr::OriginalName("FunctionTypeHeroDungeonChallenge")] FunctionTypeHeroDungeonChallenge = 300202,
     [pbr::OriginalName("FunctionTypePlanetMemory")] FunctionTypePlanetMemory = 300301,
     [pbr::OriginalName("FunctionTypeUnionHunt")] FunctionTypeUnionHunt = 500151,
+    [pbr::OriginalName("FunctionTypeJumpClimbUp")] FunctionTypeJumpClimbUp = 500889,
     [pbr::OriginalName("FunctionTypeTreasure")] FunctionTypeTreasure = 501201,
     [pbr::OriginalName("FunctionTypeChangeName")] FunctionTypeChangeName = 700102,
     [pbr::OriginalName("FunctionTypeWorldEvent")] FunctionTypeWorldEvent = 800100,

@@ -25,23 +25,25 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChRzdHJ1X21haWxfYmFzZS5wcm90bxIGenByb3RvGg9zdHJ1X2l0ZW0ucHJv",
-            "dG8aH3N0cnVfbWFpbF9leHRyYV9jb25kaXRpb24ucHJvdG8aFWVudW1fbWFp",
-            "bF9zdGF0ZS5wcm90bxoUZW51bV9tYWlsX3R5cGUucHJvdG8i2QMKCE1haWxC",
-            "YXNlEhEKCW1haWxfdXVpZBgBIAEoAxIWCg5tYWlsX2NvbmZpZ19pZBgCIAEo",
-            "DRITCgtjcmVhdGVfdGltZRgDIAEoAxIjCgltYWlsX3R5cGUYBCABKA4yEC56",
-            "cHJvdG8uTWFpbFR5cGUSDwoHc2VuZF9pZBgFIAEoAxIRCglzZW5kX25hbWUY",
-            "BiABKAkSEgoKbWFpbF90aXRsZRgHIAEoCRIRCgltYWlsX2JvZHkYCCABKAkS",
-            "EgoKdGltZW91dF9tcxgJIAEoAxIeCghhcHBlbmRpeBgKIAMoCzIMLnpwcm90",
-            "by5JdGVtEiUKCm1haWxfc3RhdGUYCyABKA4yES56cHJvdG8uTWFpbFN0YXRl",
-            "EhMKC3RpdGxlX3ByYW1zGAwgAygJEhIKCmJvZHlfcHJhbXMYDSADKAkSEQoJ",
-            "YWNjZXB0X2lkGA4gASgDEhIKCmltcG9ydGFuY2UYDyABKA0SEQoJYXdhcmRf",
-            "aWRzGBAgAygNEhwKFHJlZ2lzdGVyX2JlZm9yZV90aW1lGBEgASgDEi0KCWNv",
-            "bmRpdGlvbhgSIAEoCzIaLnpwcm90by5NYWlsRXh0cmFDb25kaXRpb24SEgoK",
-            "aXNfY29sbGVjdBgTIAEoCGIGcHJvdG8z"));
+            "dG8aH3N0cnVfbWFpbF9leHRyYV9jb25kaXRpb24ucHJvdG8aIXN0cnVfbWFp",
+            "bF9tdWx0aWxpbmd1YWxfdGV4dC5wcm90bxoVZW51bV9tYWlsX3N0YXRlLnBy",
+            "b3RvGhRlbnVtX21haWxfdHlwZS5wcm90byKSBAoITWFpbEJhc2USEQoJbWFp",
+            "bF91dWlkGAEgASgDEhYKDm1haWxfY29uZmlnX2lkGAIgASgNEhMKC2NyZWF0",
+            "ZV90aW1lGAMgASgDEiMKCW1haWxfdHlwZRgEIAEoDjIQLnpwcm90by5NYWls",
+            "VHlwZRIPCgdzZW5kX2lkGAUgASgDEhEKCXNlbmRfbmFtZRgGIAEoCRISCgpt",
+            "YWlsX3RpdGxlGAcgASgJEhEKCW1haWxfYm9keRgIIAEoCRISCgp0aW1lb3V0",
+            "X21zGAkgASgDEh4KCGFwcGVuZGl4GAogAygLMgwuenByb3RvLkl0ZW0SJQoK",
+            "bWFpbF9zdGF0ZRgLIAEoDjIRLnpwcm90by5NYWlsU3RhdGUSEwoLdGl0bGVf",
+            "cHJhbXMYDCADKAkSEgoKYm9keV9wcmFtcxgNIAMoCRIRCglhY2NlcHRfaWQY",
+            "DiABKAMSEgoKaW1wb3J0YW5jZRgPIAEoDRIRCglhd2FyZF9pZHMYECADKA0S",
+            "HAoUcmVnaXN0ZXJfYmVmb3JlX3RpbWUYESABKAMSLQoJY29uZGl0aW9uGBIg",
+            "ASgLMhouenByb3RvLk1haWxFeHRyYUNvbmRpdGlvbhISCgppc19jb2xsZWN0",
+            "GBMgASgIEjcKEW11bHRpbGluZ3VhbF90ZXh0GBQgAygLMhwuenByb3RvLk1h",
+            "aWxNdWx0aWxpbmd1YWxUZXh0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Zproto.StruItemReflection.Descriptor, global::Zproto.StruMailExtraConditionReflection.Descriptor, global::Zproto.EnumMailStateReflection.Descriptor, global::Zproto.EnumMailTypeReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Zproto.StruItemReflection.Descriptor, global::Zproto.StruMailExtraConditionReflection.Descriptor, global::Zproto.StruMailMultilingualTextReflection.Descriptor, global::Zproto.EnumMailStateReflection.Descriptor, global::Zproto.EnumMailTypeReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.MailBase), global::Zproto.MailBase.Parser, new[]{ "MailUuid", "MailConfigId", "CreateTime", "MailType", "SendId", "SendName", "MailTitle", "MailBody", "TimeoutMs", "Appendix", "MailState", "TitlePrams", "BodyPrams", "AcceptId", "Importance", "AwardIds", "RegisterBeforeTime", "Condition", "IsCollect" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.MailBase), global::Zproto.MailBase.Parser, new[]{ "MailUuid", "MailConfigId", "CreateTime", "MailType", "SendId", "SendName", "MailTitle", "MailBody", "TimeoutMs", "Appendix", "MailState", "TitlePrams", "BodyPrams", "AcceptId", "Importance", "AwardIds", "RegisterBeforeTime", "Condition", "IsCollect", "MultilingualText" }, null, null, null, null)
           }));
     }
     #endregion
@@ -102,6 +104,7 @@ namespace Zproto {
       registerBeforeTime_ = other.registerBeforeTime_;
       condition_ = other.condition_ != null ? other.condition_.Clone() : null;
       isCollect_ = other.isCollect_;
+      multilingualText_ = other.multilingualText_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -335,6 +338,17 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "multilingual_text" field.</summary>
+    public const int MultilingualTextFieldNumber = 20;
+    private static readonly pb::FieldCodec<global::Zproto.MailMultilingualText> _repeated_multilingualText_codec
+        = pb::FieldCodec.ForMessage(162, global::Zproto.MailMultilingualText.Parser);
+    private readonly pbc::RepeatedField<global::Zproto.MailMultilingualText> multilingualText_ = new pbc::RepeatedField<global::Zproto.MailMultilingualText>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Zproto.MailMultilingualText> MultilingualText {
+      get { return multilingualText_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -369,6 +383,7 @@ namespace Zproto {
       if (RegisterBeforeTime != other.RegisterBeforeTime) return false;
       if (!object.Equals(Condition, other.Condition)) return false;
       if (IsCollect != other.IsCollect) return false;
+      if(!multilingualText_.Equals(other.multilingualText_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -395,6 +410,7 @@ namespace Zproto {
       if (RegisterBeforeTime != 0L) hash ^= RegisterBeforeTime.GetHashCode();
       if (condition_ != null) hash ^= Condition.GetHashCode();
       if (IsCollect != false) hash ^= IsCollect.GetHashCode();
+      hash ^= multilingualText_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -477,6 +493,7 @@ namespace Zproto {
         output.WriteRawTag(152, 1);
         output.WriteBool(IsCollect);
       }
+      multilingualText_.WriteTo(output, _repeated_multilingualText_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -551,6 +568,7 @@ namespace Zproto {
         output.WriteRawTag(152, 1);
         output.WriteBool(IsCollect);
       }
+      multilingualText_.WriteTo(ref output, _repeated_multilingualText_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -610,6 +628,7 @@ namespace Zproto {
       if (IsCollect != false) {
         size += 2 + 1;
       }
+      size += multilingualText_.CalculateSize(_repeated_multilingualText_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -674,6 +693,7 @@ namespace Zproto {
       if (other.IsCollect != false) {
         IsCollect = other.IsCollect;
       }
+      multilingualText_.Add(other.multilingualText_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -773,6 +793,10 @@ namespace Zproto {
             IsCollect = input.ReadBool();
             break;
           }
+          case 162: {
+            multilingualText_.AddEntriesFrom(input, _repeated_multilingualText_codec);
+            break;
+          }
         }
       }
     #endif
@@ -870,6 +894,10 @@ namespace Zproto {
           }
           case 152: {
             IsCollect = input.ReadBool();
+            break;
+          }
+          case 162: {
+            multilingualText_.AddEntriesFrom(ref input, _repeated_multilingualText_codec);
             break;
           }
         }

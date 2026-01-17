@@ -25,14 +25,15 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CiVzdHJ1X3RlYW1fbWVtYmVyX2Zhc3Rfc3luY19kYXRhLnByb3RvEgZ6cHJv",
-            "dG8aE3N0cnVfcG9zaXRpb24ucHJvdG8iigEKFlRlYW1NZW1iZXJGYXN0U3lu",
+            "dG8aE3N0cnVfcG9zaXRpb24ucHJvdG8ioQEKFlRlYW1NZW1iZXJGYXN0U3lu",
             "Y0RhdGESDwoHY2hhcl9pZBgBIAEoAxIQCghzY2VuZV9pZBgCIAEoBRIiCghw",
             "b3NpdGlvbhgDIAEoCzIQLnpwcm90by5Qb3NpdGlvbhIKCgJocBgEIAEoAxIO",
-            "CgZtYXhfaHAYBSABKAMSDQoFc3RhdGUYBiABKAViBnByb3RvMw=="));
+            "CgZtYXhfaHAYBSABKAMSDQoFc3RhdGUYBiABKAUSFQoNc2NlbmVfYXJlYV9p",
+            "ZBgHIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruPositionReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.TeamMemberFastSyncData), global::Zproto.TeamMemberFastSyncData.Parser, new[]{ "CharId", "SceneId", "Position", "Hp", "MaxHp", "State" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.TeamMemberFastSyncData), global::Zproto.TeamMemberFastSyncData.Parser, new[]{ "CharId", "SceneId", "Position", "Hp", "MaxHp", "State", "SceneAreaId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -80,6 +81,7 @@ namespace Zproto {
       hp_ = other.hp_;
       maxHp_ = other.maxHp_;
       state_ = other.state_;
+      sceneAreaId_ = other.sceneAreaId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -161,6 +163,18 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "scene_area_id" field.</summary>
+    public const int SceneAreaIdFieldNumber = 7;
+    private int sceneAreaId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int SceneAreaId {
+      get { return sceneAreaId_; }
+      set {
+        sceneAreaId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -182,6 +196,7 @@ namespace Zproto {
       if (Hp != other.Hp) return false;
       if (MaxHp != other.MaxHp) return false;
       if (State != other.State) return false;
+      if (SceneAreaId != other.SceneAreaId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -195,6 +210,7 @@ namespace Zproto {
       if (Hp != 0L) hash ^= Hp.GetHashCode();
       if (MaxHp != 0L) hash ^= MaxHp.GetHashCode();
       if (State != 0) hash ^= State.GetHashCode();
+      if (SceneAreaId != 0) hash ^= SceneAreaId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -237,6 +253,10 @@ namespace Zproto {
         output.WriteRawTag(48);
         output.WriteInt32(State);
       }
+      if (SceneAreaId != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(SceneAreaId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -271,6 +291,10 @@ namespace Zproto {
         output.WriteRawTag(48);
         output.WriteInt32(State);
       }
+      if (SceneAreaId != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(SceneAreaId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -298,6 +322,9 @@ namespace Zproto {
       }
       if (State != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(State);
+      }
+      if (SceneAreaId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SceneAreaId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -331,6 +358,9 @@ namespace Zproto {
       }
       if (other.State != 0) {
         State = other.State;
+      }
+      if (other.SceneAreaId != 0) {
+        SceneAreaId = other.SceneAreaId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -378,6 +408,10 @@ namespace Zproto {
             State = input.ReadInt32();
             break;
           }
+          case 56: {
+            SceneAreaId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -422,6 +456,10 @@ namespace Zproto {
           }
           case 48: {
             State = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            SceneAreaId = input.ReadInt32();
             break;
           }
         }

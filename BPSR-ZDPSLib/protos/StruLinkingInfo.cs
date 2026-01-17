@@ -24,13 +24,11 @@ namespace Zproto {
     static StruLinkingInfoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChdzdHJ1X2xpbmtpbmdfaW5mby5wcm90bxIGenByb3RvGhpzdHJ1X2FjdG9y",
-            "X3V1aWRfc3RydS5wcm90byJyCgtMaW5raW5nSW5mbxIRCglpc19kZWxldGUY",
-            "ASABKAgSEAoIZWZmZWN0aWQYAiABKAUSEQoJYnVmZl91dWlkGAMgASgFEisK",
-            "DHRhcmdldF91dWlkcxgEIAMoCzIVLnpwcm90by5BY3RvclV1aWRTdHJ1YgZw",
-            "cm90bzM="));
+            "ChdzdHJ1X2xpbmtpbmdfaW5mby5wcm90bxIGenByb3RvIlsKC0xpbmtpbmdJ",
+            "bmZvEhEKCWlzX2RlbGV0ZRgBIAEoCBIQCghlZmZlY3RpZBgCIAEoBRIRCgli",
+            "dWZmX3V1aWQYAyABKAUSFAoMdGFyZ2V0X3V1aWRzGAQgAygDYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Zproto.StruActorUuidStruReflection.Descriptor, },
+          new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.LinkingInfo), global::Zproto.LinkingInfo.Parser, new[]{ "IsDelete", "Effectid", "BuffUuid", "TargetUuids" }, null, null, null, null)
           }));
@@ -125,12 +123,12 @@ namespace Zproto {
 
     /// <summary>Field number for the "target_uuids" field.</summary>
     public const int TargetUuidsFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::Zproto.ActorUuidStru> _repeated_targetUuids_codec
-        = pb::FieldCodec.ForMessage(34, global::Zproto.ActorUuidStru.Parser);
-    private readonly pbc::RepeatedField<global::Zproto.ActorUuidStru> targetUuids_ = new pbc::RepeatedField<global::Zproto.ActorUuidStru>();
+    private static readonly pb::FieldCodec<long> _repeated_targetUuids_codec
+        = pb::FieldCodec.ForInt64(34);
+    private readonly pbc::RepeatedField<long> targetUuids_ = new pbc::RepeatedField<long>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Zproto.ActorUuidStru> TargetUuids {
+    public pbc::RepeatedField<long> TargetUuids {
       get { return targetUuids_; }
     }
 
@@ -291,7 +289,8 @@ namespace Zproto {
             BuffUuid = input.ReadInt32();
             break;
           }
-          case 34: {
+          case 34:
+          case 32: {
             targetUuids_.AddEntriesFrom(input, _repeated_targetUuids_codec);
             break;
           }
@@ -326,7 +325,8 @@ namespace Zproto {
             BuffUuid = input.ReadInt32();
             break;
           }
-          case 34: {
+          case 34:
+          case 32: {
             targetUuids_.AddEntriesFrom(ref input, _repeated_targetUuids_codec);
             break;
           }

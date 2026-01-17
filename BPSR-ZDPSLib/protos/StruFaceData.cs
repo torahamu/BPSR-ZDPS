@@ -25,17 +25,18 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChRzdHJ1X2ZhY2VfZGF0YS5wcm90bxIGenByb3RvGhNzdHJ1X2ludF92ZWMz",
-            "LnByb3RvGhVzdHJ1X2RpcnR5X21hc2sucHJvdG8i9gEKCEZhY2VEYXRhEjEK",
+            "LnByb3RvGhVzdHJ1X2RpcnR5X21hc2sucHJvdG8imwIKCEZhY2VEYXRhEjEK",
             "CWZhY2VfaW5mbxgBIAMoCzIeLnpwcm90by5GYWNlRGF0YS5GYWNlSW5mb0Vu",
             "dHJ5EjMKCmNvbG9yX2luZm8YAiADKAsyHy56cHJvdG8uRmFjZURhdGEuQ29s",
-            "b3JJbmZvRW50cnkSDgoGaGVpZ2h0GAMgASgCGi8KDUZhY2VJbmZvRW50cnkS",
-            "CwoDa2V5GAEgASgFEg0KBXZhbHVlGAIgASgFOgI4ARpBCg5Db2xvckluZm9F",
-            "bnRyeRILCgNrZXkYASABKAUSHgoFdmFsdWUYAiABKAsyDy56cHJvdG8uSW50",
-            "VmVjMzoCOAFiBnByb3RvMw=="));
+            "b3JJbmZvRW50cnkSDgoGaGVpZ2h0GAMgASgCEhEKCWJvZHlfc2l6ZRgEIAEo",
+            "BRIQCgh2b2ljZV9pZBgFIAEoBRovCg1GYWNlSW5mb0VudHJ5EgsKA2tleRgB",
+            "IAEoBRINCgV2YWx1ZRgCIAEoBToCOAEaQQoOQ29sb3JJbmZvRW50cnkSCwoD",
+            "a2V5GAEgASgFEh4KBXZhbHVlGAIgASgLMg8uenByb3RvLkludFZlYzM6AjgB",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruIntVec3Reflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.FaceData), global::Zproto.FaceData.Parser, new[]{ "FaceInfo", "ColorInfo", "Height" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.FaceData), global::Zproto.FaceData.Parser, new[]{ "FaceInfo", "ColorInfo", "Height", "BodySize", "VoiceId" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
           }));
     }
     #endregion
@@ -80,6 +81,8 @@ namespace Zproto {
       faceInfo_ = other.faceInfo_.Clone();
       colorInfo_ = other.colorInfo_.Clone();
       height_ = other.height_;
+      bodySize_ = other.bodySize_;
+      voiceId_ = other.voiceId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -123,6 +126,30 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "body_size" field.</summary>
+    public const int BodySizeFieldNumber = 4;
+    private int bodySize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int BodySize {
+      get { return bodySize_; }
+      set {
+        bodySize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "voice_id" field.</summary>
+    public const int VoiceIdFieldNumber = 5;
+    private int voiceId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int VoiceId {
+      get { return voiceId_; }
+      set {
+        voiceId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -141,6 +168,8 @@ namespace Zproto {
       if (!FaceInfo.Equals(other.FaceInfo)) return false;
       if (!ColorInfo.Equals(other.ColorInfo)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Height, other.Height)) return false;
+      if (BodySize != other.BodySize) return false;
+      if (VoiceId != other.VoiceId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -151,6 +180,8 @@ namespace Zproto {
       hash ^= FaceInfo.GetHashCode();
       hash ^= ColorInfo.GetHashCode();
       if (Height != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Height);
+      if (BodySize != 0) hash ^= BodySize.GetHashCode();
+      if (VoiceId != 0) hash ^= VoiceId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -175,6 +206,14 @@ namespace Zproto {
         output.WriteRawTag(29);
         output.WriteFloat(Height);
       }
+      if (BodySize != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(BodySize);
+      }
+      if (VoiceId != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(VoiceId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -191,6 +230,14 @@ namespace Zproto {
         output.WriteRawTag(29);
         output.WriteFloat(Height);
       }
+      if (BodySize != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(BodySize);
+      }
+      if (VoiceId != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(VoiceId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -205,6 +252,12 @@ namespace Zproto {
       size += colorInfo_.CalculateSize(_map_colorInfo_codec);
       if (Height != 0F) {
         size += 1 + 4;
+      }
+      if (BodySize != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(BodySize);
+      }
+      if (VoiceId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VoiceId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -222,6 +275,12 @@ namespace Zproto {
       colorInfo_.MergeFrom(other.colorInfo_);
       if (other.Height != 0F) {
         Height = other.Height;
+      }
+      if (other.BodySize != 0) {
+        BodySize = other.BodySize;
+      }
+      if (other.VoiceId != 0) {
+        VoiceId = other.VoiceId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -254,6 +313,14 @@ namespace Zproto {
             Height = input.ReadFloat();
             break;
           }
+          case 32: {
+            BodySize = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            VoiceId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -283,6 +350,14 @@ namespace Zproto {
           }
           case 29: {
             Height = input.ReadFloat();
+            break;
+          }
+          case 32: {
+            BodySize = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            VoiceId = input.ReadInt32();
             break;
           }
         }

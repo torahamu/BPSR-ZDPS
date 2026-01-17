@@ -28,7 +28,7 @@ namespace Zproto {
             "dGFyX2luZm8ucHJvdG8aFHN0cnVfY2hhcl90ZWFtLnByb3RvGhZlbnVtX2Vf",
             "Ym9keV9zaXplLnByb3RvGhNlbnVtX2VfZ2VuZGVyLnByb3RvGhRzdHJ1X2Zh",
             "Y2VfZGF0YS5wcm90bxoXc3RydV9wcm9maWxlX2luZm8ucHJvdG8aFXN0cnVf",
-            "dXNlcl91bmlvbi5wcm90bxoVc3RydV9kaXJ0eV9tYXNrLnByb3RvIswHCgxD",
+            "dXNlcl91bmlvbi5wcm90bxoVc3RydV9kaXJ0eV9tYXNrLnByb3RvIrcHCgxD",
             "aGFyQmFzZUluZm8SDwoHY2hhcl9pZBgBIAEoAxISCgphY2NvdW50X2lkGAIg",
             "ASgJEg8KB3Nob3dfaWQYAyABKAMSEQoJc2VydmVyX2lkGAQgASgNEgwKBG5h",
             "bWUYBSABKAkSHwoGZ2VuZGVyGAYgASgOMg8uenByb3RvLkVHZW5kZXISEgoK",
@@ -49,12 +49,12 @@ namespace Zproto {
             "EhMKC2ZpZ2h0X3BvaW50GCMgASgFEhAKCHN1bV9zYXZlGCQgASgDEh8KF2Ns",
             "aWVudF9yZXNvdXJjZV92ZXJzaW9uGCUgASgJEhkKEWxhc3Rfb2ZmbGluZV90",
             "aW1lGCYgASgDEhgKEGRheV9hY2NfZHVyX3RpbWUYJyABKAUSHgoWbGFzdF9h",
-            "Y2NfZHVyX3RpbWVzdGFtcBgoIAEoAxITCgtzYXZlX3NlcmlhbBgpIAEoAxIY",
-            "ChBsYXN0X29ubGluZV90aW1lGCogASgDYgZwcm90bzM="));
+            "Y2NfZHVyX3RpbWVzdGFtcBgoIAEoAxIYChBsYXN0X29ubGluZV90aW1lGCog",
+            "ASgDYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruAvatarInfoReflection.Descriptor, global::Zproto.StruCharTeamReflection.Descriptor, global::Zproto.EnumEBodySizeReflection.Descriptor, global::Zproto.EnumEGenderReflection.Descriptor, global::Zproto.StruFaceDataReflection.Descriptor, global::Zproto.StruProfileInfoReflection.Descriptor, global::Zproto.StruUserUnionReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.CharBaseInfo), global::Zproto.CharBaseInfo.Parser, new[]{ "CharId", "AccountId", "ShowId", "ServerId", "Name", "Gender", "IsDeleted", "IsForbid", "IsMute", "X", "Y", "Z", "Dir", "FaceData", "CardId", "CreateTime", "OnlineTime", "OfflineTime", "ProfileInfo", "TeamInfo", "CharState", "BodySize", "UnionInfo", "PersonalState", "AvatarInfo", "TotalOnlineTime", "OpenId", "SdkType", "Os", "InitProfessionId", "LastCalTotalTime", "AreaId", "ClientVersion", "FightPoint", "SumSave", "ClientResourceVersion", "LastOfflineTime", "DayAccDurTime", "LastAccDurTimestamp", "SaveSerial", "LastOnlineTime" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.CharBaseInfo), global::Zproto.CharBaseInfo.Parser, new[]{ "CharId", "AccountId", "ShowId", "ServerId", "Name", "Gender", "IsDeleted", "IsForbid", "IsMute", "X", "Y", "Z", "Dir", "FaceData", "CardId", "CreateTime", "OnlineTime", "OfflineTime", "ProfileInfo", "TeamInfo", "CharState", "BodySize", "UnionInfo", "PersonalState", "AvatarInfo", "TotalOnlineTime", "OpenId", "SdkType", "Os", "InitProfessionId", "LastCalTotalTime", "AreaId", "ClientVersion", "FightPoint", "SumSave", "ClientResourceVersion", "LastOfflineTime", "DayAccDurTime", "LastAccDurTimestamp", "LastOnlineTime" }, null, null, null, null)
           }));
     }
     #endregion
@@ -135,7 +135,6 @@ namespace Zproto {
       lastOfflineTime_ = other.lastOfflineTime_;
       dayAccDurTime_ = other.dayAccDurTime_;
       lastAccDurTimestamp_ = other.lastAccDurTimestamp_;
-      saveSerial_ = other.saveSerial_;
       lastOnlineTime_ = other.lastOnlineTime_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -613,18 +612,6 @@ namespace Zproto {
       }
     }
 
-    /// <summary>Field number for the "save_serial" field.</summary>
-    public const int SaveSerialFieldNumber = 41;
-    private long saveSerial_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long SaveSerial {
-      get { return saveSerial_; }
-      set {
-        saveSerial_ = value;
-      }
-    }
-
     /// <summary>Field number for the "last_online_time" field.</summary>
     public const int LastOnlineTimeFieldNumber = 42;
     private long lastOnlineTime_;
@@ -691,7 +678,6 @@ namespace Zproto {
       if (LastOfflineTime != other.LastOfflineTime) return false;
       if (DayAccDurTime != other.DayAccDurTime) return false;
       if (LastAccDurTimestamp != other.LastAccDurTimestamp) return false;
-      if (SaveSerial != other.SaveSerial) return false;
       if (LastOnlineTime != other.LastOnlineTime) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -739,7 +725,6 @@ namespace Zproto {
       if (LastOfflineTime != 0L) hash ^= LastOfflineTime.GetHashCode();
       if (DayAccDurTime != 0) hash ^= DayAccDurTime.GetHashCode();
       if (LastAccDurTimestamp != 0L) hash ^= LastAccDurTimestamp.GetHashCode();
-      if (SaveSerial != 0L) hash ^= SaveSerial.GetHashCode();
       if (LastOnlineTime != 0L) hash ^= LastOnlineTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -912,10 +897,6 @@ namespace Zproto {
         output.WriteRawTag(192, 2);
         output.WriteInt64(LastAccDurTimestamp);
       }
-      if (SaveSerial != 0L) {
-        output.WriteRawTag(200, 2);
-        output.WriteInt64(SaveSerial);
-      }
       if (LastOnlineTime != 0L) {
         output.WriteRawTag(208, 2);
         output.WriteInt64(LastOnlineTime);
@@ -1083,10 +1064,6 @@ namespace Zproto {
         output.WriteRawTag(192, 2);
         output.WriteInt64(LastAccDurTimestamp);
       }
-      if (SaveSerial != 0L) {
-        output.WriteRawTag(200, 2);
-        output.WriteInt64(SaveSerial);
-      }
       if (LastOnlineTime != 0L) {
         output.WriteRawTag(208, 2);
         output.WriteInt64(LastOnlineTime);
@@ -1215,9 +1192,6 @@ namespace Zproto {
       }
       if (LastAccDurTimestamp != 0L) {
         size += 2 + pb::CodedOutputStream.ComputeInt64Size(LastAccDurTimestamp);
-      }
-      if (SaveSerial != 0L) {
-        size += 2 + pb::CodedOutputStream.ComputeInt64Size(SaveSerial);
       }
       if (LastOnlineTime != 0L) {
         size += 2 + pb::CodedOutputStream.ComputeInt64Size(LastOnlineTime);
@@ -1363,9 +1337,6 @@ namespace Zproto {
       }
       if (other.LastAccDurTimestamp != 0L) {
         LastAccDurTimestamp = other.LastAccDurTimestamp;
-      }
-      if (other.SaveSerial != 0L) {
-        SaveSerial = other.SaveSerial;
       }
       if (other.LastOnlineTime != 0L) {
         LastOnlineTime = other.LastOnlineTime;
@@ -1561,10 +1532,6 @@ namespace Zproto {
             LastAccDurTimestamp = input.ReadInt64();
             break;
           }
-          case 328: {
-            SaveSerial = input.ReadInt64();
-            break;
-          }
           case 336: {
             LastOnlineTime = input.ReadInt64();
             break;
@@ -1758,10 +1725,6 @@ namespace Zproto {
           }
           case 320: {
             LastAccDurTimestamp = input.ReadInt64();
-            break;
-          }
-          case 328: {
-            SaveSerial = input.ReadInt64();
             break;
           }
           case 336: {

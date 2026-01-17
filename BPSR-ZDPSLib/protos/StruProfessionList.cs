@@ -27,7 +27,7 @@ namespace Zproto {
             "ChpzdHJ1X3Byb2Zlc3Npb25fbGlzdC5wcm90bxIGenByb3RvGhpzdHJ1X3By",
             "b2Zlc3Npb25faW5mby5wcm90bxogc3RydV9wcm9mZXNzaW9uX3NraWxsX2lu",
             "Zm8ucHJvdG8aIXN0cnVfcHJvZmVzc2lvbl90YWxlbnRfaW5mby5wcm90bxoV",
-            "c3RydV9kaXJ0eV9tYXNrLnByb3RvIs0ECg5Qcm9mZXNzaW9uTGlzdBIZChFj",
+            "c3RydV9kaXJ0eV9tYXNrLnByb3RvIpIGCg5Qcm9mZXNzaW9uTGlzdBIZChFj",
             "dXJfcHJvZmVzc2lvbl9pZBgBIAEoBRIeChZjdXJfYXNzaXN0X3Byb2Zlc3Np",
             "b25zGAMgAygFEkMKD3Byb2Zlc3Npb25fbGlzdBgEIAMoCzIqLnpwcm90by5Q",
             "cm9mZXNzaW9uTGlzdC5Qcm9mZXNzaW9uTGlzdEVudHJ5EkkKE2FveWlfc2tp",
@@ -35,16 +35,21 @@ namespace Zproto {
             "aVNraWxsSW5mb01hcEVudHJ5EhsKE3RvdGFsX3RhbGVudF9wb2ludHMYCCAB",
             "KA0SIAoYdG90YWxfdGFsZW50X3Jlc2V0X2NvdW50GAkgASgNEjsKC3RhbGVu",
             "dF9saXN0GAogAygLMiYuenByb3RvLlByb2Zlc3Npb25MaXN0LlRhbGVudExp",
-            "c3RFbnRyeRpNChNQcm9mZXNzaW9uTGlzdEVudHJ5EgsKA2tleRgBIAEoBRIl",
-            "CgV2YWx1ZRgCIAEoCzIWLnpwcm90by5Qcm9mZXNzaW9uSW5mbzoCOAEaVAoV",
-            "QW95aVNraWxsSW5mb01hcEVudHJ5EgsKA2tleRgBIAEoBRIqCgV2YWx1ZRgC",
-            "IAEoCzIbLnpwcm90by5Qcm9mZXNzaW9uU2tpbGxJbmZvOgI4ARpPCg9UYWxl",
-            "bnRMaXN0RW50cnkSCwoDa2V5GAEgASgFEisKBXZhbHVlGAIgASgLMhwuenBy",
-            "b3RvLlByb2Zlc3Npb25UYWxlbnRJbmZvOgI4AWIGcHJvdG8z"));
+            "c3RFbnRyeRIiChpyZXNldF9wcm9mZXNzaW9uX2xpc3RfZmxhZxgLIAEoBRIZ",
+            "ChF0b3RhbF9hdHRhY2tfbWFyaxgMIAEoDRIYChB0b3RhbF9ndWFyZF9tYXJr",
+            "GA0gASgNEhcKD3RvdGFsX2hlYWxfbWFyaxgOIAEoDRIjChtyZXNldF90YWxl",
+            "bnRfbWFya19pdGVtX2ZsYWcYDyABKAUSLAokcmVzZXRfdGFsZW50X21hcmtf",
+            "aXRlbV9wb3BfdXBfbm90aWNlGBAgASgFGk0KE1Byb2Zlc3Npb25MaXN0RW50",
+            "cnkSCwoDa2V5GAEgASgFEiUKBXZhbHVlGAIgASgLMhYuenByb3RvLlByb2Zl",
+            "c3Npb25JbmZvOgI4ARpUChVBb3lpU2tpbGxJbmZvTWFwRW50cnkSCwoDa2V5",
+            "GAEgASgFEioKBXZhbHVlGAIgASgLMhsuenByb3RvLlByb2Zlc3Npb25Ta2ls",
+            "bEluZm86AjgBGk8KD1RhbGVudExpc3RFbnRyeRILCgNrZXkYASABKAUSKwoF",
+            "dmFsdWUYAiABKAsyHC56cHJvdG8uUHJvZmVzc2lvblRhbGVudEluZm86AjgB",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruProfessionInfoReflection.Descriptor, global::Zproto.StruProfessionSkillInfoReflection.Descriptor, global::Zproto.StruProfessionTalentInfoReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ProfessionList), global::Zproto.ProfessionList.Parser, new[]{ "CurProfessionId", "CurAssistProfessions", "ProfessionList_", "AoyiSkillInfoMap", "TotalTalentPoints", "TotalTalentResetCount", "TalentList" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ProfessionList), global::Zproto.ProfessionList.Parser, new[]{ "CurProfessionId", "CurAssistProfessions", "ProfessionList_", "AoyiSkillInfoMap", "TotalTalentPoints", "TotalTalentResetCount", "TalentList", "ResetProfessionListFlag", "TotalAttackMark", "TotalGuardMark", "TotalHealMark", "ResetTalentMarkItemFlag", "ResetTalentMarkItemPopUpNotice" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, })
           }));
     }
     #endregion
@@ -93,6 +98,12 @@ namespace Zproto {
       totalTalentPoints_ = other.totalTalentPoints_;
       totalTalentResetCount_ = other.totalTalentResetCount_;
       talentList_ = other.talentList_.Clone();
+      resetProfessionListFlag_ = other.resetProfessionListFlag_;
+      totalAttackMark_ = other.totalAttackMark_;
+      totalGuardMark_ = other.totalGuardMark_;
+      totalHealMark_ = other.totalHealMark_;
+      resetTalentMarkItemFlag_ = other.resetTalentMarkItemFlag_;
+      resetTalentMarkItemPopUpNotice_ = other.resetTalentMarkItemPopUpNotice_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -182,6 +193,78 @@ namespace Zproto {
       get { return talentList_; }
     }
 
+    /// <summary>Field number for the "reset_profession_list_flag" field.</summary>
+    public const int ResetProfessionListFlagFieldNumber = 11;
+    private int resetProfessionListFlag_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ResetProfessionListFlag {
+      get { return resetProfessionListFlag_; }
+      set {
+        resetProfessionListFlag_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "total_attack_mark" field.</summary>
+    public const int TotalAttackMarkFieldNumber = 12;
+    private uint totalAttackMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint TotalAttackMark {
+      get { return totalAttackMark_; }
+      set {
+        totalAttackMark_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "total_guard_mark" field.</summary>
+    public const int TotalGuardMarkFieldNumber = 13;
+    private uint totalGuardMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint TotalGuardMark {
+      get { return totalGuardMark_; }
+      set {
+        totalGuardMark_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "total_heal_mark" field.</summary>
+    public const int TotalHealMarkFieldNumber = 14;
+    private uint totalHealMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint TotalHealMark {
+      get { return totalHealMark_; }
+      set {
+        totalHealMark_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "reset_talent_mark_item_flag" field.</summary>
+    public const int ResetTalentMarkItemFlagFieldNumber = 15;
+    private int resetTalentMarkItemFlag_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ResetTalentMarkItemFlag {
+      get { return resetTalentMarkItemFlag_; }
+      set {
+        resetTalentMarkItemFlag_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "reset_talent_mark_item_pop_up_notice" field.</summary>
+    public const int ResetTalentMarkItemPopUpNoticeFieldNumber = 16;
+    private int resetTalentMarkItemPopUpNotice_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ResetTalentMarkItemPopUpNotice {
+      get { return resetTalentMarkItemPopUpNotice_; }
+      set {
+        resetTalentMarkItemPopUpNotice_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -204,6 +287,12 @@ namespace Zproto {
       if (TotalTalentPoints != other.TotalTalentPoints) return false;
       if (TotalTalentResetCount != other.TotalTalentResetCount) return false;
       if (!TalentList.Equals(other.TalentList)) return false;
+      if (ResetProfessionListFlag != other.ResetProfessionListFlag) return false;
+      if (TotalAttackMark != other.TotalAttackMark) return false;
+      if (TotalGuardMark != other.TotalGuardMark) return false;
+      if (TotalHealMark != other.TotalHealMark) return false;
+      if (ResetTalentMarkItemFlag != other.ResetTalentMarkItemFlag) return false;
+      if (ResetTalentMarkItemPopUpNotice != other.ResetTalentMarkItemPopUpNotice) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -218,6 +307,12 @@ namespace Zproto {
       if (TotalTalentPoints != 0) hash ^= TotalTalentPoints.GetHashCode();
       if (TotalTalentResetCount != 0) hash ^= TotalTalentResetCount.GetHashCode();
       hash ^= TalentList.GetHashCode();
+      if (ResetProfessionListFlag != 0) hash ^= ResetProfessionListFlag.GetHashCode();
+      if (TotalAttackMark != 0) hash ^= TotalAttackMark.GetHashCode();
+      if (TotalGuardMark != 0) hash ^= TotalGuardMark.GetHashCode();
+      if (TotalHealMark != 0) hash ^= TotalHealMark.GetHashCode();
+      if (ResetTalentMarkItemFlag != 0) hash ^= ResetTalentMarkItemFlag.GetHashCode();
+      if (ResetTalentMarkItemPopUpNotice != 0) hash ^= ResetTalentMarkItemPopUpNotice.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -252,6 +347,30 @@ namespace Zproto {
         output.WriteUInt32(TotalTalentResetCount);
       }
       talentList_.WriteTo(output, _map_talentList_codec);
+      if (ResetProfessionListFlag != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(ResetProfessionListFlag);
+      }
+      if (TotalAttackMark != 0) {
+        output.WriteRawTag(96);
+        output.WriteUInt32(TotalAttackMark);
+      }
+      if (TotalGuardMark != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(TotalGuardMark);
+      }
+      if (TotalHealMark != 0) {
+        output.WriteRawTag(112);
+        output.WriteUInt32(TotalHealMark);
+      }
+      if (ResetTalentMarkItemFlag != 0) {
+        output.WriteRawTag(120);
+        output.WriteInt32(ResetTalentMarkItemFlag);
+      }
+      if (ResetTalentMarkItemPopUpNotice != 0) {
+        output.WriteRawTag(128, 1);
+        output.WriteInt32(ResetTalentMarkItemPopUpNotice);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -278,6 +397,30 @@ namespace Zproto {
         output.WriteUInt32(TotalTalentResetCount);
       }
       talentList_.WriteTo(ref output, _map_talentList_codec);
+      if (ResetProfessionListFlag != 0) {
+        output.WriteRawTag(88);
+        output.WriteInt32(ResetProfessionListFlag);
+      }
+      if (TotalAttackMark != 0) {
+        output.WriteRawTag(96);
+        output.WriteUInt32(TotalAttackMark);
+      }
+      if (TotalGuardMark != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(TotalGuardMark);
+      }
+      if (TotalHealMark != 0) {
+        output.WriteRawTag(112);
+        output.WriteUInt32(TotalHealMark);
+      }
+      if (ResetTalentMarkItemFlag != 0) {
+        output.WriteRawTag(120);
+        output.WriteInt32(ResetTalentMarkItemFlag);
+      }
+      if (ResetTalentMarkItemPopUpNotice != 0) {
+        output.WriteRawTag(128, 1);
+        output.WriteInt32(ResetTalentMarkItemPopUpNotice);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -301,6 +444,24 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TotalTalentResetCount);
       }
       size += talentList_.CalculateSize(_map_talentList_codec);
+      if (ResetProfessionListFlag != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ResetProfessionListFlag);
+      }
+      if (TotalAttackMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TotalAttackMark);
+      }
+      if (TotalGuardMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TotalGuardMark);
+      }
+      if (TotalHealMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TotalHealMark);
+      }
+      if (ResetTalentMarkItemFlag != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ResetTalentMarkItemFlag);
+      }
+      if (ResetTalentMarkItemPopUpNotice != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(ResetTalentMarkItemPopUpNotice);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -326,6 +487,24 @@ namespace Zproto {
         TotalTalentResetCount = other.TotalTalentResetCount;
       }
       talentList_.MergeFrom(other.talentList_);
+      if (other.ResetProfessionListFlag != 0) {
+        ResetProfessionListFlag = other.ResetProfessionListFlag;
+      }
+      if (other.TotalAttackMark != 0) {
+        TotalAttackMark = other.TotalAttackMark;
+      }
+      if (other.TotalGuardMark != 0) {
+        TotalGuardMark = other.TotalGuardMark;
+      }
+      if (other.TotalHealMark != 0) {
+        TotalHealMark = other.TotalHealMark;
+      }
+      if (other.ResetTalentMarkItemFlag != 0) {
+        ResetTalentMarkItemFlag = other.ResetTalentMarkItemFlag;
+      }
+      if (other.ResetTalentMarkItemPopUpNotice != 0) {
+        ResetTalentMarkItemPopUpNotice = other.ResetTalentMarkItemPopUpNotice;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -374,6 +553,30 @@ namespace Zproto {
             talentList_.AddEntriesFrom(input, _map_talentList_codec);
             break;
           }
+          case 88: {
+            ResetProfessionListFlag = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            TotalAttackMark = input.ReadUInt32();
+            break;
+          }
+          case 104: {
+            TotalGuardMark = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            TotalHealMark = input.ReadUInt32();
+            break;
+          }
+          case 120: {
+            ResetTalentMarkItemFlag = input.ReadInt32();
+            break;
+          }
+          case 128: {
+            ResetTalentMarkItemPopUpNotice = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -420,6 +623,30 @@ namespace Zproto {
           }
           case 82: {
             talentList_.AddEntriesFrom(ref input, _map_talentList_codec);
+            break;
+          }
+          case 88: {
+            ResetProfessionListFlag = input.ReadInt32();
+            break;
+          }
+          case 96: {
+            TotalAttackMark = input.ReadUInt32();
+            break;
+          }
+          case 104: {
+            TotalGuardMark = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            TotalHealMark = input.ReadUInt32();
+            break;
+          }
+          case 120: {
+            ResetTalentMarkItemFlag = input.ReadInt32();
+            break;
+          }
+          case 128: {
+            ResetTalentMarkItemPopUpNotice = input.ReadInt32();
             break;
           }
         }

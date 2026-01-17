@@ -27,7 +27,7 @@ namespace Zproto {
             "ChZzdHJ1X2Zhc2hpb25fbWdyLnByb3RvEgZ6cHJvdG8aH3N0cnVfZmFzaGlv",
             "bl9hZHZhbmNlX2luZm8ucHJvdG8aHXN0cnVfZmFzaGlvbl9jb2xvcl9pbmZv",
             "LnByb3RvGhxzdHJ1X3VubG9ja19jb2xvcl9pbmZvLnByb3RvGhVzdHJ1X2Rp",
-            "cnR5X21hc2sucHJvdG8i4QsKCkZhc2hpb25NZ3ISMwoJd2Vhcl9pbmZvGAEg",
+            "cnR5X21hc2sucHJvdG8iggwKCkZhc2hpb25NZ3ISMwoJd2Vhcl9pbmZvGAEg",
             "AygLMiAuenByb3RvLkZhc2hpb25NZ3IuV2VhckluZm9FbnRyeRI7Cg1mYXNo",
             "aW9uX2RhdGFzGAIgAygLMiQuenByb3RvLkZhc2hpb25NZ3IuRmFzaGlvbkRh",
             "dGFzRW50cnkSOQoMdW5sb2NrX2NvbG9yGAMgAygLMiMuenByb3RvLkZhc2hp",
@@ -46,25 +46,26 @@ namespace Zproto {
             "ChNhbGxfd2VhcG9uX3NraW5fbnVtGA4gAygLMiguenByb3RvLkZhc2hpb25N",
             "Z3IuQWxsV2VhcG9uU2tpbk51bUVudHJ5EhcKD2lzX2Zhc2hpb25faW5pdBgP",
             "IAEoCBIUCgxpc19yaWRlX2luaXQYECABKAgSGwoTaXNfd2VhcG9uX3NraW5f",
-            "aW5pdBgRIAEoCBovCg1XZWFySW5mb0VudHJ5EgsKA2tleRgBIAEoBRINCgV2",
-            "YWx1ZRgCIAEoBToCOAEaTQoRRmFzaGlvbkRhdGFzRW50cnkSCwoDa2V5GAEg",
-            "ASgFEicKBXZhbHVlGAIgASgLMhguenByb3RvLkZhc2hpb25Db2xvckluZm86",
-            "AjgBGksKEFVubG9ja0NvbG9yRW50cnkSCwoDa2V5GAEgASgFEiYKBXZhbHVl",
-            "GAIgASgLMhcuenByb3RvLlVubG9ja0NvbG9ySW5mbzoCOAEaNAoSRmFzaGlv",
-            "blJld2FyZEVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoCDoCOAEa",
-            "MQoPQWxsRmFzaGlvbkVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEo",
-            "CDoCOAEaLgoMQWxsUmlkZUVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgC",
-            "IAEoCDoCOAEaNAoSQWxsV2VhcG9uU2tpbkVudHJ5EgsKA2tleRgBIAEoBRIN",
-            "CgV2YWx1ZRgCIAEoCDoCOAEaUQoTRmFzaGlvbkFkdmFuY2VFbnRyeRILCgNr",
-            "ZXkYASABKAUSKQoFdmFsdWUYAiABKAsyGi56cHJvdG8uRmFzaGlvbkFkdmFu",
-            "Y2VJbmZvOgI4ARo0ChJBbGxGYXNoaW9uTnVtRW50cnkSCwoDa2V5GAEgASgF",
-            "Eg0KBXZhbHVlGAIgASgFOgI4ARoxCg9BbGxSaWRlTnVtRW50cnkSCwoDa2V5",
-            "GAEgASgFEg0KBXZhbHVlGAIgASgFOgI4ARo3ChVBbGxXZWFwb25Ta2luTnVt",
-            "RW50cnkSCwoDa2V5GAEgASgFEg0KBXZhbHVlGAIgASgFOgI4AWIGcHJvdG8z"));
+            "aW5pdBgRIAEoCBIfChdmYXNoaW9uX3VubG9ja19maXhfZmxhZxgSIAEoBRov",
+            "Cg1XZWFySW5mb0VudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoBToC",
+            "OAEaTQoRRmFzaGlvbkRhdGFzRW50cnkSCwoDa2V5GAEgASgFEicKBXZhbHVl",
+            "GAIgASgLMhguenByb3RvLkZhc2hpb25Db2xvckluZm86AjgBGksKEFVubG9j",
+            "a0NvbG9yRW50cnkSCwoDa2V5GAEgASgFEiYKBXZhbHVlGAIgASgLMhcuenBy",
+            "b3RvLlVubG9ja0NvbG9ySW5mbzoCOAEaNAoSRmFzaGlvblJld2FyZEVudHJ5",
+            "EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoCDoCOAEaMQoPQWxsRmFzaGlv",
+            "bkVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoCDoCOAEaLgoMQWxs",
+            "UmlkZUVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoCDoCOAEaNAoS",
+            "QWxsV2VhcG9uU2tpbkVudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEo",
+            "CDoCOAEaUQoTRmFzaGlvbkFkdmFuY2VFbnRyeRILCgNrZXkYASABKAUSKQoF",
+            "dmFsdWUYAiABKAsyGi56cHJvdG8uRmFzaGlvbkFkdmFuY2VJbmZvOgI4ARo0",
+            "ChJBbGxGYXNoaW9uTnVtRW50cnkSCwoDa2V5GAEgASgFEg0KBXZhbHVlGAIg",
+            "ASgFOgI4ARoxCg9BbGxSaWRlTnVtRW50cnkSCwoDa2V5GAEgASgFEg0KBXZh",
+            "bHVlGAIgASgFOgI4ARo3ChVBbGxXZWFwb25Ta2luTnVtRW50cnkSCwoDa2V5",
+            "GAEgASgFEg0KBXZhbHVlGAIgASgFOgI4AWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruFashionAdvanceInfoReflection.Descriptor, global::Zproto.StruFashionColorInfoReflection.Descriptor, global::Zproto.StruUnlockColorInfoReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.FashionMgr), global::Zproto.FashionMgr.Parser, new[]{ "WearInfo", "FashionDatas", "UnlockColor", "FashionReward", "AllFashion", "AllRide", "AllWeaponSkin", "FashionAdvance", "FashionCollectPoint", "RideCollectPoint", "WeaponSkinCollectPoint", "AllFashionNum", "AllRideNum", "AllWeaponSkinNum", "IsFashionInit", "IsRideInit", "IsWeaponSkinInit" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.FashionMgr), global::Zproto.FashionMgr.Parser, new[]{ "WearInfo", "FashionDatas", "UnlockColor", "FashionReward", "AllFashion", "AllRide", "AllWeaponSkin", "FashionAdvance", "FashionCollectPoint", "RideCollectPoint", "WeaponSkinCollectPoint", "AllFashionNum", "AllRideNum", "AllWeaponSkinNum", "IsFashionInit", "IsRideInit", "IsWeaponSkinInit", "FashionUnlockFixFlag" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, })
           }));
     }
     #endregion
@@ -123,6 +124,7 @@ namespace Zproto {
       isFashionInit_ = other.isFashionInit_;
       isRideInit_ = other.isRideInit_;
       isWeaponSkinInit_ = other.isWeaponSkinInit_;
+      fashionUnlockFixFlag_ = other.fashionUnlockFixFlag_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -325,6 +327,18 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "fashion_unlock_fix_flag" field.</summary>
+    public const int FashionUnlockFixFlagFieldNumber = 18;
+    private int fashionUnlockFixFlag_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int FashionUnlockFixFlag {
+      get { return fashionUnlockFixFlag_; }
+      set {
+        fashionUnlockFixFlag_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -357,6 +371,7 @@ namespace Zproto {
       if (IsFashionInit != other.IsFashionInit) return false;
       if (IsRideInit != other.IsRideInit) return false;
       if (IsWeaponSkinInit != other.IsWeaponSkinInit) return false;
+      if (FashionUnlockFixFlag != other.FashionUnlockFixFlag) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -381,6 +396,7 @@ namespace Zproto {
       if (IsFashionInit != false) hash ^= IsFashionInit.GetHashCode();
       if (IsRideInit != false) hash ^= IsRideInit.GetHashCode();
       if (IsWeaponSkinInit != false) hash ^= IsWeaponSkinInit.GetHashCode();
+      if (FashionUnlockFixFlag != 0) hash ^= FashionUnlockFixFlag.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -434,6 +450,10 @@ namespace Zproto {
         output.WriteRawTag(136, 1);
         output.WriteBool(IsWeaponSkinInit);
       }
+      if (FashionUnlockFixFlag != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt32(FashionUnlockFixFlag);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -479,6 +499,10 @@ namespace Zproto {
         output.WriteRawTag(136, 1);
         output.WriteBool(IsWeaponSkinInit);
       }
+      if (FashionUnlockFixFlag != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteInt32(FashionUnlockFixFlag);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -517,6 +541,9 @@ namespace Zproto {
       }
       if (IsWeaponSkinInit != false) {
         size += 2 + 1;
+      }
+      if (FashionUnlockFixFlag != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(FashionUnlockFixFlag);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -558,6 +585,9 @@ namespace Zproto {
       }
       if (other.IsWeaponSkinInit != false) {
         IsWeaponSkinInit = other.IsWeaponSkinInit;
+      }
+      if (other.FashionUnlockFixFlag != 0) {
+        FashionUnlockFixFlag = other.FashionUnlockFixFlag;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -646,6 +676,10 @@ namespace Zproto {
             IsWeaponSkinInit = input.ReadBool();
             break;
           }
+          case 144: {
+            FashionUnlockFixFlag = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -731,6 +765,10 @@ namespace Zproto {
           }
           case 136: {
             IsWeaponSkinInit = input.ReadBool();
+            break;
+          }
+          case 144: {
+            FashionUnlockFixFlag = input.ReadInt32();
             break;
           }
         }

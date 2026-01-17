@@ -30,7 +30,7 @@ namespace Zproto {
             "YWN0aXZpdHkucHJvdG8aGXN0cnVfdW5pb25fYnVpbGRpbmcucHJvdG8aHHN0",
             "cnVfdW5pb25fZWZmZWN0X2J1ZmYucHJvdG8aFXN0cnVfdW5pb25faW5mby5w",
             "cm90bxoZc3RydV91bmlvbl9yZXNvdXJjZS5wcm90bxocc3RydV91c2VyX3N1",
-            "bW1hcnlfZGF0YS5wcm90byKSBQoRUmVxVW5pb25JbmZvUmVwbHkSHwoEaW5m",
+            "bW1hcnlfZGF0YS5wcm90byK0BQoRUmVxVW5pb25JbmZvUmVwbHkSHwoEaW5m",
             "bxgBIAEoCzIRLnpwcm90by5VbmlvbkluZm8SKQoMcmVjcnVpdF9pbmZvGAIg",
             "ASgLMhMuenByb3RvLlJlY3J1aXRJbmZvEi8KDnByZXNpZGVudF9pbmZvGAMg",
             "ASgLMhcuenByb3RvLlVzZXJTdW1tYXJ5RGF0YRJGCg91bmlvbl9idWlsZGlu",
@@ -40,16 +40,16 @@ namespace Zproto {
             "TWVtVW5pb25BY3Rpdml0eRJLChJ1bmlvbl9yZXNvdXJjZV9saWIYByADKAsy",
             "Ly56cHJvdG8uUmVxVW5pb25JbmZvUmVwbHkuVW5pb25SZXNvdXJjZUxpYkVu",
             "dHJ5EhgKEHNlbGZfc3BlZWRfdGltZXMYCCABKAUSLQoMZWZmZWN0X2J1ZmZz",
-            "GAkgAygLMhcuenByb3RvLlVuaW9uRWZmZWN0QnVmZhIkCghlcnJfY29kZRgK",
-            "IAEoDjISLnpwcm90by5FRXJyb3JDb2RlGkwKE1VuaW9uQnVpbGRpbmdzRW50",
-            "cnkSCwoDa2V5GAEgASgFEiQKBXZhbHVlGAIgASgLMhUuenByb3RvLlVuaW9u",
-            "QnVpbGRpbmc6AjgBGk4KFVVuaW9uUmVzb3VyY2VMaWJFbnRyeRILCgNrZXkY",
-            "ASABKAUSJAoFdmFsdWUYAiABKAsyFS56cHJvdG8uVW5pb25SZXNvdXJjZToC",
-            "OAFiBnByb3RvMw=="));
+            "GAkgAygLMhcuenByb3RvLlVuaW9uRWZmZWN0QnVmZhIgChhyZWNlaXZlZF9w",
+            "b2ludF9hd2FyZF9pZHMYCiADKAUSJAoIZXJyX2NvZGUYCyABKA4yEi56cHJv",
+            "dG8uRUVycm9yQ29kZRpMChNVbmlvbkJ1aWxkaW5nc0VudHJ5EgsKA2tleRgB",
+            "IAEoBRIkCgV2YWx1ZRgCIAEoCzIVLnpwcm90by5VbmlvbkJ1aWxkaW5nOgI4",
+            "ARpOChVVbmlvblJlc291cmNlTGliRW50cnkSCwoDa2V5GAEgASgFEiQKBXZh",
+            "bHVlGAIgASgLMhUuenByb3RvLlVuaW9uUmVzb3VyY2U6AjgBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.EnumEErrorCodeReflection.Descriptor, global::Zproto.StruMemUnionActivityReflection.Descriptor, global::Zproto.StruRecruitInfoReflection.Descriptor, global::Zproto.StruUnionActivityReflection.Descriptor, global::Zproto.StruUnionBuildingReflection.Descriptor, global::Zproto.StruUnionEffectBuffReflection.Descriptor, global::Zproto.StruUnionInfoReflection.Descriptor, global::Zproto.StruUnionResourceReflection.Descriptor, global::Zproto.StruUserSummaryDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ReqUnionInfoReply), global::Zproto.ReqUnionInfoReply.Parser, new[]{ "Info", "RecruitInfo", "PresidentInfo", "UnionBuildings", "UnionActivity", "SelfActivity", "UnionResourceLib", "SelfSpeedTimes", "EffectBuffs", "ErrCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ReqUnionInfoReply), global::Zproto.ReqUnionInfoReply.Parser, new[]{ "Info", "RecruitInfo", "PresidentInfo", "UnionBuildings", "UnionActivity", "SelfActivity", "UnionResourceLib", "SelfSpeedTimes", "EffectBuffs", "ReceivedPointAwardIds", "ErrCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
           }));
     }
     #endregion
@@ -100,6 +100,7 @@ namespace Zproto {
       unionResourceLib_ = other.unionResourceLib_.Clone();
       selfSpeedTimes_ = other.selfSpeedTimes_;
       effectBuffs_ = other.effectBuffs_.Clone();
+      receivedPointAwardIds_ = other.receivedPointAwardIds_.Clone();
       errCode_ = other.errCode_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -215,8 +216,19 @@ namespace Zproto {
       get { return effectBuffs_; }
     }
 
+    /// <summary>Field number for the "received_point_award_ids" field.</summary>
+    public const int ReceivedPointAwardIdsFieldNumber = 10;
+    private static readonly pb::FieldCodec<int> _repeated_receivedPointAwardIds_codec
+        = pb::FieldCodec.ForInt32(82);
+    private readonly pbc::RepeatedField<int> receivedPointAwardIds_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<int> ReceivedPointAwardIds {
+      get { return receivedPointAwardIds_; }
+    }
+
     /// <summary>Field number for the "err_code" field.</summary>
-    public const int ErrCodeFieldNumber = 10;
+    public const int ErrCodeFieldNumber = 11;
     private global::Zproto.EErrorCode errCode_ = global::Zproto.EErrorCode.ErrSuccess;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -251,6 +263,7 @@ namespace Zproto {
       if (!UnionResourceLib.Equals(other.UnionResourceLib)) return false;
       if (SelfSpeedTimes != other.SelfSpeedTimes) return false;
       if(!effectBuffs_.Equals(other.effectBuffs_)) return false;
+      if(!receivedPointAwardIds_.Equals(other.receivedPointAwardIds_)) return false;
       if (ErrCode != other.ErrCode) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -268,6 +281,7 @@ namespace Zproto {
       hash ^= UnionResourceLib.GetHashCode();
       if (SelfSpeedTimes != 0) hash ^= SelfSpeedTimes.GetHashCode();
       hash ^= effectBuffs_.GetHashCode();
+      hash ^= receivedPointAwardIds_.GetHashCode();
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) hash ^= ErrCode.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -314,8 +328,9 @@ namespace Zproto {
         output.WriteInt32(SelfSpeedTimes);
       }
       effectBuffs_.WriteTo(output, _repeated_effectBuffs_codec);
+      receivedPointAwardIds_.WriteTo(output, _repeated_receivedPointAwardIds_codec);
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(88);
         output.WriteEnum((int) ErrCode);
       }
       if (_unknownFields != null) {
@@ -355,8 +370,9 @@ namespace Zproto {
         output.WriteInt32(SelfSpeedTimes);
       }
       effectBuffs_.WriteTo(ref output, _repeated_effectBuffs_codec);
+      receivedPointAwardIds_.WriteTo(ref output, _repeated_receivedPointAwardIds_codec);
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(88);
         output.WriteEnum((int) ErrCode);
       }
       if (_unknownFields != null) {
@@ -390,6 +406,7 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SelfSpeedTimes);
       }
       size += effectBuffs_.CalculateSize(_repeated_effectBuffs_codec);
+      size += receivedPointAwardIds_.CalculateSize(_repeated_receivedPointAwardIds_codec);
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ErrCode);
       }
@@ -441,6 +458,7 @@ namespace Zproto {
         SelfSpeedTimes = other.SelfSpeedTimes;
       }
       effectBuffs_.Add(other.effectBuffs_);
+      receivedPointAwardIds_.Add(other.receivedPointAwardIds_);
       if (other.ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
         ErrCode = other.ErrCode;
       }
@@ -514,7 +532,12 @@ namespace Zproto {
             effectBuffs_.AddEntriesFrom(input, _repeated_effectBuffs_codec);
             break;
           }
+          case 82:
           case 80: {
+            receivedPointAwardIds_.AddEntriesFrom(input, _repeated_receivedPointAwardIds_codec);
+            break;
+          }
+          case 88: {
             ErrCode = (global::Zproto.EErrorCode) input.ReadEnum();
             break;
           }
@@ -588,7 +611,12 @@ namespace Zproto {
             effectBuffs_.AddEntriesFrom(ref input, _repeated_effectBuffs_codec);
             break;
           }
+          case 82:
           case 80: {
+            receivedPointAwardIds_.AddEntriesFrom(ref input, _repeated_receivedPointAwardIds_codec);
+            break;
+          }
+          case 88: {
             ErrCode = (global::Zproto.EErrorCode) input.ReadEnum();
             break;
           }

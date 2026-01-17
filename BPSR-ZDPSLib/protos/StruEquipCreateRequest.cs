@@ -24,13 +24,14 @@ namespace Zproto {
     static StruEquipCreateRequestReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Ch9zdHJ1X2VxdWlwX2NyZWF0ZV9yZXF1ZXN0LnByb3RvEgZ6cHJvdG8iSQoS",
+            "Ch9zdHJ1X2VxdWlwX2NyZWF0ZV9yZXF1ZXN0LnByb3RvEgZ6cHJvdG8iXgoS",
             "RXF1aXBDcmVhdGVSZXF1ZXN0EhcKD2VxdWlwX2NvbmZpZ19pZBgBIAEoBRIa",
-            "ChJjb25zdW1lX2VxdWlwX3V1aWQYAiABKANiBnByb3RvMw=="));
+            "ChJjb25zdW1lX2VxdWlwX3V1aWQYAiABKAMSEwoLZnVuY3Rpb25faWQYAyAB",
+            "KAViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.EquipCreateRequest), global::Zproto.EquipCreateRequest.Parser, new[]{ "EquipConfigId", "ConsumeEquipUuid" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.EquipCreateRequest), global::Zproto.EquipCreateRequest.Parser, new[]{ "EquipConfigId", "ConsumeEquipUuid", "FunctionId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -74,6 +75,7 @@ namespace Zproto {
     public EquipCreateRequest(EquipCreateRequest other) : this() {
       equipConfigId_ = other.equipConfigId_;
       consumeEquipUuid_ = other.consumeEquipUuid_;
+      functionId_ = other.functionId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -107,6 +109,18 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "function_id" field.</summary>
+    public const int FunctionIdFieldNumber = 3;
+    private int functionId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int FunctionId {
+      get { return functionId_; }
+      set {
+        functionId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -124,6 +138,7 @@ namespace Zproto {
       }
       if (EquipConfigId != other.EquipConfigId) return false;
       if (ConsumeEquipUuid != other.ConsumeEquipUuid) return false;
+      if (FunctionId != other.FunctionId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -133,6 +148,7 @@ namespace Zproto {
       int hash = 1;
       if (EquipConfigId != 0) hash ^= EquipConfigId.GetHashCode();
       if (ConsumeEquipUuid != 0L) hash ^= ConsumeEquipUuid.GetHashCode();
+      if (FunctionId != 0) hash ^= FunctionId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -159,6 +175,10 @@ namespace Zproto {
         output.WriteRawTag(16);
         output.WriteInt64(ConsumeEquipUuid);
       }
+      if (FunctionId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(FunctionId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -177,6 +197,10 @@ namespace Zproto {
         output.WriteRawTag(16);
         output.WriteInt64(ConsumeEquipUuid);
       }
+      if (FunctionId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(FunctionId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -192,6 +216,9 @@ namespace Zproto {
       }
       if (ConsumeEquipUuid != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ConsumeEquipUuid);
+      }
+      if (FunctionId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FunctionId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -210,6 +237,9 @@ namespace Zproto {
       }
       if (other.ConsumeEquipUuid != 0L) {
         ConsumeEquipUuid = other.ConsumeEquipUuid;
+      }
+      if (other.FunctionId != 0) {
+        FunctionId = other.FunctionId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -238,6 +268,10 @@ namespace Zproto {
             ConsumeEquipUuid = input.ReadInt64();
             break;
           }
+          case 24: {
+            FunctionId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -263,6 +297,10 @@ namespace Zproto {
           }
           case 16: {
             ConsumeEquipUuid = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            FunctionId = input.ReadInt32();
             break;
           }
         }

@@ -25,15 +25,16 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChpzdHJ1X2Jhc2ljX3Nob3dfaW5mby5wcm90bxIGenByb3RvGhZlbnVtX2Vf",
-            "Ym9keV9zaXplLnByb3RvIr8BCg1CYXNpY1Nob3dJbmZvEg8KB2NoYXJfaWQY",
+            "Ym9keV9zaXplLnByb3RvItQBCg1CYXNpY1Nob3dJbmZvEg8KB2NoYXJfaWQY",
             "ASABKAMSDAoEbmFtZRgCIAEoCRIOCgZnZW5kZXIYAyABKAUSJAoJYm9keV9z",
             "aXplGAQgASgOMhEuenByb3RvLkVCb2R5U2l6ZRINCgVsZXZlbBgFIAEoBRIa",
             "ChJjdXJfdGFsZW50X3Bvb2xfaWQYBiABKA0SGwoTdW5pb25faHVudF9yYW5k",
-            "X2lkeBgHIAEoDRIRCglpc19uZXdiaWUYCCABKAhiBnByb3RvMw=="));
+            "X2lkeBgHIAEoDRIRCglpc19uZXdiaWUYCCABKAgSEwoLaXNfYmFja2Zsb3cY",
+            "CSABKAhiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.EnumEBodySizeReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.BasicShowInfo), global::Zproto.BasicShowInfo.Parser, new[]{ "CharId", "Name", "Gender", "BodySize", "Level", "CurTalentPoolId", "UnionHuntRandIdx", "IsNewbie" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.BasicShowInfo), global::Zproto.BasicShowInfo.Parser, new[]{ "CharId", "Name", "Gender", "BodySize", "Level", "CurTalentPoolId", "UnionHuntRandIdx", "IsNewbie", "IsBackflow" }, null, null, null, null)
           }));
     }
     #endregion
@@ -83,6 +84,7 @@ namespace Zproto {
       curTalentPoolId_ = other.curTalentPoolId_;
       unionHuntRandIdx_ = other.unionHuntRandIdx_;
       isNewbie_ = other.isNewbie_;
+      isBackflow_ = other.isBackflow_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -188,6 +190,18 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "is_backflow" field.</summary>
+    public const int IsBackflowFieldNumber = 9;
+    private bool isBackflow_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsBackflow {
+      get { return isBackflow_; }
+      set {
+        isBackflow_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -211,6 +225,7 @@ namespace Zproto {
       if (CurTalentPoolId != other.CurTalentPoolId) return false;
       if (UnionHuntRandIdx != other.UnionHuntRandIdx) return false;
       if (IsNewbie != other.IsNewbie) return false;
+      if (IsBackflow != other.IsBackflow) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -226,6 +241,7 @@ namespace Zproto {
       if (CurTalentPoolId != 0) hash ^= CurTalentPoolId.GetHashCode();
       if (UnionHuntRandIdx != 0) hash ^= UnionHuntRandIdx.GetHashCode();
       if (IsNewbie != false) hash ^= IsNewbie.GetHashCode();
+      if (IsBackflow != false) hash ^= IsBackflow.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -276,6 +292,10 @@ namespace Zproto {
         output.WriteRawTag(64);
         output.WriteBool(IsNewbie);
       }
+      if (IsBackflow != false) {
+        output.WriteRawTag(72);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -318,6 +338,10 @@ namespace Zproto {
         output.WriteRawTag(64);
         output.WriteBool(IsNewbie);
       }
+      if (IsBackflow != false) {
+        output.WriteRawTag(72);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -350,6 +374,9 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(UnionHuntRandIdx);
       }
       if (IsNewbie != false) {
+        size += 1 + 1;
+      }
+      if (IsBackflow != false) {
         size += 1 + 1;
       }
       if (_unknownFields != null) {
@@ -387,6 +414,9 @@ namespace Zproto {
       }
       if (other.IsNewbie != false) {
         IsNewbie = other.IsNewbie;
+      }
+      if (other.IsBackflow != false) {
+        IsBackflow = other.IsBackflow;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -439,6 +469,10 @@ namespace Zproto {
             IsNewbie = input.ReadBool();
             break;
           }
+          case 72: {
+            IsBackflow = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -488,6 +522,10 @@ namespace Zproto {
           }
           case 64: {
             IsNewbie = input.ReadBool();
+            break;
+          }
+          case 72: {
+            IsBackflow = input.ReadBool();
             break;
           }
         }

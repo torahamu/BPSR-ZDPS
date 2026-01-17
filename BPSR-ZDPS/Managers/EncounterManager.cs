@@ -1563,30 +1563,7 @@ namespace BPSR_ZDPS
 
         public void NotifyBuffEvent(EBuffEventType buffEventType, int buffUuid, int baseId, int level, long fireUuid, string entityCasterName, int layer, int duration, int sourceConfigId, TimeSpan encounterTime)
         {
-            if (baseId > 0)
-            {
-                if (!BuffEvents.TryGetValue((ulong)buffUuid, out var buffEvent))
-                {
-                    buffEvent = new BuffEvent(buffUuid, baseId, level, fireUuid, entityCasterName, layer, duration, sourceConfigId);
-                }
-                else
-                {
-                    // TODO: For now allow all updates to pass through into the Buff Event system. This needs to be refined for better accuracy of what is actually going on though
-                    //if (buffEvent.BaseId <= 0)
-                    {
-                        buffEvent.SetEvent(buffUuid, baseId, level, fireUuid, entityCasterName, layer, duration, sourceConfigId);
-                    }
-                }
-                buffEvent.SetAddTime(encounterTime.Duration());
-
-                if (!Settings.Instance.UseDatabaseForEncounterHistory && Settings.Instance.LimitEncounterBuffTrackingWithoutDatabase && BuffEvents.Count > 99)
-                {
-                    BuffEvents.Remove(BuffEvents.AsValueEnumerable().First().Key);
-                }
-
-                BuffEvents[(ulong)buffUuid] = buffEvent;
-            }
-            else
+            if (buffEventType == EBuffEventType.BuffEventRemove)
             {
                 if (!BuffEvents.TryGetValue((ulong)buffUuid, out var buffEvent))
                 {
@@ -1602,9 +1579,24 @@ namespace BPSR_ZDPS
 
                 BuffEvents[(ulong)buffUuid] = buffEvent;
             }
-            //else
+            else
             {
-                //System.Diagnostics.Debug.WriteLine($"NotifyBuffEvent Unhandled BuffEventType: {buffEventType}");
+                if (!BuffEvents.TryGetValue((ulong)buffUuid, out var buffEvent))
+                {
+                    buffEvent = new BuffEvent(buffUuid, baseId, level, fireUuid, entityCasterName, layer, duration, sourceConfigId);
+                }
+                else
+                {
+                    buffEvent.SetEvent(buffUuid, baseId, level, fireUuid, entityCasterName, layer, duration, sourceConfigId);
+                }
+                buffEvent.SetAddTime(encounterTime.Duration());
+
+                if (!Settings.Instance.UseDatabaseForEncounterHistory && Settings.Instance.LimitEncounterBuffTrackingWithoutDatabase && BuffEvents.Count > 99)
+                {
+                    BuffEvents.Remove(BuffEvents.AsValueEnumerable().First().Key);
+                }
+
+                BuffEvents[(ulong)buffUuid] = buffEvent;
             }
         }
 
@@ -2343,13 +2335,28 @@ namespace BPSR_ZDPS
         public void SetEvent(int uuid, int baseId, int level, long fireUuid, string entityCasterName, int layer, int duration, int sourceConfigId)
         {
             Uuid = uuid;
-            BaseId = baseId;
-            Level = level;
-            FireUuid = fireUuid;
-            EntityCasterName = entityCasterName;
+            if (baseId > 0)
+            {
+                BaseId = baseId;
+            }
+            if (level > 0)
+            {
+                Level = level;
+            }
+            if (fireUuid > 0)
+            {
+                FireUuid = fireUuid;
+            }
+            if (!string.IsNullOrEmpty(entityCasterName))
+            {
+                EntityCasterName = entityCasterName;
+            }
             Layer = layer;
             Duration = duration;
-            SourceConfigId = sourceConfigId;
+            if (sourceConfigId > 0)
+            {
+                SourceConfigId = sourceConfigId;
+            }
 
             if (BaseId > 0)
             {

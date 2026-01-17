@@ -25,13 +25,13 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ci9zdHJ1X3JlY2VpdmVfdW5pb25fYWN0aXZpdHlfYXdhcmRfcmVxdWVzdC5w",
-            "cm90bxIGenByb3RvIkYKIFJlY2VpdmVVbmlvbkFjdGl2aXR5QXdhcmRSZXF1",
-            "ZXN0EhAKCHVuaW9uX2lkGAIgASgDEhAKCGF3YXJkX2lkGAMgASgFYgZwcm90",
-            "bzM="));
+            "cm90bxIGenByb3RvImEKIFJlY2VpdmVVbmlvbkFjdGl2aXR5QXdhcmRSZXF1",
+            "ZXN0EhAKCHVuaW9uX2lkGAIgASgDEhAKCGF3YXJkX2lkGAMgASgFEhkKEWxh",
+            "c3RfcmVmcmVzaF90aW1lGAQgASgDYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ReceiveUnionActivityAwardRequest), global::Zproto.ReceiveUnionActivityAwardRequest.Parser, new[]{ "UnionId", "AwardId" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ReceiveUnionActivityAwardRequest), global::Zproto.ReceiveUnionActivityAwardRequest.Parser, new[]{ "UnionId", "AwardId", "LastRefreshTime" }, null, null, null, null)
           }));
     }
     #endregion
@@ -75,6 +75,7 @@ namespace Zproto {
     public ReceiveUnionActivityAwardRequest(ReceiveUnionActivityAwardRequest other) : this() {
       unionId_ = other.unionId_;
       awardId_ = other.awardId_;
+      lastRefreshTime_ = other.lastRefreshTime_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -108,6 +109,18 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "last_refresh_time" field.</summary>
+    public const int LastRefreshTimeFieldNumber = 4;
+    private long lastRefreshTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long LastRefreshTime {
+      get { return lastRefreshTime_; }
+      set {
+        lastRefreshTime_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -125,6 +138,7 @@ namespace Zproto {
       }
       if (UnionId != other.UnionId) return false;
       if (AwardId != other.AwardId) return false;
+      if (LastRefreshTime != other.LastRefreshTime) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -134,6 +148,7 @@ namespace Zproto {
       int hash = 1;
       if (UnionId != 0L) hash ^= UnionId.GetHashCode();
       if (AwardId != 0) hash ^= AwardId.GetHashCode();
+      if (LastRefreshTime != 0L) hash ^= LastRefreshTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -160,6 +175,10 @@ namespace Zproto {
         output.WriteRawTag(24);
         output.WriteInt32(AwardId);
       }
+      if (LastRefreshTime != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(LastRefreshTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -178,6 +197,10 @@ namespace Zproto {
         output.WriteRawTag(24);
         output.WriteInt32(AwardId);
       }
+      if (LastRefreshTime != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(LastRefreshTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -193,6 +216,9 @@ namespace Zproto {
       }
       if (AwardId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(AwardId);
+      }
+      if (LastRefreshTime != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(LastRefreshTime);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -211,6 +237,9 @@ namespace Zproto {
       }
       if (other.AwardId != 0) {
         AwardId = other.AwardId;
+      }
+      if (other.LastRefreshTime != 0L) {
+        LastRefreshTime = other.LastRefreshTime;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -239,6 +268,10 @@ namespace Zproto {
             AwardId = input.ReadInt32();
             break;
           }
+          case 32: {
+            LastRefreshTime = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -264,6 +297,10 @@ namespace Zproto {
           }
           case 24: {
             AwardId = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            LastRefreshTime = input.ReadInt64();
             break;
           }
         }

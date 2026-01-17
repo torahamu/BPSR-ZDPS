@@ -24,14 +24,17 @@ namespace Zproto {
     static StruNewbieDataReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZzdHJ1X25ld2JpZV9kYXRhLnByb3RvEgZ6cHJvdG8aFXN0cnVfZGlydHlf",
-            "bWFzay5wcm90byJUCgpOZXdiaWVEYXRhEhkKEXRvdGFsX29ubGluZV90aW1l",
-            "GAEgASgDEhEKCWlzX25ld2JpZRgCIAEoCBIYChBpc19jYW5jZWxfbmV3Ymll",
-            "GAMgASgIYgZwcm90bzM="));
+            "ChZzdHJ1X25ld2JpZV9kYXRhLnByb3RvEgZ6cHJvdG8aGnN0cnVfbmV3Ymll",
+            "X2FjdF9kYXRhLnByb3RvGhVzdHJ1X2RpcnR5X21hc2sucHJvdG8i1QEKCk5l",
+            "d2JpZURhdGESGQoRdG90YWxfb25saW5lX3RpbWUYASABKAMSEQoJaXNfbmV3",
+            "YmllGAIgASgIEhgKEGlzX2NhbmNlbF9uZXdiaWUYAyABKAgSEQoJc2Vhc29u",
+            "X2lkGAQgASgFEhYKDmFjdGl2YXRlX3RpbWVzGAUgASgFEhcKD2lzX25vdF9z",
+            "aG93X3RhZxgGIAEoCBISCgpiZWdpbl90aW1lGAcgASgDEicKCGFjdF9kYXRh",
+            "GAggASgLMhUuenByb3RvLk5ld2JpZUFjdERhdGFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Zproto.StruDirtyMaskReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Zproto.StruNewbieActDataReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.NewbieData), global::Zproto.NewbieData.Parser, new[]{ "TotalOnlineTime", "IsNewbie", "IsCancelNewbie" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.NewbieData), global::Zproto.NewbieData.Parser, new[]{ "TotalOnlineTime", "IsNewbie", "IsCancelNewbie", "SeasonId", "ActivateTimes", "IsNotShowTag", "BeginTime", "ActData" }, null, null, null, null)
           }));
     }
     #endregion
@@ -76,6 +79,11 @@ namespace Zproto {
       totalOnlineTime_ = other.totalOnlineTime_;
       isNewbie_ = other.isNewbie_;
       isCancelNewbie_ = other.isCancelNewbie_;
+      seasonId_ = other.seasonId_;
+      activateTimes_ = other.activateTimes_;
+      isNotShowTag_ = other.isNotShowTag_;
+      beginTime_ = other.beginTime_;
+      actData_ = other.actData_ != null ? other.actData_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -121,6 +129,66 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "season_id" field.</summary>
+    public const int SeasonIdFieldNumber = 4;
+    private int seasonId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int SeasonId {
+      get { return seasonId_; }
+      set {
+        seasonId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "activate_times" field.</summary>
+    public const int ActivateTimesFieldNumber = 5;
+    private int activateTimes_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ActivateTimes {
+      get { return activateTimes_; }
+      set {
+        activateTimes_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "is_not_show_tag" field.</summary>
+    public const int IsNotShowTagFieldNumber = 6;
+    private bool isNotShowTag_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsNotShowTag {
+      get { return isNotShowTag_; }
+      set {
+        isNotShowTag_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "begin_time" field.</summary>
+    public const int BeginTimeFieldNumber = 7;
+    private long beginTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long BeginTime {
+      get { return beginTime_; }
+      set {
+        beginTime_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "act_data" field.</summary>
+    public const int ActDataFieldNumber = 8;
+    private global::Zproto.NewbieActData actData_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Zproto.NewbieActData ActData {
+      get { return actData_; }
+      set {
+        actData_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -139,6 +207,11 @@ namespace Zproto {
       if (TotalOnlineTime != other.TotalOnlineTime) return false;
       if (IsNewbie != other.IsNewbie) return false;
       if (IsCancelNewbie != other.IsCancelNewbie) return false;
+      if (SeasonId != other.SeasonId) return false;
+      if (ActivateTimes != other.ActivateTimes) return false;
+      if (IsNotShowTag != other.IsNotShowTag) return false;
+      if (BeginTime != other.BeginTime) return false;
+      if (!object.Equals(ActData, other.ActData)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -149,6 +222,11 @@ namespace Zproto {
       if (TotalOnlineTime != 0L) hash ^= TotalOnlineTime.GetHashCode();
       if (IsNewbie != false) hash ^= IsNewbie.GetHashCode();
       if (IsCancelNewbie != false) hash ^= IsCancelNewbie.GetHashCode();
+      if (SeasonId != 0) hash ^= SeasonId.GetHashCode();
+      if (ActivateTimes != 0) hash ^= ActivateTimes.GetHashCode();
+      if (IsNotShowTag != false) hash ^= IsNotShowTag.GetHashCode();
+      if (BeginTime != 0L) hash ^= BeginTime.GetHashCode();
+      if (actData_ != null) hash ^= ActData.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -179,6 +257,26 @@ namespace Zproto {
         output.WriteRawTag(24);
         output.WriteBool(IsCancelNewbie);
       }
+      if (SeasonId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(SeasonId);
+      }
+      if (ActivateTimes != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(ActivateTimes);
+      }
+      if (IsNotShowTag != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(IsNotShowTag);
+      }
+      if (BeginTime != 0L) {
+        output.WriteRawTag(56);
+        output.WriteInt64(BeginTime);
+      }
+      if (actData_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(ActData);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -201,6 +299,26 @@ namespace Zproto {
         output.WriteRawTag(24);
         output.WriteBool(IsCancelNewbie);
       }
+      if (SeasonId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(SeasonId);
+      }
+      if (ActivateTimes != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(ActivateTimes);
+      }
+      if (IsNotShowTag != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(IsNotShowTag);
+      }
+      if (BeginTime != 0L) {
+        output.WriteRawTag(56);
+        output.WriteInt64(BeginTime);
+      }
+      if (actData_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(ActData);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -219,6 +337,21 @@ namespace Zproto {
       }
       if (IsCancelNewbie != false) {
         size += 1 + 1;
+      }
+      if (SeasonId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeasonId);
+      }
+      if (ActivateTimes != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ActivateTimes);
+      }
+      if (IsNotShowTag != false) {
+        size += 1 + 1;
+      }
+      if (BeginTime != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(BeginTime);
+      }
+      if (actData_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ActData);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -240,6 +373,24 @@ namespace Zproto {
       }
       if (other.IsCancelNewbie != false) {
         IsCancelNewbie = other.IsCancelNewbie;
+      }
+      if (other.SeasonId != 0) {
+        SeasonId = other.SeasonId;
+      }
+      if (other.ActivateTimes != 0) {
+        ActivateTimes = other.ActivateTimes;
+      }
+      if (other.IsNotShowTag != false) {
+        IsNotShowTag = other.IsNotShowTag;
+      }
+      if (other.BeginTime != 0L) {
+        BeginTime = other.BeginTime;
+      }
+      if (other.actData_ != null) {
+        if (actData_ == null) {
+          ActData = new global::Zproto.NewbieActData();
+        }
+        ActData.MergeFrom(other.ActData);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -272,6 +423,29 @@ namespace Zproto {
             IsCancelNewbie = input.ReadBool();
             break;
           }
+          case 32: {
+            SeasonId = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            ActivateTimes = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            IsNotShowTag = input.ReadBool();
+            break;
+          }
+          case 56: {
+            BeginTime = input.ReadInt64();
+            break;
+          }
+          case 66: {
+            if (actData_ == null) {
+              ActData = new global::Zproto.NewbieActData();
+            }
+            input.ReadMessage(ActData);
+            break;
+          }
         }
       }
     #endif
@@ -301,6 +475,29 @@ namespace Zproto {
           }
           case 24: {
             IsCancelNewbie = input.ReadBool();
+            break;
+          }
+          case 32: {
+            SeasonId = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            ActivateTimes = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            IsNotShowTag = input.ReadBool();
+            break;
+          }
+          case 56: {
+            BeginTime = input.ReadInt64();
+            break;
+          }
+          case 66: {
+            if (actData_ == null) {
+              ActData = new global::Zproto.NewbieActData();
+            }
+            input.ReadMessage(ActData);
             break;
           }
         }

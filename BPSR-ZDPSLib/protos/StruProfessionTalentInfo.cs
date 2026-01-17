@@ -25,14 +25,16 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CiFzdHJ1X3Byb2Zlc3Npb25fdGFsZW50X2luZm8ucHJvdG8SBnpwcm90bxoV",
-            "c3RydV9kaXJ0eV9tYXNrLnByb3RvIosBChRQcm9mZXNzaW9uVGFsZW50SW5m",
+            "c3RydV9kaXJ0eV9tYXNrLnByb3RvItYBChRQcm9mZXNzaW9uVGFsZW50SW5m",
             "bxIaChJ1c2VkX3RhbGVudF9wb2ludHMYASABKA0SFwoPdGFsZW50X25vZGVf",
             "aWRzGAIgAygNEhsKE3RhbGVudF9zdGFnZV9jZmdfaWQYBCABKAUSIQoZdGFs",
-            "ZW50X2lsZWdhbF9yZXNldF9jb3VudBgFIAEoBWIGcHJvdG8z"));
+            "ZW50X2lsZWdhbF9yZXNldF9jb3VudBgFIAEoBRIYChB1c2VkX2F0dGFja19t",
+            "YXJrGAYgASgFEhcKD3VzZWRfZ3VhcmRfbWFyaxgHIAEoBRIWCg51c2VkX2hl",
+            "YWxfbWFyaxgIIAEoBWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ProfessionTalentInfo), global::Zproto.ProfessionTalentInfo.Parser, new[]{ "UsedTalentPoints", "TalentNodeIds", "TalentStageCfgId", "TalentIlegalResetCount" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.ProfessionTalentInfo), global::Zproto.ProfessionTalentInfo.Parser, new[]{ "UsedTalentPoints", "TalentNodeIds", "TalentStageCfgId", "TalentIlegalResetCount", "UsedAttackMark", "UsedGuardMark", "UsedHealMark" }, null, null, null, null)
           }));
     }
     #endregion
@@ -78,6 +80,9 @@ namespace Zproto {
       talentNodeIds_ = other.talentNodeIds_.Clone();
       talentStageCfgId_ = other.talentStageCfgId_;
       talentIlegalResetCount_ = other.talentIlegalResetCount_;
+      usedAttackMark_ = other.usedAttackMark_;
+      usedGuardMark_ = other.usedGuardMark_;
+      usedHealMark_ = other.usedHealMark_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -134,6 +139,42 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "used_attack_mark" field.</summary>
+    public const int UsedAttackMarkFieldNumber = 6;
+    private int usedAttackMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UsedAttackMark {
+      get { return usedAttackMark_; }
+      set {
+        usedAttackMark_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "used_guard_mark" field.</summary>
+    public const int UsedGuardMarkFieldNumber = 7;
+    private int usedGuardMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UsedGuardMark {
+      get { return usedGuardMark_; }
+      set {
+        usedGuardMark_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "used_heal_mark" field.</summary>
+    public const int UsedHealMarkFieldNumber = 8;
+    private int usedHealMark_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UsedHealMark {
+      get { return usedHealMark_; }
+      set {
+        usedHealMark_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -153,6 +194,9 @@ namespace Zproto {
       if(!talentNodeIds_.Equals(other.talentNodeIds_)) return false;
       if (TalentStageCfgId != other.TalentStageCfgId) return false;
       if (TalentIlegalResetCount != other.TalentIlegalResetCount) return false;
+      if (UsedAttackMark != other.UsedAttackMark) return false;
+      if (UsedGuardMark != other.UsedGuardMark) return false;
+      if (UsedHealMark != other.UsedHealMark) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -164,6 +208,9 @@ namespace Zproto {
       hash ^= talentNodeIds_.GetHashCode();
       if (TalentStageCfgId != 0) hash ^= TalentStageCfgId.GetHashCode();
       if (TalentIlegalResetCount != 0) hash ^= TalentIlegalResetCount.GetHashCode();
+      if (UsedAttackMark != 0) hash ^= UsedAttackMark.GetHashCode();
+      if (UsedGuardMark != 0) hash ^= UsedGuardMark.GetHashCode();
+      if (UsedHealMark != 0) hash ^= UsedHealMark.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -195,6 +242,18 @@ namespace Zproto {
         output.WriteRawTag(40);
         output.WriteInt32(TalentIlegalResetCount);
       }
+      if (UsedAttackMark != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(UsedAttackMark);
+      }
+      if (UsedGuardMark != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(UsedGuardMark);
+      }
+      if (UsedHealMark != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(UsedHealMark);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -218,6 +277,18 @@ namespace Zproto {
         output.WriteRawTag(40);
         output.WriteInt32(TalentIlegalResetCount);
       }
+      if (UsedAttackMark != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(UsedAttackMark);
+      }
+      if (UsedGuardMark != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(UsedGuardMark);
+      }
+      if (UsedHealMark != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(UsedHealMark);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -237,6 +308,15 @@ namespace Zproto {
       }
       if (TalentIlegalResetCount != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(TalentIlegalResetCount);
+      }
+      if (UsedAttackMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UsedAttackMark);
+      }
+      if (UsedGuardMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UsedGuardMark);
+      }
+      if (UsedHealMark != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UsedHealMark);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -259,6 +339,15 @@ namespace Zproto {
       }
       if (other.TalentIlegalResetCount != 0) {
         TalentIlegalResetCount = other.TalentIlegalResetCount;
+      }
+      if (other.UsedAttackMark != 0) {
+        UsedAttackMark = other.UsedAttackMark;
+      }
+      if (other.UsedGuardMark != 0) {
+        UsedGuardMark = other.UsedGuardMark;
+      }
+      if (other.UsedHealMark != 0) {
+        UsedHealMark = other.UsedHealMark;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -296,6 +385,18 @@ namespace Zproto {
             TalentIlegalResetCount = input.ReadInt32();
             break;
           }
+          case 48: {
+            UsedAttackMark = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            UsedGuardMark = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            UsedHealMark = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -330,6 +431,18 @@ namespace Zproto {
           }
           case 40: {
             TalentIlegalResetCount = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            UsedAttackMark = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            UsedGuardMark = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            UsedHealMark = input.ReadInt32();
             break;
           }
         }

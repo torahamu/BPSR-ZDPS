@@ -25,17 +25,17 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChdzdHJ1X2FjY291bnRfaW5mby5wcm90bxIGenByb3RvGhZzdHJ1X3NvY2lh",
-            "bF9kYXRhLnByb3RvIowCCgtBY2NvdW50SW5mbxISCgphY2NvdW50X2lkGAEg",
+            "bF9kYXRhLnByb3RvIqACCgtBY2NvdW50SW5mbxISCgphY2NvdW50X2lkGAEg",
             "ASgJEg8KB29wZW5faWQYAiABKAkSIQoFY2hhcnMYAyADKAsyEi56cHJvdG8u",
             "U29jaWFsRGF0YRINCgV0b2tlbhgFIAEoCRIVCg1yZXN0cmljdF90aW1lGAYg",
             "ASgDElEKGWRlbGV0ZV9jaGFyX2lkc19sZWZ0X3RpbWUYByADKAsyLi56cHJv",
-            "dG8uQWNjb3VudEluZm8uRGVsZXRlQ2hhcklkc0xlZnRUaW1lRW50cnkaPAoa",
-            "RGVsZXRlQ2hhcklkc0xlZnRUaW1lRW50cnkSCwoDa2V5GAEgASgDEg0KBXZh",
-            "bHVlGAIgASgDOgI4AWIGcHJvdG8z"));
+            "dG8uQWNjb3VudEluZm8uRGVsZXRlQ2hhcklkc0xlZnRUaW1lRW50cnkSEgoK",
+            "YmFuX3JlYXNvbhgIIAEoDRo8ChpEZWxldGVDaGFySWRzTGVmdFRpbWVFbnRy",
+            "eRILCgNrZXkYASABKAMSDQoFdmFsdWUYAiABKAM6AjgBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruSocialDataReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.AccountInfo), global::Zproto.AccountInfo.Parser, new[]{ "AccountId", "OpenId", "Chars", "Token", "RestrictTime", "DeleteCharIdsLeftTime" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.AccountInfo), global::Zproto.AccountInfo.Parser, new[]{ "AccountId", "OpenId", "Chars", "Token", "RestrictTime", "DeleteCharIdsLeftTime", "BanReason" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -83,6 +83,7 @@ namespace Zproto {
       token_ = other.token_;
       restrictTime_ = other.restrictTime_;
       deleteCharIdsLeftTime_ = other.deleteCharIdsLeftTime_.Clone();
+      banReason_ = other.banReason_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -162,6 +163,18 @@ namespace Zproto {
       get { return deleteCharIdsLeftTime_; }
     }
 
+    /// <summary>Field number for the "ban_reason" field.</summary>
+    public const int BanReasonFieldNumber = 8;
+    private uint banReason_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint BanReason {
+      get { return banReason_; }
+      set {
+        banReason_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -183,6 +196,7 @@ namespace Zproto {
       if (Token != other.Token) return false;
       if (RestrictTime != other.RestrictTime) return false;
       if (!DeleteCharIdsLeftTime.Equals(other.DeleteCharIdsLeftTime)) return false;
+      if (BanReason != other.BanReason) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -196,6 +210,7 @@ namespace Zproto {
       if (Token.Length != 0) hash ^= Token.GetHashCode();
       if (RestrictTime != 0L) hash ^= RestrictTime.GetHashCode();
       hash ^= DeleteCharIdsLeftTime.GetHashCode();
+      if (BanReason != 0) hash ^= BanReason.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -232,6 +247,10 @@ namespace Zproto {
         output.WriteInt64(RestrictTime);
       }
       deleteCharIdsLeftTime_.WriteTo(output, _map_deleteCharIdsLeftTime_codec);
+      if (BanReason != 0) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(BanReason);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -260,6 +279,10 @@ namespace Zproto {
         output.WriteInt64(RestrictTime);
       }
       deleteCharIdsLeftTime_.WriteTo(ref output, _map_deleteCharIdsLeftTime_codec);
+      if (BanReason != 0) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(BanReason);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -284,6 +307,9 @@ namespace Zproto {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(RestrictTime);
       }
       size += deleteCharIdsLeftTime_.CalculateSize(_map_deleteCharIdsLeftTime_codec);
+      if (BanReason != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(BanReason);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -310,6 +336,9 @@ namespace Zproto {
         RestrictTime = other.RestrictTime;
       }
       deleteCharIdsLeftTime_.MergeFrom(other.deleteCharIdsLeftTime_);
+      if (other.BanReason != 0) {
+        BanReason = other.BanReason;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -353,6 +382,10 @@ namespace Zproto {
             deleteCharIdsLeftTime_.AddEntriesFrom(input, _map_deleteCharIdsLeftTime_codec);
             break;
           }
+          case 64: {
+            BanReason = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -394,6 +427,10 @@ namespace Zproto {
           }
           case 58: {
             deleteCharIdsLeftTime_.AddEntriesFrom(ref input, _map_deleteCharIdsLeftTime_codec);
+            break;
+          }
+          case 64: {
+            BanReason = input.ReadUInt32();
             break;
           }
         }

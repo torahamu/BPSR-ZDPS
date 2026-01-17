@@ -25,7 +25,7 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChVzdHJ1X2Jhc2ljX2RhdGEucHJvdG8SBnpwcm90bxoWZW51bV9lX2JvZHlf",
-            "c2l6ZS5wcm90bxoVc3RydV9kaXJ0eV9tYXNrLnByb3RvIogDCglCYXNpY0Rh",
+            "c2l6ZS5wcm90bxoVc3RydV9kaXJ0eV9tYXNrLnByb3RvIrMDCglCYXNpY0Rh",
             "dGESDwoHY2hhcl9pZBgBIAEoAxIPCgdzaG93X2lkGAIgASgDEgwKBG5hbWUY",
             "AyABKAkSDgoGZ2VuZGVyGAQgASgFEiQKCWJvZHlfc2l6ZRgFIAEoDjIRLnpw",
             "cm90by5FQm9keVNpemUSDQoFbGV2ZWwYBiABKAUSEAoIc2NlbmVfaWQYByAB",
@@ -34,11 +34,12 @@ namespace Zproto {
             "GgoSY3VyX3RhbGVudF9wb29sX2lkGAwgASgNEhEKCWJvdF9haV9pZBgNIAEo",
             "DRIYChByZWdpc3Rlcl9jaGFubmVsGA4gASgFEhIKCmNoYXJfc3RhdGUYDyAB",
             "KAQSEwoLb25saW5lX3RpbWUYECABKAMSGAoQc3VtX3NhdmVfZGlhbW9uZBgR",
-            "IAEoAxIRCglpc19uZXdiaWUYEiABKAhiBnByb3RvMw=="));
+            "IAEoAxIRCglpc19uZXdiaWUYEiABKAgSFAoMc2Vhc29uX2xldmVsGBMgASgF",
+            "EhMKC2lzX2JhY2tmbG93GBQgASgIYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.EnumEBodySizeReflection.Descriptor, global::Zproto.StruDirtyMaskReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.BasicData), global::Zproto.BasicData.Parser, new[]{ "CharId", "ShowId", "Name", "Gender", "BodySize", "Level", "SceneId", "PersonalState", "OfflineTime", "SceneGuid", "CreateTime", "CurTalentPoolId", "BotAiId", "RegisterChannel", "CharState", "OnlineTime", "SumSaveDiamond", "IsNewbie" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.BasicData), global::Zproto.BasicData.Parser, new[]{ "CharId", "ShowId", "Name", "Gender", "BodySize", "Level", "SceneId", "PersonalState", "OfflineTime", "SceneGuid", "CreateTime", "CurTalentPoolId", "BotAiId", "RegisterChannel", "CharState", "OnlineTime", "SumSaveDiamond", "IsNewbie", "SeasonLevel", "IsBackflow" }, null, null, null, null)
           }));
     }
     #endregion
@@ -98,6 +99,8 @@ namespace Zproto {
       onlineTime_ = other.onlineTime_;
       sumSaveDiamond_ = other.sumSaveDiamond_;
       isNewbie_ = other.isNewbie_;
+      seasonLevel_ = other.seasonLevel_;
+      isBackflow_ = other.isBackflow_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -322,6 +325,30 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "season_level" field.</summary>
+    public const int SeasonLevelFieldNumber = 19;
+    private int seasonLevel_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int SeasonLevel {
+      get { return seasonLevel_; }
+      set {
+        seasonLevel_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "is_backflow" field.</summary>
+    public const int IsBackflowFieldNumber = 20;
+    private bool isBackflow_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsBackflow {
+      get { return isBackflow_; }
+      set {
+        isBackflow_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -355,6 +382,8 @@ namespace Zproto {
       if (OnlineTime != other.OnlineTime) return false;
       if (SumSaveDiamond != other.SumSaveDiamond) return false;
       if (IsNewbie != other.IsNewbie) return false;
+      if (SeasonLevel != other.SeasonLevel) return false;
+      if (IsBackflow != other.IsBackflow) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -380,6 +409,8 @@ namespace Zproto {
       if (OnlineTime != 0L) hash ^= OnlineTime.GetHashCode();
       if (SumSaveDiamond != 0L) hash ^= SumSaveDiamond.GetHashCode();
       if (IsNewbie != false) hash ^= IsNewbie.GetHashCode();
+      if (SeasonLevel != 0) hash ^= SeasonLevel.GetHashCode();
+      if (IsBackflow != false) hash ^= IsBackflow.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -467,6 +498,14 @@ namespace Zproto {
         output.WriteRawTag(144, 1);
         output.WriteBool(IsNewbie);
       }
+      if (SeasonLevel != 0) {
+        output.WriteRawTag(152, 1);
+        output.WriteInt32(SeasonLevel);
+      }
+      if (IsBackflow != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -546,6 +585,14 @@ namespace Zproto {
         output.WriteRawTag(144, 1);
         output.WriteBool(IsNewbie);
       }
+      if (SeasonLevel != 0) {
+        output.WriteRawTag(152, 1);
+        output.WriteInt32(SeasonLevel);
+      }
+      if (IsBackflow != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(IsBackflow);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -606,6 +653,12 @@ namespace Zproto {
         size += 2 + pb::CodedOutputStream.ComputeInt64Size(SumSaveDiamond);
       }
       if (IsNewbie != false) {
+        size += 2 + 1;
+      }
+      if (SeasonLevel != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(SeasonLevel);
+      }
+      if (IsBackflow != false) {
         size += 2 + 1;
       }
       if (_unknownFields != null) {
@@ -671,6 +724,12 @@ namespace Zproto {
       }
       if (other.IsNewbie != false) {
         IsNewbie = other.IsNewbie;
+      }
+      if (other.SeasonLevel != 0) {
+        SeasonLevel = other.SeasonLevel;
+      }
+      if (other.IsBackflow != false) {
+        IsBackflow = other.IsBackflow;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -764,6 +823,14 @@ namespace Zproto {
             IsNewbie = input.ReadBool();
             break;
           }
+          case 152: {
+            SeasonLevel = input.ReadInt32();
+            break;
+          }
+          case 160: {
+            IsBackflow = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -854,6 +921,14 @@ namespace Zproto {
           }
           case 144: {
             IsNewbie = input.ReadBool();
+            break;
+          }
+          case 152: {
+            SeasonLevel = input.ReadInt32();
+            break;
+          }
+          case 160: {
+            IsBackflow = input.ReadBool();
             break;
           }
         }

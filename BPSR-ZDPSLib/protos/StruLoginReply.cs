@@ -25,21 +25,21 @@ namespace Zproto {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChZzdHJ1X2xvZ2luX3JlcGx5LnByb3RvEgZ6cHJvdG8aF3N0cnVfYWNjb3Vu",
-            "dF9pbmZvLnByb3RvGhdlbnVtX2VfZXJyb3JfY29kZS5wcm90byKVAwoKTG9n",
+            "dF9pbmZvLnByb3RvGhdlbnVtX2VfZXJyb3JfY29kZS5wcm90byKtAwoKTG9n",
             "aW5SZXBseRIpCgxhY2NvdW50X2luZm8YAiABKAsyEy56cHJvdG8uQWNjb3Vu",
             "dEluZm8SEgoKYmVnaW5fdGltZRgDIAEoAxIYChBwcm90b2NvbF92ZXJzaW9u",
             "GAQgASgJEhYKDmNvbmZpZ192ZXJzaW9uGAUgASgJEhEKCXRpbWVfem9uZRgG",
             "IAEoCRIUCgxpc19wcml2aWxlZ2UYByABKAgSPwoPcGxhdGZvcm1fY29uZmln",
             "GAggAygLMiYuenByb3RvLkxvZ2luUmVwbHkuUGxhdGZvcm1Db25maWdFbnRy",
             "eRIZChFpc19jaGFuZ2VfYWNjb3VudBgJIAEoCBIbChNpbnN0YWxsX2NoYW5u",
-            "ZWxfZGlzGAogASgFEhcKD3JlZ19jaGFubmVsX2RpcxgLIAEoBRIkCghlcnJf",
-            "Y29kZRgMIAEoDjISLnpwcm90by5FRXJyb3JDb2RlGjUKE1BsYXRmb3JtQ29u",
-            "ZmlnRW50cnkSCwoDa2V5GAEgASgFEg0KBXZhbHVlGAIgASgJOgI4AWIGcHJv",
-            "dG8z"));
+            "ZWxfZGlzGAogASgFEhcKD3JlZ19jaGFubmVsX2RpcxgLIAEoBRIWCg5vcGVu",
+            "X2FjZV9jaGVjaxgMIAEoCBIkCghlcnJfY29kZRgNIAEoDjISLnpwcm90by5F",
+            "RXJyb3JDb2RlGjUKE1BsYXRmb3JtQ29uZmlnRW50cnkSCwoDa2V5GAEgASgF",
+            "Eg0KBXZhbHVlGAIgASgJOgI4AWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Zproto.StruAccountInfoReflection.Descriptor, global::Zproto.EnumEErrorCodeReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.LoginReply), global::Zproto.LoginReply.Parser, new[]{ "AccountInfo", "BeginTime", "ProtocolVersion", "ConfigVersion", "TimeZone", "IsPrivilege", "PlatformConfig", "IsChangeAccount", "InstallChannelDis", "RegChannelDis", "ErrCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Zproto.LoginReply), global::Zproto.LoginReply.Parser, new[]{ "AccountInfo", "BeginTime", "ProtocolVersion", "ConfigVersion", "TimeZone", "IsPrivilege", "PlatformConfig", "IsChangeAccount", "InstallChannelDis", "RegChannelDis", "OpenAceCheck", "ErrCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -91,6 +91,7 @@ namespace Zproto {
       isChangeAccount_ = other.isChangeAccount_;
       installChannelDis_ = other.installChannelDis_;
       regChannelDis_ = other.regChannelDis_;
+      openAceCheck_ = other.openAceCheck_;
       errCode_ = other.errCode_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -220,8 +221,20 @@ namespace Zproto {
       }
     }
 
+    /// <summary>Field number for the "open_ace_check" field.</summary>
+    public const int OpenAceCheckFieldNumber = 12;
+    private bool openAceCheck_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool OpenAceCheck {
+      get { return openAceCheck_; }
+      set {
+        openAceCheck_ = value;
+      }
+    }
+
     /// <summary>Field number for the "err_code" field.</summary>
-    public const int ErrCodeFieldNumber = 12;
+    public const int ErrCodeFieldNumber = 13;
     private global::Zproto.EErrorCode errCode_ = global::Zproto.EErrorCode.ErrSuccess;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -257,6 +270,7 @@ namespace Zproto {
       if (IsChangeAccount != other.IsChangeAccount) return false;
       if (InstallChannelDis != other.InstallChannelDis) return false;
       if (RegChannelDis != other.RegChannelDis) return false;
+      if (OpenAceCheck != other.OpenAceCheck) return false;
       if (ErrCode != other.ErrCode) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -275,6 +289,7 @@ namespace Zproto {
       if (IsChangeAccount != false) hash ^= IsChangeAccount.GetHashCode();
       if (InstallChannelDis != 0) hash ^= InstallChannelDis.GetHashCode();
       if (RegChannelDis != 0) hash ^= RegChannelDis.GetHashCode();
+      if (OpenAceCheck != false) hash ^= OpenAceCheck.GetHashCode();
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) hash ^= ErrCode.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -331,8 +346,12 @@ namespace Zproto {
         output.WriteRawTag(88);
         output.WriteInt32(RegChannelDis);
       }
-      if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
+      if (OpenAceCheck != false) {
         output.WriteRawTag(96);
+        output.WriteBool(OpenAceCheck);
+      }
+      if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
+        output.WriteRawTag(104);
         output.WriteEnum((int) ErrCode);
       }
       if (_unknownFields != null) {
@@ -382,8 +401,12 @@ namespace Zproto {
         output.WriteRawTag(88);
         output.WriteInt32(RegChannelDis);
       }
-      if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
+      if (OpenAceCheck != false) {
         output.WriteRawTag(96);
+        output.WriteBool(OpenAceCheck);
+      }
+      if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
+        output.WriteRawTag(104);
         output.WriteEnum((int) ErrCode);
       }
       if (_unknownFields != null) {
@@ -423,6 +446,9 @@ namespace Zproto {
       }
       if (RegChannelDis != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(RegChannelDis);
+      }
+      if (OpenAceCheck != false) {
+        size += 1 + 1;
       }
       if (ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ErrCode);
@@ -469,6 +495,9 @@ namespace Zproto {
       }
       if (other.RegChannelDis != 0) {
         RegChannelDis = other.RegChannelDis;
+      }
+      if (other.OpenAceCheck != false) {
+        OpenAceCheck = other.OpenAceCheck;
       }
       if (other.ErrCode != global::Zproto.EErrorCode.ErrSuccess) {
         ErrCode = other.ErrCode;
@@ -536,6 +565,10 @@ namespace Zproto {
             break;
           }
           case 96: {
+            OpenAceCheck = input.ReadBool();
+            break;
+          }
+          case 104: {
             ErrCode = (global::Zproto.EErrorCode) input.ReadEnum();
             break;
           }
@@ -602,6 +635,10 @@ namespace Zproto {
             break;
           }
           case 96: {
+            OpenAceCheck = input.ReadBool();
+            break;
+          }
+          case 104: {
             ErrCode = (global::Zproto.EErrorCode) input.ReadEnum();
             break;
           }
