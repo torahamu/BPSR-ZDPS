@@ -100,7 +100,7 @@ namespace BPSR_ZDPS.Windows
                 entityName = $"[{LoadedEntity.UID}]";
             }
 
-            if (ImGui.Begin($"Entity Inspector - {entityName}###EntityInspectorWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
+            if (ImGui.Begin($"ダメージ詳細 - {entityName}###EntityInspectorWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
             {
                 if (RunOnceDelayed == 0)
                 {
@@ -140,17 +140,17 @@ namespace BPSR_ZDPS.Windows
                                 //ImGui.Image((ImTextureRef)tex, new Vector2(texSize, texSize));
                                 ImGui.ImageWithBg((ImTextureRef)tex, new Vector2(texSize, texSize), new Vector2(0, 0), new Vector2(1, 1), new Vector4(0, 0, 0, 0), new Vector4(1, 1, 1, 0.50f));
                             }
-                            
+
                             ImGui.SetCursorPos(cursorStart);
                         }
                     }
 
-                    ImGui.TextUnformatted($"Name: {LoadedEntity.Name}");
-                    ImGui.TextUnformatted($"Level: {LoadedEntity.Level}");
-                    ImGui.TextUnformatted($"Ability Score: {LoadedEntity.AbilityScore}");
-                    ImGui.TextUnformatted($"Profession: {LoadedEntity.Profession}");
-                    ImGui.TextUnformatted($"ProfessionSpec: {LoadedEntity.SubProfession}");
-                    ImGui.TextUnformatted($"EntityType: {LoadedEntity.EntityType.ToString()}");
+                    ImGui.TextUnformatted($"名前: {LoadedEntity.Name}");
+                    ImGui.TextUnformatted($"レベル: {LoadedEntity.Level}");
+                    ImGui.TextUnformatted($"アビリティスコア: {LoadedEntity.AbilityScore}");
+                    ImGui.TextUnformatted($"職業: {LoadedEntity.Profession}");
+                    ImGui.TextUnformatted($"サブ職業: {LoadedEntity.SubProfession}");
+                    ImGui.TextUnformatted($"エンティティ種別: {LoadedEntity.EntityType.ToString()}");
 
                     ImGui.TableNextColumn();
 
@@ -161,24 +161,24 @@ namespace BPSR_ZDPS.Windows
 
                         ImGui.TableNextColumn();
                         ImGui.TextUnformatted($"HP: {LoadedEntity.GetAttrKV("AttrHp") ?? "0"}");
-                        ImGui.TextUnformatted($"Max HP: {LoadedEntity.GetAttrKV("AttrMaxHp") ?? "0"}");
-                        ImGui.TextUnformatted($"ATK: {LoadedEntity.GetAttrKV("AttrAttack") ?? "0"}");
+                        ImGui.TextUnformatted($"最大HP: {LoadedEntity.GetAttrKV("AttrMaxHp") ?? "0"}");
+                        ImGui.TextUnformatted($"攻撃力: {LoadedEntity.GetAttrKV("AttrAttack") ?? "0"}");
                         string MainStat = Professions.GetBaseProfessionMainStatName(LoadedEntity.ProfessionId);
                         if (MainStat == "Strength" || MainStat == "")
                         {
-                            ImGui.TextUnformatted($"Strength: {LoadedEntity.GetAttrKV("AttrStrength") ?? "0"}");
+                            ImGui.TextUnformatted($"筋力: {LoadedEntity.GetAttrKV("AttrStrength") ?? "0"}");
                         }
                         else if (MainStat == "Agility")
                         {
-                            ImGui.TextUnformatted($"Agility: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
+                            ImGui.TextUnformatted($"敏捷: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
                         }
                         else if (MainStat == "Intellect")
                         {
-                            ImGui.TextUnformatted($"Agility: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
+                            ImGui.TextUnformatted($"敏捷: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
                         }
 
-                        ImGui.TextUnformatted($"Endurance: {LoadedEntity.GetAttrKV("AttrVitality") ?? "0"}");
-                        ImGui.TextUnformatted($"Armor: {LoadedEntity.GetAttrKV("AttrDefense") ?? "0"}");
+                        ImGui.TextUnformatted($"耐久: {LoadedEntity.GetAttrKV("AttrVitality") ?? "0"}");
+                        ImGui.TextUnformatted($"防御: {LoadedEntity.GetAttrKV("AttrDefense") ?? "0"}");
 
                         ImGui.TableNextColumn();
                         var Cri = LoadedEntity.GetAttrKV("AttrCri"); // Raw Crit stat value
@@ -193,7 +193,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             CritPctValue = Math.Round((int)CritPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Crit: {CritPctValue}% ({CriValue})");
+                        ImGui.TextUnformatted($"クリティカル: {CritPctValue}% ({CriValue})");
 
                         var Haste = LoadedEntity.GetAttrKV("AttrHaste");
                         int HasteValue = 0;
@@ -207,7 +207,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             HastePctValue = Math.Round((int)HastePct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Haste: {HastePctValue}% ({HasteValue})");
+                        ImGui.TextUnformatted($"ヘイスト: {HastePctValue}% ({HasteValue})");
 
 
                         var Luck = LoadedEntity.GetAttrKV("AttrLuck");
@@ -222,7 +222,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             LuckPctValue = Math.Round((int)LuckPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Luck: {LuckPctValue}% ({LuckValue})");
+                        ImGui.TextUnformatted($"ラッキー: {LuckPctValue}% ({LuckValue})");
 
                         var Mastery = LoadedEntity.GetAttrKV("AttrMastery");
                         int MasteryValue = 0;
@@ -236,7 +236,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             MasteryPctValue = Math.Round((int)MasteryPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Mastery: {MasteryPctValue}% ({MasteryValue})");
+                        ImGui.TextUnformatted($"マスタリー: {MasteryPctValue}% ({MasteryValue})");
 
                         var Versatility = LoadedEntity.GetAttrKV("AttrVersatility");
                         int VersatilityValue = 0;
@@ -250,7 +250,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             VersatilityPctValue = Math.Round((int)VersatilityPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Versatility: {VersatilityPctValue} ({VersatilityValue})");
+                        ImGui.TextUnformatted($"万能: {VersatilityPctValue} ({VersatilityValue})");
 
                         var BlockPct = LoadedEntity.GetAttrKV("AttrBlockPct");
                         double BlockPctValue = 0.0;
@@ -258,7 +258,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             BlockPctValue = Math.Round((int)BlockPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"Block: {BlockPctValue}%");
+                        ImGui.TextUnformatted($"ブロック: {BlockPctValue}%");
 
                         ImGui.EndTable();
                     }
@@ -285,22 +285,22 @@ namespace BPSR_ZDPS.Windows
                     {
                         case ETableFilterMode.SkillsHealing:
                             combatStats = LoadedEntity.HealingStats;
-                            valueTotalLabel = "Total Healing:";
-                            valueExtraTotalLabel = "Total Overheal:";
-                            valueTotalPerSecondLabel = "Total HPS:";
+                            valueTotalLabel = "総回復量:";
+                            valueExtraTotalLabel = "総オーバーヒール:";
+                            valueTotalPerSecondLabel = "総HPS:";
                             break;
                         case ETableFilterMode.SkillsTaken:
                         case ETableFilterMode.EntityTaken:
                             combatStats = LoadedEntity.TakenStats;
-                            valueTotalLabel = "Total Taken:";
-                            valueExtraTotalLabel = "Total Shield:";
-                            valueTotalPerSecondLabel = "Total DPS:";
+                            valueTotalLabel = "総被ダメージ:";
+                            valueExtraTotalLabel = "総シールド:";
+                            valueTotalPerSecondLabel = "総DPS:";
                             break;
                         default:
                             combatStats = LoadedEntity.DamageStats;
-                            valueTotalLabel = "Total Damage:";
-                            valueExtraTotalLabel = "Total Shield Break:";
-                            valueTotalPerSecondLabel = "Total DPS:";
+                            valueTotalLabel = "総ダメージ:";
+                            valueExtraTotalLabel = "総シールドブレイク:";
+                            valueTotalPerSecondLabel = "総DPS:";
                             break;
                     }
 
@@ -326,22 +326,22 @@ namespace BPSR_ZDPS.Windows
                         }
                         else if (TableFilterMode == ETableFilterMode.SkillsTaken || TableFilterMode == ETableFilterMode.EntityTaken)
                         {
-                            ImGui.TextUnformatted($"Total Shield: {Utils.NumberToShorthand(LoadedEntity.TotalShield)}");
+                            ImGui.TextUnformatted($"総シールド: {Utils.NumberToShorthand(LoadedEntity.TotalShield)}");
                             ImGui.SetItemTooltip($"{LoadedEntity.TotalShield:N0}");
                         }
-                        ImGui.TextUnformatted($"Total Hits: {combatStats.HitsCount}");
+                        ImGui.TextUnformatted($"総ヒット数: {combatStats.HitsCount}");
 
                         ImGui.TableNextColumn();
-                        ImGui.TextUnformatted($"Total Crit Rate: {combatStats.CritRate}%");
-                        ImGui.TextUnformatted($"Total Lucky Rate: {combatStats.LuckyRate}%");
-                        ImGui.TextUnformatted($"Total Crits: {combatStats.CritCount}");
+                        ImGui.TextUnformatted($"総クリ率: {combatStats.CritRate}%");
+                        ImGui.TextUnformatted($"総ラッキー率: {combatStats.LuckyRate}%");
+                        ImGui.TextUnformatted($"総クリティカル数: {combatStats.CritCount}");
                         if (TableFilterMode == ETableFilterMode.SkillsDamage)
                         {
-                            ImGui.TextUnformatted($"Total Immunes: {combatStats.ImmuneCount}");
+                            ImGui.TextUnformatted($"総無効数: {combatStats.ImmuneCount}");
                         }
                         else if (TableFilterMode == ETableFilterMode.SkillsTaken || TableFilterMode == ETableFilterMode.EntityTaken)
                         {
-                            ImGui.TextUnformatted($"Total Immunes: {combatStats.ImmuneCount}");
+                            ImGui.TextUnformatted($"総無効数: {combatStats.ImmuneCount}");
                         }
 
                         ImGui.EndTable();
@@ -355,18 +355,18 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableSetupColumn("##DistributionRight", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.DefaultHide | ImGuiTableColumnFlags.NoResize, 1f, 1);
 
                         ImGui.TableNextColumn();
-                        ImGui.Text($"Total Normal Damage: {Utils.NumberToShorthand(combatStats.ValueNormalTotal)}");
+                        ImGui.Text($"通常ダメージ合計: {Utils.NumberToShorthand(combatStats.ValueNormalTotal)}");
                         ImGui.SetItemTooltip($"{combatStats.ValueNormalTotal:N0}");
-                        ImGui.Text($"Total Crit Damage: {Utils.NumberToShorthand(combatStats.ValueCritTotal)}");
+                        ImGui.Text($"クリダメージ合計: {Utils.NumberToShorthand(combatStats.ValueCritTotal)}");
                         ImGui.SetItemTooltip($"{combatStats.ValueCritTotal:N0}");
-                        ImGui.Text($"Total Lucky Damage: {Utils.NumberToShorthand(combatStats.ValueLuckyTotal)}");
+                        ImGui.Text($"幸運ダメージ合計: {Utils.NumberToShorthand(combatStats.ValueLuckyTotal)}");
                         ImGui.SetItemTooltip($"{combatStats.ValueLuckyTotal:N0}");
 
                         ImGui.TableNextColumn();
-                        ImGui.Text($"Total Lucky Strikes: {combatStats.LuckyCount}");
-                        ImGui.Text($"Total Average Damage: {Utils.NumberToShorthand(combatStats.ValueAverage)}");
+                        ImGui.Text($"総ラッキー回数: {combatStats.LuckyCount}");
+                        ImGui.Text($"平均ダメージ: {Utils.NumberToShorthand(combatStats.ValueAverage)}");
                         ImGui.SetItemTooltip($"{combatStats.ValueAverage:N0}");
-                        ImGui.Text($"Total Casts: {LoadedEntity.TotalCasts}");
+                        ImGui.Text($"総発動回数: {LoadedEntity.TotalCasts}");
 
                         ImGui.EndTable();
                     }
@@ -376,7 +376,7 @@ namespace BPSR_ZDPS.Windows
 
                 ImGui.Separator();
 
-                string[] FilterButtons = { "Damage", "Healing", "Taken", "Taken By Entity", "Attributes", "Buffs", "Graphs", "Debug" };
+                string[] FilterButtons = { "ダメージ", "回復", "被ダメ", "被ダメ（相手別）", "属性", "バフ", "グラフ", "デバッグ" };
 
                 for (int filerBtnIdx = 0; filerBtnIdx < FilterButtons.Length; filerBtnIdx++)
                 {
@@ -404,8 +404,8 @@ namespace BPSR_ZDPS.Windows
                 }
 
                 ImGui.SameLine();
-                ImGui.Checkbox("Persistent Tracking", ref PersistantTracking);
-                ImGui.SetItemTooltip("Enable this to track the current entity across new encounters instead of sticking to the one it was opened for.");
+                ImGui.Checkbox("追跡を維持", ref PersistantTracking);
+                ImGui.SetItemTooltip("有効にすると、エンカウントが切り替わっても現在のエンティティを追跡し続けます。");
 
                 if (TableFilterMode == ETableFilterMode.SkillsDamage || TableFilterMode == ETableFilterMode.SkillsHealing || TableFilterMode == ETableFilterMode.SkillsTaken)
                 {
@@ -427,9 +427,9 @@ namespace BPSR_ZDPS.Windows
 
                     if (ImGui.BeginTable("##SkillStatsTable", columnCount, ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingFixedFit))
                     {
-                        string valueTotalColumnName = "Damage";
+                        string valueTotalColumnName = "ダメージ";
                         string valuePerSecondColumnName = "Total DPS";
-                        string valueShareColumnName = "Total DMG %";
+                        string valueShareColumnName = "ダメージ割合%";
                         string valueExtraStatColumnName = "";
 
                         IReadOnlyList<KeyValuePair<int, CombatStats>> skillStats = null;
@@ -438,38 +438,38 @@ namespace BPSR_ZDPS.Windows
                         {
                             case ETableFilterMode.SkillsDamage:
                                 skillStats = (IReadOnlyList<KeyValuePair<int, CombatStats>>)(LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Damage.ValueTotal > 0).OrderByDescending(x => x.Value.Damage.ValueTotal).Select(x => new KeyValuePair<int, CombatStats>(x.Key, x.Value.Damage)).ToList());
-                                valueTotalColumnName = "Damage";
+                                valueTotalColumnName = "ダメージ";
                                 valuePerSecondColumnName = "Total DPS";
-                                valueShareColumnName = "Total DMG %";
+                                valueShareColumnName = "ダメージ割合%";
                                 break;
                             case ETableFilterMode.SkillsHealing:
                                 skillStats = (IReadOnlyList<KeyValuePair<int, CombatStats>>)(LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Healing.ValueTotal > 0).OrderByDescending(x => x.Value.Healing.ValueTotal).Select(x => new KeyValuePair<int, CombatStats>(x.Key, x.Value.Healing)).ToList());
-                                valueTotalColumnName = "Healing";
+                                valueTotalColumnName = "回復";
                                 valuePerSecondColumnName = "Total HPS";
-                                valueShareColumnName = "Total HEAL %";
+                                valueShareColumnName = "回復割合%";
                                 break;
                             case ETableFilterMode.SkillsTaken:
                                 skillStats = (IReadOnlyList<KeyValuePair<int, CombatStats>>)(LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Taken.ValueTotal > 0).OrderByDescending(x => x.Value.Taken.ValueTotal).Select(x => new KeyValuePair<int, CombatStats>(x.Key, x.Value.Taken)).ToList());
-                                valueTotalColumnName = "Damage";
+                                valueTotalColumnName = "ダメージ";
                                 valuePerSecondColumnName = "Total DPS";
-                                valueShareColumnName = "Total DMG %";
-                                valueExtraStatColumnName = "Deaths";
+                                valueShareColumnName = "ダメージ割合%";
+                                valueExtraStatColumnName = "死亡数";
                                 break;
                             default:
                                 skillStats = (IReadOnlyList<KeyValuePair<int, CombatStats>>)(LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Damage.ValueTotal > 0).OrderByDescending(x => x.Value.Damage.ValueTotal).Select(x => new KeyValuePair<int, CombatStats>(x.Key, x.Value.Damage)).ToList());
-                                valueTotalColumnName = "Damage";
+                                valueTotalColumnName = "ダメージ";
                                 valuePerSecondColumnName = "Total DPS";
-                                valueShareColumnName = "Total DMG %";
+                                valueShareColumnName = "ダメージ割合%";
                                 break;
                         }
 
                         ImGui.TableSetupColumn("ID");
-                        ImGui.TableSetupColumn("Skill Name", ImGuiTableColumnFlags.WidthStretch, 100f);
+                        ImGui.TableSetupColumn("スキル名", ImGuiTableColumnFlags.WidthStretch, 100f);
                         ImGui.TableSetupColumn(valueTotalColumnName);
                         ImGui.TableSetupColumn(valuePerSecondColumnName);
-                        ImGui.TableSetupColumn("Hit Count");
-                        ImGui.TableSetupColumn("Crit Rate");
-                        ImGui.TableSetupColumn("Avg Per Hit");
+                        ImGui.TableSetupColumn("ヒット数");
+                        ImGui.TableSetupColumn("クリ率");
+                        ImGui.TableSetupColumn("平均/Hit");
                         ImGui.TableSetupColumn(valueShareColumnName);
 
                         if (TableFilterMode == ETableFilterMode.SkillsTaken)
@@ -519,7 +519,7 @@ namespace BPSR_ZDPS.Windows
                             ImGui.TextUnformatted(displayName);
                             if (stat.Value.Level > 0)
                             {
-                                ImGui.SetItemTooltip($"Level: {stat.Value.Level}{(stat.Value.TierLevel > 0 ? $"\nTier: {stat.Value.TierLevel}" : "")}");
+                                ImGui.SetItemTooltip($"レベル: {stat.Value.Level}{(stat.Value.TierLevel > 0 ? $"\nティア: {stat.Value.TierLevel}" : "")}");
                             }
 
                             ImGui.TableNextColumn();
@@ -545,14 +545,14 @@ namespace BPSR_ZDPS.Windows
                             ulong immuneDamageTotal = stat.Value.ValueImmuneTotal;
                             if (ImGui.IsItemHovered() && ImGui.BeginTooltip())
                             {
-                                ImGui.TextUnformatted($"Type: {stat.Value.DamageMode}\nElement: {Utils.DamagePropertyToString(stat.Value.DamageElement)}");
+                                ImGui.TextUnformatted($"種類: {stat.Value.DamageMode}\n属性: {Utils.DamagePropertyToString(stat.Value.DamageElement)}");
                                 if (shieldBreakTotal > 0)
                                 {
-                                    ImGui.TextUnformatted($"Shield Break Damage: {Utils.NumberToShorthand(shieldBreakTotal)}");
+                                    ImGui.TextUnformatted($"シールドブレイク: {Utils.NumberToShorthand(shieldBreakTotal)}");
                                 }
                                 if (immuneDamageTotal > 0)
                                 {
-                                    ImGui.TextUnformatted($"Immuned Damage: {Utils.NumberToShorthand(immuneDamageTotal)}");
+                                    ImGui.TextUnformatted($"無効ダメージ: {Utils.NumberToShorthand(immuneDamageTotal)}");
                                 }
                                 ImGui.EndTooltip();
                             }
@@ -567,13 +567,13 @@ namespace BPSR_ZDPS.Windows
                                 string immuneString = "";
                                 if (stat.Value.ImmuneCount > 0)
                                 {
-                                    immuneString = $"Immune Count: {stat.Value.ImmuneCount}";
+                                    immuneString = $"無効回数: {stat.Value.ImmuneCount}";
                                 }
 
                                 string luckyString = "";
                                 if (stat.Value.LuckyCount > 0)
                                 {
-                                    luckyString = $"{(string.IsNullOrEmpty(immuneString) ? "" : "\n")}Lucky Count: {stat.Value.LuckyCount}";
+                                    luckyString = $"{(string.IsNullOrEmpty(immuneString) ? "" : "\n")}ラッキー回数: {stat.Value.LuckyCount}";
                                 }
 
                                 ImGui.SetItemTooltip($"{immuneString}{luckyString}");
@@ -630,13 +630,13 @@ namespace BPSR_ZDPS.Windows
 
                         ImGui.TableSetupColumn("#");
                         ImGui.TableSetupColumn("UID");
-                        ImGui.TableSetupColumn("Entity Name", ImGuiTableColumnFlags.WidthStretch, 100f);
+                        ImGui.TableSetupColumn("エンティティ名", ImGuiTableColumnFlags.WidthStretch, 100f);
                         ImGui.TableSetupColumn("Profession");
-                        ImGui.TableSetupColumn("Damage");
+                        ImGui.TableSetupColumn("ダメージ");
                         ImGui.TableSetupColumn("Total DPS");
-                        ImGui.TableSetupColumn("Hit Count");
-                        ImGui.TableSetupColumn("Crit Rate");
-                        ImGui.TableSetupColumn("Avg Per Hit");
+                        ImGui.TableSetupColumn("ヒット数");
+                        ImGui.TableSetupColumn("クリ率");
+                        ImGui.TableSetupColumn("平均/Hit");
 
                         ImGui.TableHeadersRow();
 
@@ -715,7 +715,7 @@ namespace BPSR_ZDPS.Windows
                 }
                 else if (TableFilterMode == ETableFilterMode.Attributes)
                 {
-                    ImGui.TextUnformatted("Attributes:");
+                    ImGui.TextUnformatted("属性一覧:");
 
                     if (ImGui.BeginListBox("##AttrListBox", new Vector2(-1, -32)))
                     {
@@ -747,7 +747,7 @@ namespace BPSR_ZDPS.Windows
 
                         if (ImGui.BeginPopupContextWindow())
                         {
-                            if (ImGui.MenuItem("Copy All Attributes"))
+                            if (ImGui.MenuItem("属性を全てコピー"))
                             {
                                 StringBuilder format = new();
                                 int cidx = 0;
@@ -762,7 +762,7 @@ namespace BPSR_ZDPS.Windows
                                 }
                                 ImGui.SetClipboardText(format.ToString());
                             }
-                            ImGui.SetItemTooltip("Copies all attributes (ignoring the active filter) for the entity to the clipboard.");
+                            ImGui.SetItemTooltip("フィルタを無視して、このエンティティの属性をすべてクリップボードにコピーします。");
 
                             ImGui.EndPopup();
                         }
@@ -771,7 +771,7 @@ namespace BPSR_ZDPS.Windows
                     }
 
                     ImGui.AlignTextToFramePadding();
-                    ImGui.TextUnformatted("Filter: ");
+                    ImGui.TextUnformatted("フィルタ: ");
                     ImGui.SameLine();
                     ImGui.SetNextItemWidth(-1);
                     ImGui.InputText("##AttributeFilterInpuit", ref AttributeFilter, 128);
@@ -784,15 +784,15 @@ namespace BPSR_ZDPS.Windows
                     {
                         ImGui.TableSetupScrollFreeze(0, 1);
                         ImGui.TableSetupColumn("UUID");
-                        ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 100f);
-                        ImGui.TableSetupColumn("Skill ID");
+                        ImGui.TableSetupColumn("名称", ImGuiTableColumnFlags.WidthStretch, 100f);
+                        ImGui.TableSetupColumn("スキルID");
                         ImGui.TableSetupColumn("Level");
-                        ImGui.TableSetupColumn("Type");
-                        ImGui.TableSetupColumn("Layers");
-                        ImGui.TableSetupColumn("Duration");
-                        ImGui.TableSetupColumn("Caster", ImGuiTableColumnFlags.WidthStretch, 50f);
-                        ImGui.TableSetupColumn("Add Time");
-                        ImGui.TableSetupColumn("Remove Time");
+                        ImGui.TableSetupColumn("種類");
+                        ImGui.TableSetupColumn("スタック");
+                        ImGui.TableSetupColumn("持続");
+                        ImGui.TableSetupColumn("付与者", ImGuiTableColumnFlags.WidthStretch, 50f);
+                        ImGui.TableSetupColumn("付与時刻");
+                        ImGui.TableSetupColumn("解除時刻");
 
                         ImGui.TableHeadersRow();
 
@@ -870,10 +870,10 @@ namespace BPSR_ZDPS.Windows
                                 {
                                     ImGui.PopStyleColor();
                                 }
-                                
+
                                 if (!string.IsNullOrEmpty(buffEvent.Description))
                                 {
-                                    ImGui.SetItemTooltip($"Buff Id: {buffEvent.BaseId}\n{buffEvent.Description.Replace("%", "%%")}{extraTooltip}");
+                                    ImGui.SetItemTooltip($"バフID: {buffEvent.BaseId}\n{buffEvent.Description.Replace("%", "%%")}{extraTooltip}");
                                 }
 
                                 ImGui.TableNextColumn();
@@ -886,7 +886,7 @@ namespace BPSR_ZDPS.Windows
                                 {
                                     if (!string.IsNullOrWhiteSpace(buffEvent.Icon))
                                     {
-                                        var tex = ImageArchive.LoadImage(Path.Combine("Buffs", buffEvent.Icon));
+                                        var tex = ImageArchive.LoadImage(Path.Combine("バフ", buffEvent.Icon));
                                         var itemRectSize = ImGui.GetItemRectSize().Y - ImGui.GetStyle().ItemSpacing.Y;
                                         float texSize = itemRectSize;
                                         if (tex != null)
@@ -994,9 +994,9 @@ namespace BPSR_ZDPS.Windows
                             SkillSnapshotsHits = LoadedEntity.SkillMetrics.AsValueEnumerable().Select(x => (float)x.Value.Damage.HitsCount).ToArray();
                         }
 
-                        if (ImPlot.BeginPlot("Total Damage Over Time"))
+                        if (ImPlot.BeginPlot("累計ダメージ推移"))
                         {
-                            ImPlot.SetupAxes("Time (Encounter Duration In Seconds)", "Damage", ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.AutoFit);
+                            ImPlot.SetupAxes("時間（エンカウント経過秒）", "ダメージ", ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.AutoFit);
 
                             unsafe
                             {
@@ -1012,15 +1012,15 @@ namespace BPSR_ZDPS.Windows
                             }
 
                             //ImPlot.FitPointY(SkillSnapshotsDamage.Max());
-                            ImPlot.PlotBars("Bars", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamageCumulative.ToArray()[0], SkillSnapshotsDamage.Length, 1);
-                            ImPlot.PlotLine("Line", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamageCumulative.ToArray()[0], SkillSnapshotsDamage.Length);
+                            ImPlot.PlotBars("棒", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamageCumulative.ToArray()[0], SkillSnapshotsDamage.Length, 1);
+                            ImPlot.PlotLine("線", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamageCumulative.ToArray()[0], SkillSnapshotsDamage.Length);
 
                             ImPlot.EndPlot();
                         }
 
-                        if (ImPlot.BeginPlot("Damage Per Second Over Time"))
+                        if (ImPlot.BeginPlot("秒間ダメージ推移"))
                         {
-                            ImPlot.SetupAxes("Time (Encounter Duration In Seconds)", "Damage Per Second", ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.AutoFit);
+                            ImPlot.SetupAxes("時間（エンカウント経過秒）", "秒間ダメージ", ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.AutoFit);
 
                             unsafe
                             {
@@ -1035,13 +1035,13 @@ namespace BPSR_ZDPS.Windows
                                 });
                             }
 
-                            ImPlot.PlotBars("Bars", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamage[0], SkillSnapshotsDamage.Length, 1);
-                            ImPlot.PlotLine("Line", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamage[0], SkillSnapshotsDamage.Length);
+                            ImPlot.PlotBars("棒", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamage[0], SkillSnapshotsDamage.Length, 1);
+                            ImPlot.PlotLine("線", ref SkillSnapshotTimestampSeconds[0], ref SkillSnapshotsDamage[0], SkillSnapshotsDamage.Length);
 
                             ImPlot.EndPlot();
                         }
 
-                        if (ImPlot.BeginPlot("Hits By Source", new Vector2(-1, 520), ImPlotFlags.NoMouseText))
+                        if (ImPlot.BeginPlot("スキル別ヒット数", new Vector2(-1, 520), ImPlotFlags.NoMouseText))
                         {
                             ImPlot.SetupAxes("", "", ImPlotAxisFlags.NoDecorations | ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.NoDecorations | ImPlotAxisFlags.AutoFit);
                             ImPlot.SetupLegend(ImPlotLocation.West, ImPlotLegendFlags.Outside);
@@ -1053,7 +1053,7 @@ namespace BPSR_ZDPS.Windows
                 else if (TableFilterMode == ETableFilterMode.Debug)
                 {
                     ImGui.TextUnformatted($"UUID: {LoadedEntity.UUID}");
-                    ImGui.TextUnformatted($"MonsterType: {LoadedEntity.MonsterType}");
+                    ImGui.TextUnformatted($"Monster種類: {LoadedEntity.MonsterType}");
                 }
 
                 ImGui.End();

@@ -75,7 +75,7 @@
 
   <ItemGroup>
     <None Update="Data\AppStrings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Audio\GuessICanJustStandAround.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

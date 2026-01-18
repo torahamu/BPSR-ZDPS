@@ -9,7 +9,7 @@ namespace BPSR_ZDPS.DataTypes
 {
     public static class AppStrings
     {
-        public static string CurrentLocale { get; set; } = "en";//CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        public static string CurrentLocale { get; set; } = "jp";//CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
         public static Dictionary<string, Dictionary<string, string>> Strings = new();
 

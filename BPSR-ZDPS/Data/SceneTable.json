@@ -45,7 +45,7 @@
   },
   "7": {
     "Id": 7,
-    "Name": "Asteria Plains",
+    "Name": "アステリア平原",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -93,7 +93,7 @@
   },
   "8": {
     "Id": 8,
-    "Name": "Asterleeds",
+    "Name": "アステルリーズ",
     "SceneType": 1,
     "SceneSubType": 3,
     "ParentId": 0,
@@ -279,7 +279,7 @@
   },
   "71": {
     "Id": 71,
-    "Name": "Duskdye Woods",
+    "Name": "花明かりの森",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -329,7 +329,7 @@
   },
   "72": {
     "Id": 72,
-    "Name": "Everfall Forest",
+    "Name": "雨止まぬ森",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -379,7 +379,7 @@
   },
   "73": {
     "Id": 73,
-    "Name": "Windhowl Canyon",
+    "Name": "風鳴りの峡谷",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -469,7 +469,7 @@
   },
   "75": {
     "Id": 75,
-    "Name": "Skimmer's Lair",
+    "Name": "黒藍の深窟",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
