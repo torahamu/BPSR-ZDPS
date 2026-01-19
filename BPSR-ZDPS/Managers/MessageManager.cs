@@ -1462,7 +1462,7 @@ namespace BPSR_ZDPS
                         Log.Debug($"All characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to true.");
                         isStateWipePattern = true;
                     }
-                    if (Settings.Instance.AllowWipeRecalculationOverwriting && !areAllCharactersDead && isStateWipePattern)
+                    if (!Settings.Instance.DisableWipeRecalculationOverwriting && !areAllCharactersDead && isStateWipePattern)
                     {
                         Log.Debug($"Not all characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to false.");
                         isStateWipePattern = false;
