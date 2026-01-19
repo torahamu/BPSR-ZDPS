@@ -2,6 +2,7 @@
 using BPSR_ZDPS.DataTypes.Chat;
 using BPSR_ZDPS.Managers;
 using Hexa.NET.ImGui;
+using System.Globalization;
 using System.Numerics;
 using Zproto;
 
@@ -267,6 +268,7 @@ namespace BPSR_ZDPS.Windows
         {
             var chatWindowSettings = Settings.Instance.WindowSettings.ChatWindow;
             var windowViewport = ImGui.GetWindowViewport();
+            bool openBlockedUsersPopup = false;
 
             ImGui.SetCursorPosX(ImGui.GetWindowSize().X - (25));
             ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
@@ -375,6 +377,13 @@ namespace BPSR_ZDPS.Windows
                     ChatManager.RemoveMessagesOverCap(Settings.Instance.Chat.MaxChatHistory);
                 }
 
+                ImGui.Dummy(new Vector2(0, 5));
+                ImGui.Separator();
+                if (ImGui.Button("Manage Blocked Users", new Vector2(-1, 0)))
+                {
+                    openBlockedUsersPopup = true;
+                }
+
                 ImGui.Separator();
                 if (ImGui.MenuItem("Close Chat Window"))
                 {
@@ -382,6 +391,55 @@ namespace BPSR_ZDPS.Windows
                     chatWindowSettings.WindowSize = ImGui.GetWindowSize();
                     IsOpened = false;
                 }
+
+                ImGui.EndPopup();
+            }
+
+            if (openBlockedUsersPopup)
+            {
+                ImGui.OpenPopup("BlockedUsersPopup");
+            }
+
+            ImGui.SetNextWindowPos(ImGui.GetWindowPos() + new Vector2(ImGui.GetWindowSize().X - 550, 30f));
+            if (ImGui.BeginPopup("BlockedUsersPopup"))
+            {
+                ImGui.TextUnformatted("Blocked Users");
+                ImGui.Separator();
+
+                var height = windowViewport.Size.Y - 100;
+                if (ImGui.BeginChild("BlockedUserArea", new Vector2(500, height), ImGuiChildFlags.None, ImGuiWindowFlags.NoDecoration))
+                {
+                    if (ImGui.BeginTable("BlockedUserTable", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
+                    {
+                        ImGui.TableSetupColumn("Blocked At", ImGuiTableColumnFlags.WidthFixed, 100f);
+                        ImGui.TableSetupColumn("UID", ImGuiTableColumnFlags.WidthFixed, 100f);
+                        ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch);
+                        ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, 80f);
+                        ImGui.TableHeadersRow();
+
+                        foreach (var blockedUser in Settings.Instance.Chat.BlockedUsers.Values)
+                        {
+                            ImGui.TableNextRow();
+                            ImGui.TableNextColumn();
+                            ImGui.TextUnformatted($"{(blockedUser.BlockedAt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))}");
+
+                            ImGui.TableNextColumn();
+                            ImGui.TextUnformatted($"{blockedUser.ID}");
+
+                            ImGui.TableNextColumn();
+                            ImGui.TextUnformatted($"{blockedUser.Name}");
+
+                            ImGui.TableNextColumn();
+                            if (ImGui.Button($"Unblock##{blockedUser.ID}", new Vector2(-1, 0)))
+                            {
+                                ChatManager.UnblockUser(blockedUser.ID);
+                            }
+                        }
+
+                        ImGui.EndTable();
+                    }
+                }
+                ImGui.EndChild();
 
                 ImGui.EndPopup();
             }
@@ -554,6 +612,12 @@ namespace BPSR_ZDPS.Windows
                     ImGui.SetClipboardText(sender.Info.CharId.ToString());
                 }
                 ImGui.SetItemTooltip($"Copies [ {sender.Info.CharId} ] to the clipboard.");
+
+                if (ImGui.MenuItem("Block User"))
+                {
+                    ChatManager.BlockUser(sender);
+                }
+                ImGui.SetItemTooltip($"Blocks this users ({sender.Info.Name}) messages from showing in your ZDPS chat.");
 
                 ImGui.EndPopup();
             }

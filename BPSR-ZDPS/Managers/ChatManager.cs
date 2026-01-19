@@ -143,6 +143,12 @@ namespace BPSR_ZDPS.Managers
         {
             if (Senders.TryGetValue(msg.SenderId, out var sender))
             {
+                bool isBlocked = IsUserBlocked(msg.SenderId);
+                if (isBlocked)
+                {
+                    return false;
+                }
+
                 bool isTextMsg = msg.Msg.MsgType == ChitChatMsgType.ChatMsgTextMessage;
                 bool isFromChannel = tab.Config.Channels.Contains(msg.Channel);
                 bool isOverLevel = sender.Info.Level >= tab.Config.OverLevel;
@@ -174,6 +180,37 @@ namespace BPSR_ZDPS.Managers
                     }
                 }
             }
+        }
+
+        public static void RefilterAllTabs()
+        {
+            foreach (var tab in ChatTabs)
+            {
+                RefilterChatTab(tab);
+            }
+        }
+
+        public static void BlockUser(User user)
+        {
+            var blockedUser = new UserBlock()
+            {
+                ID = user.Info.CharId,
+                Name = user.Info.Name,
+                BlockedAt = DateTime.Now
+            };
+
+            Settings.Instance.Chat.BlockedUsers.TryAdd(user.Info.CharId, blockedUser);
+        }
+
+        public static void UnblockUser(long userId)
+        {
+            Settings.Instance.Chat.BlockedUsers.TryRemove(userId, out var blockedUser);
+        }
+
+        public static bool IsUserBlocked(long userId)
+        {
+            bool isBlocked = Settings.Instance.Chat.BlockedUsers.ContainsKey(userId);
+            return isBlocked;
         }
     }
 }
