@@ -132,6 +132,8 @@ public enum EGameCapturePreference
     Epic,
     HaoPlaySea,
     XDG,
+    HaoPlaySeaSteam,
+    XDGSteam,
     Custom = 200
 }
 

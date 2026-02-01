@@ -235,7 +235,7 @@ namespace BPSR_ZDPS.Windows
 
                         var gamePrefName = Utils.GameCapturePreferenceToName(GameCapturePreference);
                         ImGui.SetNextItemWidth(150);
-                        if (ImGui.BeginCombo("##EGameCapturePreference", gamePrefName))
+                        if (ImGui.BeginCombo("##EGameCapturePreference", gamePrefName, ImGuiComboFlags.HeightLarge))
                         {
                             if (ImGui.Selectable("Auto"))
                             {
@@ -260,6 +260,14 @@ namespace BPSR_ZDPS.Windows
                             else if (ImGui.Selectable("XDG"))
                             {
                                 GameCapturePreference = EGameCapturePreference.XDG;
+                            }
+                            else if (ImGui.Selectable("HaoPlay SEA Steam"))
+                            {
+                                GameCapturePreference = EGameCapturePreference.HaoPlaySeaSteam;
+                            }
+                            else if (ImGui.Selectable("XDG Steam"))
+                            {
+                                GameCapturePreference = EGameCapturePreference.XDGSteam;
                             }
                             else if (ImGui.Selectable("Custom"))
                             {
@@ -780,6 +788,8 @@ namespace BPSR_ZDPS.Windows
 
                         if(ImGui.CollapsingHeader("Meter Settings"))
                         {
+                            ImGui.Indent();
+
                             ImGui.SeparatorText("Tanking");
 
                             ImGui.AlignTextToFramePadding();
@@ -822,6 +832,8 @@ namespace BPSR_ZDPS.Windows
                             ImGui.BeginDisabled(true);
                             ImGui.TextWrapped("When enabled, shows the current HP Percentage as a Red Bar instead of the Blue Bar that would normally show how much total damage the NPC has taken.");
                             ImGui.EndDisabled();
+                            ImGui.Unindent();
+
                             ImGui.Unindent();
                         }
 

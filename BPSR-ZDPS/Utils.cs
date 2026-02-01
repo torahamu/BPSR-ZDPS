@@ -376,6 +376,8 @@ namespace BPSR_ZDPS
                 EGameCapturePreference.Epic => "Epic",
                 EGameCapturePreference.HaoPlaySea => "HaoPlay SEA",
                 EGameCapturePreference.XDG => "XDG",
+                EGameCapturePreference.HaoPlaySeaSteam => "HaoPlay SEA Steam",
+                EGameCapturePreference.XDGSteam => "XDG Steam",
                 EGameCapturePreference.Custom => "Custom"
             };
 
@@ -386,12 +388,14 @@ namespace BPSR_ZDPS
         {
             string[] exeNameToCapture = pref switch
             {
-                EGameCapturePreference.Auto => ["BPSR", "BPSR_STEAM", "BPSR_EPIC", "StarSEA", "StarASIA"],
+                EGameCapturePreference.Auto => ["BPSR", "BPSR_STEAM", "BPSR_EPIC", "StarSEA", "StarASIA", "StarSEA_STEAM", "StarASIA_STEAM"],
                 EGameCapturePreference.Steam => ["BPSR_STEAM"],
                 EGameCapturePreference.Standalone => ["BPSR"],
                 EGameCapturePreference.Epic => ["BPSR_EPIC"],
                 EGameCapturePreference.HaoPlaySea => ["StarSEA"],
                 EGameCapturePreference.XDG => ["StarASIA"],
+                EGameCapturePreference.HaoPlaySeaSteam => ["StarSEA_STEAM"],
+                EGameCapturePreference.XDGSteam => ["StarASIA_STEAM"],
                 EGameCapturePreference.Custom => [Settings.Instance.GameCaptureCustomExeName]
             };
 
