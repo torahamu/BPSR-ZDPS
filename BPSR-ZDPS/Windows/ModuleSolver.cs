@@ -853,12 +853,12 @@ namespace BPSR_ZDPS
 
     public struct ModuleSet
     {
-        public ushort Mod1;
-        public ushort Mod2;
-        public ushort Mod3;
-        public ushort Mod4;
+        public int Mod1;
+        public int Mod2;
+        public int Mod3;
+        public int Mod4;
 
-        public ushort[] Mods => [Mod1, Mod2, Mod3, Mod4];
+        public int[] Mods => [Mod1, Mod2, Mod3, Mod4];
     }
 
     public struct ModComboResult
