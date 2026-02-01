@@ -31,6 +31,7 @@ namespace BPSR_ZDPS
         public static long BenchmarkSingleTargetUUID { get; set; }
 
         public static bool IsEncounterSavingPaused { get; set; } = false;
+        public static bool WasEncounterSavingPaused { get; set; } = false; // For restoring Pause state after being in an Active Dungeon State
 
         public static bool MousePassthrough { get; set; } = false;
 

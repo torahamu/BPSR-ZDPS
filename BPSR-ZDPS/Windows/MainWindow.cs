@@ -305,7 +305,10 @@ namespace BPSR_ZDPS.Windows
                 ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.DarkRed_Transparent);
                 ImGui.BeginChild("##EncounterSavingPausedChild", ImGuiChildFlags.AutoResizeY);
                 ImGui.TextAligned(0.5f, -1, "Encounter Saving Is Paused");
+                if (!Settings.Instance.PersistEncounterSavingPauseStateBetweenMaps)
+                {
                 ImGui.TextAligned(0.5f, -1, "Automatically resumes if you change maps.");
+                }
                 ImGui.SetCursorPosX((ImGui.GetContentRegionAvail().X - 200) * 0.5f);
                 ImGui.PushStyleColor(ImGuiCol.Button, Colors.DarkGreen);
                 if (ImGui.Button("RESUME SAVING NOW##ResumeEncounterSavingBtn", new Vector2(200, 0)))

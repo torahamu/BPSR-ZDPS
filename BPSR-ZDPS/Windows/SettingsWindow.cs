@@ -38,6 +38,8 @@ namespace BPSR_ZDPS.Windows
         static int databaseRetentionPolicyDays;
         static bool limitEncounterBuffTrackingWithoutDatabase;
         static bool allowEncounterSavingPausingInOpenWorld;
+        static bool persistEncounterSavingPauseStateBetweenMaps;
+        static bool minimalProcessingWhileEncounterSavingPaused;
 
         static bool meterSettingsTankingShowDeaths;
         static bool meterSettingsNpcTakenShowHpData;
@@ -413,6 +415,30 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TextWrapped("When enabled, a button is added to the top of the Main Window that allows the current Encounter to not be saved to the Database.\nThis is only available while in the Open World and will automatically disable when map changing. Benchmarking and Manual New Encounter creation will be disabled while Paused.\nNote: At least one map change is required before the button will appear after starting ZDPS.");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
+
+                        ImGui.BeginDisabled(!allowEncounterSavingPausingInOpenWorld);
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Persist Encounter Saving Pause State Between Maps: ");
+                        ImGui.SameLine();
+                        ImGui.Checkbox("##PersistEncounterSavingPauseStateBetweenMaps", ref persistEncounterSavingPauseStateBetweenMaps);
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("When enabled, the Encounter Saving Pause state will be remembered even after changing maps. However, the state will not persist between ZDPS sessions.");
+                        ImGui.EndDisabled();
+                        ImGui.Unindent();
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Minimal Processing While Encounter Saving Paused: ");
+                        ImGui.SameLine();
+                        ImGui.Checkbox("##MinimalProcessingWhileEncounterSavingPaused", ref minimalProcessingWhileEncounterSavingPaused);
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("When enabled, while Encounter Saving is Paused, DPS and other metrics will not be calculated. Only the minimum amount of data (Attributes) will be processed.");
+                        ImGui.EndDisabled();
+                        ImGui.Unindent();
+
+                        ImGui.EndDisabled();
 
                         ImGui.EndChild();
                         ImGui.EndTabItem();
@@ -1422,6 +1448,8 @@ namespace BPSR_ZDPS.Windows
             databaseRetentionPolicyDays = Settings.Instance.DatabaseRetentionPolicyDays;
             limitEncounterBuffTrackingWithoutDatabase = Settings.Instance.LimitEncounterBuffTrackingWithoutDatabase;
             allowEncounterSavingPausingInOpenWorld = Settings.Instance.AllowEncounterSavingPausingInOpenWorld;
+            persistEncounterSavingPauseStateBetweenMaps = Settings.Instance.PersistEncounterSavingPauseStateBetweenMaps;
+            minimalProcessingWhileEncounterSavingPaused = Settings.Instance.MinimalProcessingWhileEncounterSavingPaused;
 
             meterSettingsTankingShowDeaths = Settings.Instance.MeterSettingsTankingShowDeaths;
             meterSettingsNpcTakenShowHpData = Settings.Instance.MeterSettingsNpcTakenShowHpData;
@@ -1496,6 +1524,7 @@ namespace BPSR_ZDPS.Windows
             if (!allowEncounterSavingPausingInOpenWorld)
             {
                 AppState.IsEncounterSavingPaused = false;
+                AppState.WasEncounterSavingPaused = false;
             }
 
             Settings.Instance.NormalizeMeterContributions = normalizeMeterContributions;
@@ -1519,6 +1548,8 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.UseDatabaseForEncounterHistory = useDatabaseForEncounterHistory;
             Settings.Instance.DatabaseRetentionPolicyDays = databaseRetentionPolicyDays;
             Settings.Instance.LimitEncounterBuffTrackingWithoutDatabase = limitEncounterBuffTrackingWithoutDatabase;
+            Settings.Instance.PersistEncounterSavingPauseStateBetweenMaps = persistEncounterSavingPauseStateBetweenMaps;
+            Settings.Instance.MinimalProcessingWhileEncounterSavingPaused = minimalProcessingWhileEncounterSavingPaused;
 
             Settings.Instance.MeterSettingsTankingShowDeaths = meterSettingsTankingShowDeaths;
             Settings.Instance.MeterSettingsNpcTakenShowHpData = meterSettingsNpcTakenShowHpData;

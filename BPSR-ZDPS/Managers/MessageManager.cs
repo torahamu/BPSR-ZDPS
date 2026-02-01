@@ -840,6 +840,12 @@ namespace BPSR_ZDPS
                 //System.Diagnostics.Debug.WriteLine($"delta.TempAttrs.Attrs.count = {delta.TempAttrs.Attrs.Count}");
             }
 
+            if (AppState.IsEncounterSavingPaused && Settings.Instance.MinimalProcessingWhileEncounterSavingPaused)
+            {
+                BattleStateMachine.CheckDeferredCalls();
+                return;
+            }
+
             long buffBasedShieldBreakValue = 0;
             
             List<int> EventHandledBuffs = new();
@@ -1556,15 +1562,19 @@ namespace BPSR_ZDPS
 
             if (dun?.DungeonVar?.Data != null)
             {
+                BattleStateMachine.DungeonVarHistoryAdd(dun.DungeonVar);
+
                 if (dun?.DungeonVar?.Data.Count > 1)
                 {
-                    System.Diagnostics.Debug.WriteLine("DungeonVar.Data.Count > 1!!");
+                    //System.Diagnostics.Debug.WriteLine("DungeonVar.Data.Count > 1!!");
                 }
-
+                // Season 2 dungeons (once again) do not all follow a common design practice such as some are missing the Kill Boss objective
+                // TODO: Send this over to the BattleStateMachine
+                // TODO: If Encounter has an End time, and DungeonVarData.IsFinishTarget == 1, and at least 1 enemy is alive, trigger EncounterStart for New Objective
                 int dungeonVarDataIdx = 0;
                 foreach (var dungeonVarData in dun.DungeonVar.Data)
                 {
-                    System.Diagnostics.Debug.WriteLine($"dun.DungeonVar.Data.dungeonVarData[{dungeonVarDataIdx}] = {dungeonVarData.Name}, {dungeonVarData.Value}");
+                    //System.Diagnostics.Debug.WriteLine($"dun.DungeonVar.Data.dungeonVarData[{dungeonVarDataIdx}] = {dungeonVarData.Name}, {dungeonVarData.Value}");
 
                     dungeonVarDataIdx++;
                 }
