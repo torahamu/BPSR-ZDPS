@@ -165,6 +165,22 @@ namespace BPSR_ZDPS
                         }
                     }
                 }
+                else if (reason == EncounterStartReason.Wipe)
+                {
+                    var priorBosses = priorEncounter.Entities.AsValueEnumerable().Where(x => x.Value.EntityType == EEntityType.EntMonster && x.Value.MonsterType == EMonsterType.Boss);
+                    foreach (var priorBoss in priorBosses)
+                    {
+                        var bossCache = new EncounterBossDataCache()
+                        {
+                            UUID = priorBoss.Key,
+                            Name = priorBoss.Value.Name,
+                            Hp = priorBoss.Value.Hp,
+                            MaxHp = priorBoss.Value.MaxHp,
+                            Attrs = priorBoss.Value.Attributes.ToDictionary()
+                        };
+                        Current.PreviousBossCache[priorBoss.Key] = bossCache;
+                    }
+                }
             }
             if (reason == EncounterStartReason.NewObjective)
             {
@@ -200,6 +216,7 @@ namespace BPSR_ZDPS
                 if (nextEncounterIdModifier != 0 && !AppState.IsEncounterSavingPaused)
                 {
                     DB.InsertEncounter(priorEncounter);
+                    GC.Collect();
                 }
             }
 
@@ -438,6 +455,7 @@ namespace BPSR_ZDPS
         public List<long> BossUUIDs { get; set; } = new();
         public EDungeonState DungeonState { get; set; } = EDungeonState.DungeonStateNull;
         public uint ChannelLine { get; set; } = 0;
+        public Dictionary<long, EncounterBossDataCache> PreviousBossCache = new();
 
         public Encounter()
         {
@@ -490,7 +508,7 @@ namespace BPSR_ZDPS
             }
             else
             {
-                entity = new Entity(uuid);
+                entity = new Entity(uuid, null, this);
                 Entities.TryAdd(uuid, entity);
                 return entity;
             }
@@ -968,6 +986,15 @@ namespace BPSR_ZDPS
         public EncounterExData() { }
     }
 
+    public class EncounterBossDataCache
+    {
+        public long UUID;
+        public string Name;
+        public long Hp;
+        public long MaxHp;
+        public Dictionary<string, object> Attrs;
+    }
+
     public class Entity : System.ICloneable
     {
         public long UUID { get; set; }
@@ -1075,11 +1102,24 @@ namespace BPSR_ZDPS
         }
 
         [JsonConstructor]
-        public Entity(long uuid, string name = null)
+        public Entity(long uuid, string name = null, Encounter encounter = null)
         {
             UUID = uuid;
             UID = Utils.UuidToEntityId(uuid);
             Name = name;
+
+            if (encounter != null)
+            {
+                // Restore boss data from the previous attempt if it exists
+                // This is done before anything else to ensure required Attributes exist and are overriden by new data
+                if (encounter.PreviousBossCache.Count > 0 && encounter.PreviousBossCache.TryGetValue(uuid, out var foundEnt))
+                {
+                    SetHpValuesNoUpdate(foundEnt.Hp, foundEnt.MaxHp);
+                    Attributes = foundEnt.Attrs.ToDictionary();
+
+                    encounter.PreviousBossCache.Remove(uuid);
+                }
+            }
 
             SetEntityType((EEntityType)Utils.UuidToEntityType(uuid));
 
@@ -1276,7 +1316,7 @@ namespace BPSR_ZDPS
         public void SetHpValuesNoUpdate(long hp, long maxHp)
         {
             Hp = hp;
-            MaxHp = MaxHp;
+            MaxHp = maxHp;
         }
 
         public void SetHpValues(long hp = -1, long maxHp = -1)

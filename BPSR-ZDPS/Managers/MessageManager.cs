@@ -732,6 +732,15 @@ namespace BPSR_ZDPS
                     case EAttrType.AttrTeamId:
                         EncounterManager.Current.SetAttrKV(uuid, "AttrTeamId", reader.ReadInt64());
                         break;
+                    case EAttrType.AttrStateTime:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrStateTime", reader.ReadInt64());
+                        break;
+                    case EAttrType.AttrRideUuid:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrRideUuid", reader.ReadInt64());
+                        break;
+                    case EAttrType.AttrDeadTime:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrDeadTime", reader.ReadInt64());
+                        break;
                     default:
                         string attr_name = ((EAttrType)attr.Id).ToString();
                         EncounterManager.Current.SetAttrKV(uuid, attr_name, reader.ReadInt32());
@@ -1453,7 +1462,7 @@ namespace BPSR_ZDPS
                         var charState = character.Value.GetAttrKV("AttrState");
                         if (charState != null)
                         {
-                            if ((EActorState)charState != EActorState.ActorStateDead && character.Value.Hp > 0)
+                            if (((EActorState)charState != EActorState.ActorStateDead || (EActorState)charState != EActorState.ActorStateResurrection) && character.Value.Hp > 0)
                             {
                                 areAllCharactersDead = false;
                             }
@@ -1492,16 +1501,17 @@ namespace BPSR_ZDPS
                             // If all bosses are full HP, then let's call it a wipe
                             long? hp = boss.Value.GetAttrKV("AttrHp") as long?;
                             long? maxHp = boss.Value.GetAttrKV("AttrMaxHp") as long?;
+                            var bossState = boss.Value.GetAttrKV("AttrState");
                             // Might need to use MaxHpTotal?
-                            if (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp)
+                            if ((bossState != null && (EActorState)bossState == EActorState.ActorStateBorn) || (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp))
                             {
                                 EncounterManager.Current.SetWipeState(true);
-                                //System.Diagnostics.Debug.WriteLine($"We've hit a wipe (bossesAtMaxHp = {bossesAtMaxHp})! Start up a new encounter");
+                                System.Diagnostics.Debug.WriteLine($"We've hit a wipe (bossesAtMaxHp = {bossesAtMaxHp})! Start up a new encounter");
                                 EncounterManager.StartEncounter(false, EncounterStartReason.Wipe);
                             }
                             else
                             {
-                                //System.Diagnostics.Debug.WriteLine($"We didn't hit a wipe yet {boss.UUID} - {boss.Name} {hp} / {maxHp}");
+                                System.Diagnostics.Debug.WriteLine($"We didn't hit a wipe yet {boss.Value.UUID} - {boss.Value.Name} {hp} / {maxHp}");
                             }
                         }
                     }
