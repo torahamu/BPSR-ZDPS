@@ -261,6 +261,9 @@ namespace BPSR_ZDPS.Windows
                     // Ability Score
 
                     ImGui.TableNextColumn();
+                    // Season Strength
+
+                    ImGui.TableNextColumn();
                     ImGui.TextUnformatted(Utils.NumberToShorthand(encounter.TotalDamage));
 
                     ImGui.TableNextColumn();
