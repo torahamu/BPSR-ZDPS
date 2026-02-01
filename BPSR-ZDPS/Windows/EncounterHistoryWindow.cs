@@ -159,7 +159,6 @@ namespace BPSR_ZDPS.Windows
                     SelectedViewMode = 0;
                     SelectedEncounterIndex = -1;
 
-                    //LoadFromDB();
                     HandleDBLoad();
                 }
                 if (viewMode == 0)
@@ -176,10 +175,7 @@ namespace BPSR_ZDPS.Windows
                 {
                     SelectedViewMode = 1;
                     SelectedEncounterIndex = -1;
-                    // TODO: Allow viewing encounters grouped by their BattleId and showing the combined totals for them
 
-                    //GroupEncountersByBattleId();
-                    //LoadFromDB();
                     HandleDBLoad();
                 }
                 if (viewMode == 1)
@@ -197,7 +193,6 @@ namespace BPSR_ZDPS.Windows
                 }
 
                 List<Encounter> encounters = new List<Encounter>();
-                // TODO: Support reading history from an encounter cache file as well
                 ImGui.AlignTextToFramePadding();
                 if (SelectedViewMode == 0)
                 {
@@ -207,7 +202,6 @@ namespace BPSR_ZDPS.Windows
                 else
                 {
                     encounters = GroupedBattles;
-                    // We subtract 2 because the current encounter is also in here
                     ImGui.Text($"Battles: {Battles.Count}");
                 }
 
@@ -253,8 +247,6 @@ namespace BPSR_ZDPS.Windows
                         var encounterTuple = BuildDropdownStringName(encounters[i].StartTime, encounters[i].EndTime, encounters[i].SceneName, i);
                         if (ImGui.Selectable(encounterIndexText, isSelected, ImGuiSelectableFlags.SpanAllColumns))
                         {
-                            // TODO: Load up the historical encounter
-
                             // TODO: This clean up logic won't play nice if the Entity Inspector is open on a Historical
                             if (!isSelected && SelectedEncounterIndex != -1)
                             {
@@ -594,6 +586,13 @@ namespace BPSR_ZDPS.Windows
                             {
                                 HideEntitiesWithNoDamageDealt = !HideEntitiesWithNoDamageDealt;
                             }
+                            ImGui.BeginDisabled(!Settings.Instance.KeepPastEncounterInMeterUntilNextDamage);
+                            if (ImGui.MenuItem("Show In Meters UI"))
+                            {
+                                AppState.ActiveEncounter = encounters[SelectedEncounterIndex];
+                            }
+                            ImGui.EndDisabled();
+                            ImGui.SetItemTooltip("This only works if 'Keep Past Encounter In Meter Until Next Damage' is Enabled");
                             ImGui.EndPopup();
                         }
 

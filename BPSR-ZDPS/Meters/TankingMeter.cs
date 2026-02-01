@@ -29,33 +29,38 @@ namespace BPSR_ZDPS.Meters
 
                 if (Settings.Instance.KeepPastEncounterInMeterUntilNextDamage)
                 {
-                    if (ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    if ((AppState.ActiveEncounter == null && EncounterManager.Current != null) || (AppState.ActiveEncounter != null && AppState.ActiveEncounter.Entities.IsEmpty))
                     {
-                        ActiveEncounter = EncounterManager.Current;
+                        AppState.ActiveEncounter = EncounterManager.Current;
                     }
-                    else if (ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId)
+                    /*else if (AppState.ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    {
+                        AppState.ActiveEncounter = EncounterManager.Current;
+                    }*/
+                    else if (AppState.ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId)
                     {
                         if (EncounterManager.Current.HasStatsBeenRecorded())
                         {
-                            ActiveEncounter = EncounterManager.Current;
+                            AppState.ActiveEncounter = EncounterManager.Current;
                         }
                     }
                 }
                 else
                 {
-                    if (ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId || ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    if (AppState.ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId || AppState.ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
                     {
-                        ActiveEncounter = EncounterManager.Current;
+                        AppState.ActiveEncounter = EncounterManager.Current;
                     }
                 }
 
-                var playerList = ActiveEncounter?.Entities.AsValueEnumerable().Where(x => x.Value.EntityType == Zproto.EEntityType.EntChar && (x.Value.TotalTakenDamage > 0 || x.Value.TotalDeaths > 0)).OrderByDescending(x => x.Value.TotalTakenDamage).ToArray();
+                var playerList = AppState.ActiveEncounter.Entities.AsValueEnumerable().Where(x => x.Value.EntityType == Zproto.EEntityType.EntChar && (x.Value.TotalTakenDamage > 0 || x.Value.TotalDeaths > 0)).OrderByDescending(x => x.Value.TotalTakenDamage);
 
                 ulong topTotalValue = 0;
 
-                for (int i = 0; i < playerList?.Count(); i++)
+                int i = 0;
+                foreach (var player in playerList)
                 {
-                    var entity = playerList[i].Value;
+                    var entity = player.Value;
 
                     if (i == 0 && Settings.Instance.NormalizeMeterContributions)
                     {
@@ -90,9 +95,9 @@ namespace BPSR_ZDPS.Meters
 
                     double contribution = 0.0;
                     double contributionProgressBar = 0.0;
-                    if (ActiveEncounter.TotalHealing != 0)
+                    if (AppState.ActiveEncounter.TotalHealing != 0)
                     {
-                        contribution = Math.Round(((double)entity.TotalTakenDamage / (double)ActiveEncounter.TotalTakenDamage) * 100, 4);
+                        contribution = Math.Round(((double)entity.TotalTakenDamage / (double)AppState.ActiveEncounter.TotalTakenDamage) * 100, 4);
 
                         if (Settings.Instance.NormalizeMeterContributions)
                         {
@@ -143,11 +148,12 @@ namespace BPSR_ZDPS.Meters
                     //if (SelectableWithHint($" {(i + 1).ToString().PadLeft((playerList.Count() < 101 ? 2 : 3), '0')}. {name}-{profession} ({entity.AbilityScore})##TpsEntry_{i}", tps_format))
                     {
                         mainWindow.entityInspector = new EntityInspector();
-                        mainWindow.entityInspector.LoadEntity(entity, ActiveEncounter.StartTime);
+                        mainWindow.entityInspector.LoadEntity(entity, AppState.ActiveEncounter.StartTime);
                         mainWindow.entityInspector.Open();
                     }
 
                     ImGui.PopFont();
+                    i++;
                 }
 
                 ImGui.EndListBox();

@@ -30,48 +30,54 @@ namespace BPSR_ZDPS.Meters
 
                 if (Settings.Instance.KeepPastEncounterInMeterUntilNextDamage)
                 {
-                    if (ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    if ((AppState.ActiveEncounter == null && EncounterManager.Current != null) || (AppState.ActiveEncounter != null && AppState.ActiveEncounter.Entities.IsEmpty))
                     {
-                        ActiveEncounter = EncounterManager.Current;
+                        AppState.ActiveEncounter = EncounterManager.Current;
                     }
-                    else if (ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId)
+                    /*else if (AppState.ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    {
+                        AppState.ActiveEncounter = EncounterManager.Current;
+                    }*/
+                    else if (AppState.ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId)
                     {
                         if (EncounterManager.Current.HasStatsBeenRecorded())
                         {
-                            ActiveEncounter = EncounterManager.Current;
+                            AppState.ActiveEncounter = EncounterManager.Current;
                         }
                     }
                 }
                 else
                 {
-                    if (ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId || ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
+                    if (AppState.ActiveEncounter?.EncounterId != EncounterManager.Current?.EncounterId || AppState.ActiveEncounter?.BattleId != EncounterManager.Current?.BattleId)
                     {
-                        ActiveEncounter = EncounterManager.Current;
+                        AppState.ActiveEncounter = EncounterManager.Current;
                     }
                 }
 
-                var playerList = ActiveEncounter?.Entities.AsValueEnumerable()
+                var playerList = AppState.ActiveEncounter.Entities.AsValueEnumerable()
                     .Where(x => x.Value.EntityType == Zproto.EEntityType.EntChar && (Settings.Instance.OnlyShowDamageContributorsInMeters ? x.Value.TotalDamage > 0 : true))
-                    .OrderByDescending(x => x.Value.TotalDamage).ToArray();
+                    .OrderByDescending(x => x.Value.TotalDamage);
 
                 ulong topTotalValue = 0;
 
-                for (int i = 0; i < playerList?.Count(); i++)
+                int i = 0;
+                foreach (var player in playerList)
                 {
-                    var entity = playerList[i].Value;
+                    var entity = player.Value;
+
+                    if (i == 0 && Settings.Instance.NormalizeMeterContributions)
+                    {
+                        topTotalValue = entity.TotalDamage;
+                    }
 
                     if (Settings.Instance.OnlyShowPartyMembersInMeters && AppState.PartyTeamId != 0 && AppState.PlayerUUID != 0 && AppState.PlayerUUID != entity.UUID)
                     {
                         var teamId = entity.GetAttrKV("AttrTeamId") as long?;
                         if (teamId == null || (teamId != null && AppState.PartyTeamId != teamId))
                         {
+                            i++;
                             continue;
                         }
-                    }
-
-                    if (i == 0 && Settings.Instance.NormalizeMeterContributions)
-                    {
-                        topTotalValue = entity.TotalDamage;
                     }
 
                     string name = "Unknown";
@@ -103,7 +109,7 @@ namespace BPSR_ZDPS.Meters
                     double contribution = 0.0;
                     double contributionProgressBar = 0.0;
                     // TotalDamage is the player only total, TotalNpcDamage is only for monster's totals
-                    ulong totalEncounterDamage = ActiveEncounter.TotalDamage;
+                    ulong totalEncounterDamage = AppState.ActiveEncounter.TotalDamage;
 
                     if (totalEncounterDamage != 0)
                     {
@@ -173,11 +179,12 @@ namespace BPSR_ZDPS.Meters
                     //if (ImGui.Selectable($"{name}-{profession} ({entity.AbilityScore}) [{entity.UID.ToString()}] ({entity.TotalDamage})##DpsEntry_{i}"))
                     {
                         mainWindow.entityInspector = new EntityInspector();
-                        mainWindow.entityInspector.LoadEntity(entity, ActiveEncounter.StartTime);
+                        mainWindow.entityInspector.LoadEntity(entity, AppState.ActiveEncounter.StartTime);
                         mainWindow.entityInspector.Open();
                     }
 
                     ImGui.PopFont();
+                    i++;
                 }
 
                 ImGui.EndListBox();

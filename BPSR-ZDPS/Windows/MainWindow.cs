@@ -300,6 +300,27 @@ namespace BPSR_ZDPS.Windows
                 ImGui.EndTable();
             }
 
+            if (AppState.ActiveEncounter != null && Settings.Instance.KeepPastEncounterInMeterUntilNextDamage)
+            {
+                if (AppState.ActiveEncounter.BattleId != EncounterManager.Current?.BattleId || AppState.ActiveEncounter.EncounterId != EncounterManager.Current?.EncounterId)
+                {
+                    ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.Goldenrod_Transparent);
+                    ImGui.BeginChild("##EncounterNotCurrentChild", ImGuiChildFlags.AutoResizeY);
+                    ImGui.TextAligned(0.5f, -1, "Viewing Historical Encounter Data");
+                    ImGui.SetCursorPosX((ImGui.GetContentRegionAvail().X - 200) * 0.5f);
+                    ImGui.PushStyleColor(ImGuiCol.Button, Colors.DarkGreen);
+                    if (ImGui.Button("Go To Current Encounter##GoToCurrentEncounterBtn", new Vector2(200, 0)))
+                    {
+                        AppState.ActiveEncounter = EncounterManager.Current;
+                        // Try and release some stale resources immediately
+                        GC.Collect();
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.EndChild();
+                    ImGui.PopStyleColor();
+                }
+            }
+
             if (AppState.IsEncounterSavingPaused)
             {
                 ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.DarkRed_Transparent);
@@ -362,6 +383,7 @@ namespace BPSR_ZDPS.Windows
                     if (ImGui.MenuItem($"{FASIcons.Pause}##PauseEncounterSavingBtn"))
                     {
                         AppState.IsEncounterSavingPaused = !AppState.IsEncounterSavingPaused;
+                        AppState.WasEncounterSavingPaused = AppState.IsEncounterSavingPaused;
                     }
                     ImGui.PopStyleColor();
                     ImGui.PopFont();

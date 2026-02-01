@@ -41,6 +41,8 @@ namespace BPSR_ZDPS
 
         public static long PartyTeamId = 0;
 
+        public static Encounter? ActiveEncounter = null;
+
         public static void LoadDataTables()
         {
             // Load table data for resolving with in the future
