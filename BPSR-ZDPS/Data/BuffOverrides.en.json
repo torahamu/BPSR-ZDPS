@@ -1,8 +1,20 @@
 {
+    "20301":
+    {
+        "Name": "Life Bloom (Heal)",
+        "Desc": "",
+        "BuffType": 1
+    },
     "21402":
     {
         "Name": "Special Attack Healing",
         "Desc": "Healing component of the Special Attack skill",
+        "BuffType": 1
+    },
+    "21406":
+    {
+        "Name": "Grove Wish (Heal)",
+        "Desc": "",
         "BuffType": 1
     },
     "21408":
@@ -26,6 +38,12 @@
     {
         "Name": "Fast Growth (Growth Arcane)",
         "Desc": "Growth Arcane Increases MATK and Reduces CD"
+    },
+    "21413":
+    {
+        "Name": "15% Element Resistance",
+        "Desc": "Grove Wish 15% Element Resistance",
+        "BuffType": 1
     },
     "21422":
     {
@@ -104,9 +122,181 @@
         "Desc": "Access to the secondary class resource has been granted",
         "BuffType": 1
     },
+    "55301":
+    {
+        "Name": "Rhapsody of Flame: Health Regen",
+        "BuffType": 1
+    },
+    "55302":
+    {
+        "Name": "Healing Beat",
+        "Desc": "Play a tune that heals the caster and the nearby ally with the lowest HP.\nHealing scales with the caster's MATK plus 3% of target's Max HP",
+        "BuffType": 1
+    },
+    "55303":
+    {
+        "Name": "Fivefold Crescendo - Seek Target",
+        "Desc": "Target selection component of Fivefold Crescendo",
+        "BuffType": 1
+    },
+    "55304":
+    {
+        "Name": "Fivefold Crescendo - Heal",
+        "Desc": "Healing tick from Fivefold Crescendo",
+        "BuffType": 1
+    },
+    "55311":
+    {
+        "Name": "Beat Performer Resource Regen Buff",
+        "Desc": "Beat Performer's Class Resource"
+    },
+    "55312":
+    {
+        "Name": "Beat Performer Refill Resources",
+        "Desc": "Refill the Class Resources"
+    },
+    "55315":
+    {
+        "Name": "Beat Performer Ultimate (Shield)",
+        "Desc": "Shield that decays over time from Rock the Stage or Infinite Rhapsody"
+    },
+    "55326":
+    {
+        "Name": "Rhapsody of Flame: Fire Bonus",
+        "Desc": "While standing within the graffiti, the caster gains 10% Fire Bonus",
+        "BuffType": 1
+    },
+    "55328":
+    {
+        "Name": "Fivefold Crescendo - Doubled",
+        "Desc": "Doubles the healing instances of Fivefold Crescendo from Center Stage",
+        "BuffType": 1
+    },
+    "55331":
+    {
+        "Name": "Heroic Melody - Wild Aria",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "55332":
+    {
+        "Name": "Healing Melody - Serene Aria",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "55334":
+    {
+        "Name": "Harmonic Anthem - Doubled",
+        "Desc": "Doubles the damage of Harmonic Anthem from Center Stage",
+        "BuffType": 1
+    },
+    "55335":
+    {
+        "Name": "Passion Burst - Instant Max Form",
+        "Desc": "Allows instant max form of Passion Burst from Center Stage",
+        "BuffType": 1
+    },
+    "55336":
+    {
+        "Name": "Center Stage Buff",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "55337":
+    {
+        "Name": "Heroic Melody Fast Fierce Strike",
+        "Desc": "Halves the time needed to trigger Fierce Strike for Heroic Melody from Center Stage",
+        "BuffType": 1
+    },
+    "55338":
+    {
+        "Name": "Concert Circuit (Target Seek)",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "55339":
+    {
+        "Name": "Concert Circuit (Healing)",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "55340":
+    {
+        "Name": "Rhapsody of Flame: Shape Selector",
+        "Desc": "Decides what Shape the Graffiti will spawn in",
+        "BuffType": 1
+    },
     "55341":
     {
-        "Name": "Heroic Melody"
+        "Name": "Heroic Melody Heal",
+        "Desc": "Healing tick from Heroic Melody",
+        "BuffType": 1
+    },
+    "55342":
+    {
+        "Name": "Healing Melody Heal",
+        "Desc": "Healing tick from Healing Melody",
+        "BuffType": 1
+    },
+    "55344":
+    {
+        "Name": "Rock the Stage (Base Heal)",
+        "Desc": "Normal heal from Ultimate skill",
+        "BuffType": 1
+    },
+    "55346":
+    {
+        "Name": "Beat Performer Ultimate (Max Heal)",
+        "Desc": "Max heal from Ultimate skill Rock the Stage or Infinite Rhapsody",
+        "BuffType": 1
+    },
+    "55348":
+    {
+        "Name": "Center Stage MATK Buff",
+        "Desc": "Increases your MATK for a period of time",
+        "BuffType": 1
+    },
+    "55349":
+    {
+        "Name": "Fierce Strike - Harmonic Anthem Charge",
+        "Desc": "Instantly give a charge to Harmonic Anthem",
+        "BuffType": 1
+    },
+    "55350":
+    {
+        "Name": "Concert Circuit Increase Healing and DMG",
+        "Desc": "Each healed ally increases healing by 6% up to 39%, and each hit enemy increases DMG by 6% up to 30%",
+        "BuffType": 1
+    },
+    "55351":
+    {
+        "Name": "Heroic Melody BGM",
+        "Desc": "Music component of Heroic Melody",
+        "BuffType": 1
+    },
+    "55352":
+    {
+        "Name": "Healing Melody BGM",
+        "Desc": "Music component of Healing Melody",
+        "BuffType": 1
+    },
+    "55354":
+    {
+        "Name": "Peaceful Tune",
+        "Desc": "Whenever DMG is dealt, restores HP equal to 20% of the DMG dealt, distributed evenly among up to 5 allies",
+        "BuffType": 1
+    },
+    "55355":
+    {
+        "Name": "Healing of Stillness",
+        "Desc": "If you deal no DMG to enemies for 5s, each hit of your Basic Attack will heal up to 10 allies",
+        "BuffType": 1
+    },
+    "55395":
+    {
+        "Name": "Heroic Melody Conversion Boost",
+        "Desc": "Heroic Melody's conversion rate boost for Peaceful Tune Conversion +50%",
+        "BuffType": 1
     },
     "55401":
     {
@@ -258,6 +448,16 @@
         "Name": "Sword and Shield - Strength",
         "BuffType": 1
     },
+    "2031011":
+    {
+        "Name": "Guitar - Intellect",
+        "BuffType": 1
+    },
+    "2031111":
+    {
+        "Name": "Guitar - Luck",
+        "BuffType": 1
+    },
     "2031105":
     {
         "Name": "Forest Ring - Luck",
@@ -356,7 +556,13 @@
     "2202120":
     {
         "Name": "Nature Shield (Talent)",
-        "Desc": "When Wild Bl,oom heals a target, it also applies Nature Shield to them.\nTargets with Nature Shield restore HP when hit, with the amount equal to 10% of your ATK",
+        "Desc": "When Wild Bloom heals a target, it also applies Nature Shield to them.\nTargets with Nature Shield restore HP when hit, with the amount equal to 10% of your ATK",
+        "BuffType": 1
+    },
+    "2202121":
+    {
+        "Name": "Nature Shield (HP Regen)",
+        "Desc": "Targets with Nature Shield restore HP when hit, with the amount equal to 10% of your ATK.\nThis can occur up to once per second",
         "BuffType": 1
     },
     "2202130":
@@ -409,8 +615,14 @@
     },
     "2202200":
     {
-        "Name": "Verdant Duet",
+        "Name": "Verdant Duet (Talent)",
         "Desc": "Life Bloom has a fixed 20% chance to heal 1 additional time",
+        "BuffType": 1
+    },
+    "2202201":
+    {
+        "Name": "Verdant Duet",
+        "Desc": "Life Bloom heals 1 additional time",
         "BuffType": 1
     },
     "2202210":
@@ -446,6 +658,12 @@
     "2202260":
     {
         "Name": "Wings of Revival",
+        "Desc": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once ever 45s.\nRevival: Restores HP equal to 50% of the DMG taken over 5s",
+        "BuffType": 1
+    },
+    "2202261":
+    {
+        "Name": "Wings of Revival (Tracking)",
         "Desc": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once ever 45s.\nRevival: Restores HP equal to 50% of the DMG taken over 5s",
         "BuffType": 1
     },
@@ -715,6 +933,12 @@
     "2202710":
     {
         "Name": "Bud to Blossom",
+        "Desc": "When a Flower Stalk appears, grants 1 Regen Bud every 2s for 10s",
+        "BuffType": 1
+    },
+    "2202711":
+    {
+        "Name": "Bud to Blossom (Tracking)",
         "Desc": "When a Flower Stalk appears, grants 1 Regen Bud every 2s for 10s",
         "BuffType": 1
     },
@@ -1240,10 +1464,534 @@
         "Name": "Sacred Blade Enhancement",
         "Desc": "Resolved to Return Talent."
     },
+    "2207010":
+    {
+        "Name": "Passion Surge",
+        "Desc": "When Melody is active, there is a chance per second to gain Passion Surge.\nPassion Surge: Special Attack costs zero Performance Passion for 10s. Ends after Special Attack cast",
+        "BuffType": 1
+    },
+    "2207011":
+    {
+        "Name": "Passion Surge (Talent)",
+        "Desc": "Activated the Passion Surge talent proc chance",
+        "BuffType": 1
+    },
+    "2207012":
+    {
+        "Name": "Special Attack No Consume - Center Stage",
+        "Desc": "Special Attacks do not consume Performance Passion from Center Stage",
+        "BuffType": 1
+    },
+    "2207020":
+    {
+        "Name": "String Expansion",
+        "Desc": "Performance Passion max limit +1",
+        "BuffType": 1
+    },
+    "2207030":
+    {
+        "Name": "Heat Surge",
+        "Desc": "When Melody is activated, the trigger chance for Passion Surge +3% every second up to 30%",
+        "BuffType": 1
+    },
+    "2207050":
+    {
+        "Name": "Arcane Ascension",
+        "Desc": "Special Attack costs 1 less Performance Passion",
+        "BuffType": 1
+    },
+    "2207060":
+    {
+        "Name": "Melody: Heat Core",
+        "Desc": "Melody heals ally targets below 50% HP with 100% bonus effect",
+        "BuffType": 1
+    },
+    "2207070":
+    {
+        "Name": "Flame Pursuit",
+        "Desc": "After using 3 Special Attacks, the next Basic Attack hit triggers Flame Pillar Blast",
+        "BuffType": 1
+    },
+    "2207071":
+    {
+        "Name": "Flame Pillar Blast Ready",
+        "Desc": "The next Basic Attack hit triggers Flame Pillar Blast",
+        "BuffType": 1
+    },
+    "2207080":
+    {
+        "Name": "Flame Pursuit II",
+        "Desc": "Flame Pillar Blast becomes a two-hit combo",
+        "BuffType": 1
+    },
+    "2207090":
+    {
+        "Name": "Dissonance Spec",
+        "Desc": "While in Rhapsody of Flame, increases all Luck Chance acquired by any means by 50% and increases Resistance by 25%",
+        "BuffType": 1
+    },
+    "2207100":
+    {
+        "Name": "Lucky Soundwave",
+        "Desc": "Gains 1 Soundwave Energy whenever Expertise Skills or Amplified Beat trigger a Lucky Strike",
+        "BuffType": 1
+    },
+    "2207110":
+    {
+        "Name": "Trio Rhapsody",
+        "Desc": "Rhapsody of Flame always appears in its most powerful form. While in Rhapsody of Flame, healing +20%",
+        "BuffType": 1
+    },
+    "2207120":
+    {
+        "Name": "Severed Chapter",
+        "Desc": "Increases Resilience Break Efficiency of self and Allies by 10%.\nAfter activating Heroic Melody, you and Allies have a Resilience Break Efficiency +30% and deal 15% more DMG to Broken targets",
+        "BuffType": 1
+    },
+    "2207121":
+    {
+        "Name": "Severed Chapter - Break Boost",
+        "Desc": "Increases Resilience Break Efficiency of self and Allies by 10%",
+        "BuffType": 1
+    },
+    "2207122":
+    {
+        "Name": "Severed Chapter - Break Boost (Active)",
+        "Desc": "You and Allies have a Resilience Break Efficiency +30% and deal 15% more DMG to Broken targets",
+        "BuffType": 1
+    },
+    "2207130":
+    {
+        "Name": "Sound Blaze",
+        "Desc": "Gains 1 Soundwave Energy each time you deal DMG equal to 10 times ATK.\nSkills consuming Performance Pasion trigger Scorching Impact when dealing DMG consuming all Soundwave Energy",
+        "BuffType": 1
+    },
+    "2207131":
+    {
+        "Name": "Soundwave Energy",
+        "Desc": "Skills consuming Performance Passion trigger Scorching Impact when dealing DMG consuming all Soundwave Energy",
+        "BuffType": 1
+    },
+    "2207132":
+    {
+        "Name": "Soundwave Count Damage Increase",
+        "Desc": "Each 1 Soundwave Energy increases Scorching Impact DMG by 10%",
+        "BuffType": 1
+    },
+    "2207140":
+    {
+        "Name": "Healing Note (Talent)",
+        "Desc": "Basic Attack deals an extra instance of DMG.\nFor every 5 Soundwave Energy obtained, creates a Note for the ally with the lowest HP",
+        "BuffType": 1
+    },
+    "2207141":
+    {
+        "Name": "Note (Healing Note)",
+        "Desc": "Restores HP equal to 3% ATK in total within 10s. When a Note is granted again, it immediately triggers the remaining healing of the previous Note",
+        "BuffType": 1
+    },
+    "2207150":
+    {
+        "Name": "Blazing Heal (Talent)",
+        "Desc": "Stores excess Healing (up to 500% of Max HP). After activating Heroic Melody, consumes stored Healing to recover allies' HP every 1s up to 15% of Max HP per second",
+        "BuffType": 1
+    },
+    "2207151":
+    {
+        "Name": "Blazing Heal (Heal)",
+        "Desc": "After activating Heroic Melody, consumes stored Healing to recover allies' HP every 1s up to 15% of Max HP per second",
+        "BuffType": 1
+    },
+    "2207170":
+    {
+        "Name": "Restart (Talent)",
+        "Desc": "When Harmonic Anthem or Fierce Strike triggers a Lucky Strike, resets Rhapsody of Flame's CD and allows it to not consume Performance Passion",
+        "BuffType": 1
+    },
+    "2207171":
+    {
+        "Name": "Restart",
+        "Desc": "Reset Rhapsody of Flame's CD and allows it to not consume Performance Passion for next cast within 10s",
+        "BuffType": 1
+    },
+    "2207180":
+    {
+        "Name": "Concerto Spec",
+        "Desc": "Replaces Special Attack with Healing Beat.\nWhile Healing Melody is active, reduces the remaining CD of Fivefold Crescendo and Passion Burst by 1s per second",
+        "BuffType": 1
+    },
+    "2207190":
+    {
+        "Name": "Brilliant Charge",
+        "Desc": "When Healing Beat or Passion Burst applies Crit Healing or deals Crit DMG, gains 1 Performance Passion",
+        "BuffType": 1
+    },
+    "2207181":
+    {
+        "Name": "Healing Melody CD Reduction Buff",
+        "Desc": "While Healing Melody is active, reduces the remaining CD of Fivefold Crescendo and Passion Burst by 1s per second",
+        "BuffType": 1
+    },
+    "2207200":
+    {
+        "Name": "Double Recovery Note",
+        "Desc": "Healing Beat provides an additional equal Healing to targets under the influence of Healing Melody"
+    },
+    "2207210":
+    {
+        "Name": "Crit Healing",
+        "Desc": "Increases Crit Healing by 25%"
+    },
+    "2207220":
+    {
+        "Name": "Fiery Beat",
+        "Desc": "Healing Beat Crit Rate +10%\nHealing Beat Healing +10%"
+    },
+    "2207230":
+    {
+        "Name": "Critical Encore",
+        "Desc": "Every 1% Crit Rate grants 1% trigger chance for Encore Strings"
+    },
+    "2207240":
+    {
+        "Name": "Passion Fury (Talent)",
+        "Desc": "For each 10 Performance Passion consumed, enhances Passion Burst to Passion Fury for 10s",
+        "BuffType": 1
+    },
+    "2207241":
+    {
+        "Name": "Passion Fury",
+        "Desc": "Passion Burst enhanced into Passion Fury for 10s",
+        "BuffType": 1
+    },
+    "2207243":
+    {
+        "Name": "Passion Fury Counter",
+        "Desc": "For each 10 Performance Passion consumed, enhances Passion Burst to Passion Fury for 10s",
+        "BuffType": 1
+    },
+    "2207250":
+    {
+        "Name": "Stat Resonance (Talent)",
+        "Desc": "While Healing Melody is active, grants allies appropriate buffs (Strength, Intellect, Agility) equal to 8% of Intellect",
+        "BuffType": 1
+    },
+    "2207251":
+    {
+        "Name": "Stat Resonance (Get Primary Attribute)",
+        "Desc": "Determines primary attribute (Strength, Intellect, Agility) of target",
+        "BuffType": 1
+    },
+    "2207252":
+    {
+        "Name": "Stat Resonance (Boost Primary Attribute)",
+        "Desc": "Boosts primary attribute (Strength, Intellect, Agility) of target",
+        "BuffType": 1
+    },
+    "2207260":
+    {
+        "Name": "Stat Resonance Crit (Talent)",
+        "Desc": "For 10s after using Passion Burst or Passion Fury, doubles the buffs that Healing Melody provides to allies",
+        "BuffType": 1
+    },
+    "2207261":
+    {
+        "Name": "Stat Resonance Crit",
+        "Desc": "Doubles the Primary Attribute buffs that Healing Melody provides to allies",
+        "BuffType": 1
+    },
+    "2207270":
+    {
+        "Name": "Fire Day",
+        "Desc": "Increases Fire Bonus by 8% when attacking Elite or higher targets",
+        "BuffType": 1
+    },
+    "2207280":
+    {
+        "Name": "Critical Acclaim",
+        "Desc": "During Center Stage, triggering Encore Strings has a 30% chance to grant Passion Surge",
+        "BuffType": 1
+    },
+    "2207290":
+    {
+        "Name": "Rhythm Spirit",
+        "Desc": "Defeating an enemy has a fixed 50% chance to grant you 1 Performance Passion",
+        "BuffType": 1
+    },
+    "2207301":
+    {
+        "Name": "Performance Passion Restore (Infinite Rhapsody)",
+        "Desc": "Doubles the Performance PAssion cap and fully restores Performance Passion",
+        "BuffType": 1
+    },
+    "2207320":
+    {
+        "Name": "Encore Chain",
+        "Desc": "When Encore Strings triggers, it activates a second time on the same target.\nLucky Strike Chance is reduced by 20%",
+        "BuffType": 1
+    },
+    "2207330":
+    {
+        "Name": "Heat Boost",
+        "Desc": "When Intellect reaches 500, Performance Energy cap +20%",
+        "BuffType": 1
+    },
+    "2207331":
+    {
+        "Name": "Heat Boost Sub Buff",
+        "Desc": "Performance Energy cap +20%",
+        "BuffType": 1
+    },
+    "2207340":
+    {
+        "Name": "Variation",
+        "Desc": "Increase Max HP by 20%. Concerto Spec replaces Basic Attack with Resonant Strings",
+        "BuffType": 1
+    },
+    "2207350":
+    {
+        "Name": "Melody Chord",
+        "Desc": "Melody Healing +20%. Each 1% Hate increases Regen Speed of Performance Passion by 1%",
+        "BuffType": 1
+    },
+    "2207360":
+    {
+        "Name": "Exaltation",
+        "Desc": "Performance Energy Regen Speed +10%",
+        "BuffType": 1
+    },
+    "2207370":
+    {
+        "Name": "Indomitable Chord (Talent)",
+        "Desc": "While Heroic Melody is active, grants Super Armor, increases Resistance by 25%, and boosts movement speed by 10%",
+        "BuffType": 1
+    },
+    "2207371":
+    {
+        "Name": "Indomitable Chord (Buff)",
+        "Desc": "Grants Super Armor, increases Resistance by 25%, and boosts movement speed by 10%",
+        "BuffType": 1
+    },
+    "2207380":
+    {
+        "Name": "Swing Reflux",
+        "Desc": "Hitting a target with Fierce Strike recovers 5 Performance Energy.\nEach additional target hit provides 1 extra Performance Energy up to 10 total",
+        "BuffType": 1
+    },
+    "2207390":
+    {
+        "Name": "Luck Multiplier",
+        "Desc": "Every 1% Luck grants 0.5% Lucky Strike DMG Multiplier. After activating Heroic Melody, doubles its conversion efficiency",
+        "BuffType": 1
+    },
+    "2207400":
+    {
+        "Name": "Resonant Counterpoint",
+        "Desc": "When a Note forms, there's a 50% chance to create an extra Note for a different target",
+        "BuffType": 1
+    },
+    "2207420":
+    {
+        "Name": "Sonic Therapy",
+        "Desc": "Converted healing from DMG +20% for targets affected by Note",
+        "BuffType": 1
+    },
+    "2207410":
+    {
+        "Name": "Sonic Cure",
+        "Desc": "When Expertise deal DMG, additionally heal targets with Note",
+        "BuffType": 1
+    },
+    "2207430":
+    {
+        "Name": "Flame's Rampage",
+        "Desc": "When Heroic Melody is active, Rhapsody of Flame will erupt, dealing Magic Damage equal to 50% ATK every 3s to targets it touches.\nWhile in Rhapsody of Flame, each hit of Harmonic Anthem also heals 1 ally with lowest HP for 30% DMG dealt",
+        "BuffType": 1
+    },
+    "2207431":
+    {
+        "Name": "Flame's Rampage DMG",
+        "Desc": "When Heroic Melody is active, Rhapsody of Flame will erupt, dealing Magic Damage equal to 50% ATK every 3s to targets it touches.",
+        "BuffType": 1
+    },
+    "2207450":
+    {
+        "Name": "Finale Command",
+        "Desc": "Within 10s of casting Encore, each use of Rhapsody of Flame causes targets affected by Encore to trigger Encore Strings",
+        "BuffType": 1
+    },
+    "2207460":
+    {
+        "Name": "Encore Persistence",
+        "Desc": "Permanently benefits from Encore effect.\nFor every 5 triggers of Encore Strings, the next Amplified Beat and Harmonic Anthem deal 50% more DMG",
+        "BuffType": 1
+    },
+    "2207470":
+    {
+        "Name": "Encore Luck Boost",
+        "Desc": "Every 1% Luck Chance grants 1% trigger chance for Encore Strings",
+        "BuffType": 1
+    },
+    "2207480":
+    {
+        "Name": "Encore Sharp Strike",
+        "Desc": "Triggering Encore Strings to deal DMG or healing grants 2 Performance Energy.\nIf the Encore Strings triggers Lucky Strike, grants 3 extra Performance Energy",
+        "BuffType": 1
+    },
+    "2207490":
+    {
+        "Name": "Absolute Center Stage",
+        "Desc": "After you use Center Stage, the next of enhanced skills increases from 1 to 2",
+        "BuffType": 1
+    },
+    "2207500":
+    {
+        "Name": "Center Stage: Mad Tune",
+        "Desc": "Each Performance Passion consumed reduces the CD of Center Stage by 1s",
+        "BuffType": 1
+    },
+    "2207510":
+    {
+        "Name": "Tower Multiwave",
+        "Desc": "Casting Center Stage immediately extends Heroic Melody by 5s",
+        "BuffType": 1
+    },
+    "2207520":
+    {
+        "Name": "Soundwave Overclock",
+        "Desc": "Upon casting Center Stage, grants 15 Soundwave Energy, and doubles all the Soundwave Energy gained in the next 10s",
+        "BuffType": 1
+    },
+    "2207530":
+    {
+        "Name": "Crit Charge Rhythm",
+        "Desc": "Fivefold Crescendo deals Crit DMG or healing, grants 2 Performance Energy.\nWhen Healing Melody lands a Crit Hit, grants 1 Performance Energy",
+        "BuffType": 1
+    },
+    "2207540":
+    {
+        "Name": "Tower Flame Blast",
+        "Desc": "The speaker releases a Flame Shock every 5s",
+        "BuffType": 1
+    },
+    "2207550":
+    {
+        "Name": "Multi-Target Heat Amp",
+        "Desc": "Passion Burst and Passion Fury deal 5% more DMG per additional target hit, up to 25%",
+        "BuffType": 1
+    },
+    "2207560":
+    {
+        "Name": "Heated Tower Flame Blast",
+        "Desc": "When Passion Burst or Passion Fury hit the Speaker, it immediately releases a Flame Shock",
+        "BuffType": 1
+    },
+    "2207570":
+    {
+        "Name": "Sonic Verdict",
+        "Desc": "While Healing Melody is active, Fivefold Crescendo also deals DMG, with its total DMG scaling equal to its healing multiplier.\nWhile Healing Melody is active, reduces the caster's DMG taken by 15%",
+        "BuffType": 1
+    },
+    "2207580":
+    {
+        "Name": "Harmonic Amplifier",
+        "Desc": "Increases the DMG dealt and healing of skills triggered by the speaker by 30%",
+        "BuffType": 1
+    },
+    "2207590":
+    {
+        "Name": "Crescendo Healing Chord (Talent)",
+        "Desc": "For every second Healing Melody remains active, enhances its Healing by 7%, stacking up to 5 times",
+        "BuffType": 1
+    },
+    "2207591":
+    {
+        "Name": "Crescendo Healing Chord",
+        "Desc": "For every second Healing Melody remains active, enhances its Healing by 7%, stacking up to 5 times",
+        "BuffType": 1
+    },
+    "2207600":
+    {
+        "Name": "Crit Scale",
+        "Desc": "Increases Crit Rate by 10% against enemies above 50% HP.\nIncreases Crit Rate by 10% against enemies below 50% HP",
+        "BuffType": 1
+    },
+    "2207610":
+    {
+        "Name": "Symphonic Aria",
+        "Desc": "Enhances Healing by 10% for targets affected by Healing Melody",
+        "BuffType": 1
+    },
+    "2207620":
+    {
+        "Name": "Vitality Unleash",
+        "Desc": "7% of DMG dealt and 15% of healing done is stored as Rhythm.\nWithin 10s after casting Center Stage, the use of Expertise and Healing Beat consumes Rhythm to grant up to 40% bonus healing",
+        "BuffType": 1
+    },
+    "2207630":
+    {
+        "Name": "Encore Chain (2)",
+        "Desc": "Within 10s after you cast Encore, each use of Expertise Skill triggers Encore Strings for targets affected by Encore",
+        "BuffType": 1
+    },
+    "2207640":
+    {
+        "Name": "Tower Resonance",
+        "Desc": "Permanently benefits from Encore effect.\nEach trigger of Encore Strings reduces the remaining CD of Expertise by 1s",
+        "BuffType": 1
+    },
+    "2207650":
+    {
+        "Name": "Stat Resonance Overload",
+        "Desc": "For 15s after actively casting Encore, the stat bonuses provided by Healing Melody are +100%",
+        "BuffType": 1
+    },
+    "2207660":
+    {
+        "Name": "Center Stage: Concerto",
+        "Desc": "The charges of Center Stage increase by 1",
+        "BuffType": 1
+    },
+    "2207680":
+    {
+        "Name": "Spiral Flame (Talent)",
+        "Desc": "After casting Center Stage, summon a wave of Sonic Surge",
+        "BuffType": 1
+    },
+    "2207681":
+    {
+        "Name": "Sonic Surge (Spiral Flame)",
+        "Desc": "After casting Center Stage, summon a wave of Sonic Surge, restoring HP over time",
+        "BuffType": 1
+    },
+    "3002011":
+    {
+        "Name": "Fantasia Impact CD",
+        "BuffType": 1
+    },
+    "3056071":
+    {
+        "Name": "Verdant Oracle X7",
+        "Desc": "Within 10s after casting Fast Growth or Nature Ward, increase MATK",
+        "BuffType": 1
+    },
+    "3056081":
+    {
+        "Name": "Verdant Oracle X8",
+        "Desc": "Casting Blossom Charge grants Super Armor.\bBlossom Charge Dream DMG increased and Control Duration increased",
+        "BuffType": 1
+    },
+    "3059061":
+    {
+        "Name": "Stasis X6",
+        "Desc": "If no damage is taken for a few seconds, Max HP increased for the next fe seconds, allowing stacking",
+        "BuffType": 1
+    },
     "3059221":
     {
         "Name": "Verdant Oracle Stasis X1",
-        "Desc": "Excess healing received is converted into a Shield"
+        "Desc": "Excess healing received is converted into a Shield",
+        "BuffType": 1
     },
     "3210030":
     {

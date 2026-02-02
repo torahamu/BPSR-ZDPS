@@ -449,21 +449,25 @@
     "230101":
     {
         "Name": "Harmonic Anthem - Stage 1",
+        "Desc": "Not Amplified",
         "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx01"
     },
     "230102":
     {
         "Name": "Harmonic Anthem - Stage 2",
+        "Desc": "1 Amplified stack",
         "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx01"
     },
     "230103":
     {
         "Name": "Harmonic Anthem - Stage 3",
+        "Desc": "2 Amplified stacks",
         "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx01"
     },
     "230104":
     {
         "Name": "Harmonic Anthem - Stage 4",
+        "Desc": "3 Amplified stacks",
         "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx01"
     },
     "2301":
@@ -502,7 +506,8 @@
     },
     "230105":
     {
-        "Name": "Rhapsody of Flame - Stomp",
+        "Name": "Rhapsody of Flame - Flame's Rampage",
+        "Desc": "When Heroic Melody is active, Rhapsody of Flame will erupt, dealing Magic Damage equal to 50% ATK every 3s (affected by Haste)",
         "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx02"
     },
     "230106":
@@ -566,7 +571,8 @@
     },
     "2320":
     {
-        "Name": "Flame Blast"
+        "Name": "Flame Shock",
+        "Desc": "From Tower Flame Blast or Heated Tower Flame Blast talents, deals Magic Damage equal to 100% ATK to enemies in an AOE around the Speaker"
     },
     "2321":
     {
@@ -590,11 +596,13 @@
     },
     "2329":
     {
-        "Name": "Flame Dancer"
+        "Name": "Flame Pillar Blast",
+        "Desc": "Granted by the Flame Pursuit talent"
     },
     "2330":
     {
-        "Name": "Flame Pillar Blast (Enhanced)"
+        "Name": "Flame Pillar Blast (Enhanced)",
+        "Desc": "Granted by the Flame Pursuit II talent"
     },
     "2331":
     {
@@ -617,7 +625,8 @@
     },
     "55301":
     {
-        "Name": "Flame Fantasy"
+        "Name": "Rhapsody of Flame",
+        "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx02"
     },
     "55341":
     {
@@ -631,15 +640,18 @@
     },
     "55344":
     {
-        "Name": "Upgrade: Blast the Field"
+        "Name": "Rock the Stage",
+        "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_ult"
     },
     "55346":
     {
-        "Name": "Upgrade: Infinite Fantasy"
+        "Name": "Beat Performer Ultimate - Final",
+        "Desc": "From Rock the Stage or Infinite Rhapsody"
     },
     "2207151":
     {
-        "Name": "Fiery Healing"
+        "Name": "Blazing Heal",
+        "Desc": "Triggered from the Blazing Heal talent's stored excess Healing"
     },
     "2352":
     {
@@ -651,7 +663,8 @@
     },
     "2362":
     {
-        "Name": "Healing Beat copy"
+        "Name": "Fivefold Crescendo (Close Range)",
+        "Desc": "Close Range AOE enabled by Sonic Verdict talent"
     },
     "2363":
     {
@@ -1188,15 +1201,18 @@
     },
     "55302":
     {
-        "Name": "Healing Rhythm"
+        "Name": "Healing Beat",
+        "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_tg02"
     },
     "55304":
     {
-        "Name": "Surging Quintet"
+        "Name": "Fivefold Crescendo",
+        "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_kx05"
     },
     "55311":
     {
-        "Name": "Encore Transformation"
+        "Name": "Peaceful Tune (Passive)",
+        "Desc": "Whenever DMG is dealt, restores HP equal to 20% of the DMG dealt, distributed evenly among up to 5 allies"
     },
     "553313":
     {
@@ -1216,11 +1232,12 @@
     },
     "55339":
     {
-        "Name": "Upgrade - Tour Song"
+        "Name": "Concert Circuit",
+        "Icon": "ui/atlas/skill_weapon_jt/weapon_jt-01_ult02"
     },
     "55355":
     {
-        "Name": "Ceasing Healing"
+        "Name": "Healing of Stillness"
     },
     "55432":
     {
@@ -1888,9 +1905,17 @@
     {
         "Name": "Passive Effect Encore Damage"
     },
+    "230801":
+    {
+        "Name": "Rhapsody of Flame - Shape 1"
+    },
+    "230901":
+    {
+        "Name": "Rhapsody of Flame - Shape 2"
+    },
     "231001":
     {
-        "Name": "Rhapsody of Flame - Damage"
+        "Name": "Rhapsody of Flame - Shape 3"
     },
     "300000":
     {
@@ -3312,7 +3337,7 @@
     },
     "2110111":
     {
-        "Name": "Arcane! Divine Reliance (Active)",
+        "Name": "Arcane! Divine Reliance (Life Steal)",
         "Desc": "Rorola"
     },
     "2110118":
@@ -3507,11 +3532,13 @@
     },
     "2207141":
     {
-        "Name": "Musical Notes"
+        "Name": "Note (Healing Notes)",
+        "Desc": "From Healing Notes talent. restores HP equal to 35% ATK in total within 10s.\nWhen a Note is granted again, it immediately triggers the remaining healing of the previous Note"
     },
     "2207431":
     {
-        "Name": "Flame Law Healing"
+        "Name": "Flame's Rampage (Healing)",
+        "Desc": "From Flame's Rampage talent, while in Rhapsody of Flame, each hit of Harmonic Anthem also heals 1 ally with lowest HP for 30% DMG dealt"
     },
     "2207500":
     {
@@ -3527,7 +3554,8 @@
     },
     "2207681":
     {
-        "Name": "Spiral Performance"
+        "Name": "Sonic Surge",
+        "Desc": "From Spiral Flame talent, restores HP equal to 20% ATK for allies every 0.5s for 5s"
     },
     "2406140":
     {
@@ -3537,6 +3565,11 @@
     {
         "Name": "Arcane! Flash Execution",
         "Desc": "Olvera"
+    },
+    "2900840":
+    {
+        "Name": "Arcane! Divine Reliance (Active)",
+        "Desc": "Rorola"
     },
     "3002215":
     {
