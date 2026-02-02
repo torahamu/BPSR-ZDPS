@@ -1259,10 +1259,21 @@ namespace BPSR_ZDPS
             SubProfessionId = id;
             SubProfession = Professions.GetSubProfessionNameFromId(id);
 
+            int profId = Professions.GetProfessionIdFromSubProfessionId(id);
+            if (ProfessionId != profId)
+            {
+                ProfessionId = profId;
+                Profession = Professions.GetProfessionNameFromId(profId);
+            }
+
             var cached = EntityCache.Instance.GetOrCreate(UUID);
             if (cached != null && id != 0)
             {
                 cached.SubProfessionId = id;
+                if (cached.ProfessionId != profId)
+                {
+                    cached.ProfessionId = profId;
+                }
             }
         }
 
