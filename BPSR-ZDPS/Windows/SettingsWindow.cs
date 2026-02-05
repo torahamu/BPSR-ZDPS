@@ -23,11 +23,13 @@ namespace BPSR_ZDPS.Windows
         static bool colorClassIconsByRole;
         static bool showSkillIconsInDetails;
         static bool onlyShowDamageContributorsInMeters;
+        static bool onlyShowPartyMembersInMeters;
         static bool showAbilityScoreInMeters;
+        static bool showSeasonStrengthInMeters;
         static bool showSubProfessionNameInMeters;
         static bool useAutomaticWipeDetection;
         static bool skipTeleportStateCheckInAutomaticWipeDetection;
-        static bool allowWipeRecalculationOverwriting;
+        static bool disableWipeRecalculationOverwriting;
         static bool splitEncountersOnNewPhases;
         static bool displayTruePerSecondValuesInMeters;
         static bool allowGamepadNavigationInputInZDPS;
@@ -481,15 +483,13 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("全滅再計算の上書きを許可: ");
+                        ImGui.Text("Disable Wipe Recalculation Overwriting: ");
                         ImGui.SameLine();
-                        ImGui.Checkbox("##AllowWipeRecalculationOverwriting", ref allowWipeRecalculationOverwriting);
+                        ImGui.Checkbox("##DisableWipeRecalculationOverwriting", ref disableWipeRecalculationOverwriting);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped(
-                            "有効にすると、エンカウント内の全プレイヤーの死亡状態を確認する内部処理が、通常の自動検出による全滅判定を上書きできるようになります。\n" +
-                            "この挙動は実験的な機能のため、全滅判定が正しく行われない場合のみ有効にすることを推奨します。"
-                        );
+                        //ImGui.TextWrapped("When enabled, the internal process of checking the Dead status of all players in the Encounter is allowed to overwrite the detected wipe status from the normal automatic detector.\nAllowing this to overturn results is experimental so only enable it if you run into incorrect wipe reporting.");
+                        ImGui.TextWrapped("When enabled, the new Wipe Recalcuation logic will be Disabled and the original method will be used (if 'Use Automatic Wipe Detection' if still Enabled).");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -570,7 +570,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("メーターにアビリティスコアを表示: ");
+                        ImGui.Text("Show Ability Score In Meters: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowAbilityScoreInMeters", ref showAbilityScoreInMeters);
                         ImGui.Indent();
@@ -580,7 +580,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("メーターにサブ職業名を表示: ");
+                        ImGui.Text("Show Sub Profession Name In Meters: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowSubProfessionNameInMeters", ref showSubProfessionNameInMeters);
                         ImGui.Indent();
@@ -1305,8 +1305,8 @@ namespace BPSR_ZDPS.Windows
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##DevelopmentTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("開発");
-                        if (ImGui.Button("データテーブル再読み込み"))
+                        ImGui.SeparatorText("Development");
+                        if (ImGui.Button("Reload DataTables"))
                         {
                             AppState.LoadDataTables();
                         }
@@ -1429,11 +1429,13 @@ namespace BPSR_ZDPS.Windows
             colorClassIconsByRole = Settings.Instance.ColorClassIconsByRole;
             showSkillIconsInDetails = Settings.Instance.ShowSkillIconsInDetails;
             onlyShowDamageContributorsInMeters = Settings.Instance.OnlyShowDamageContributorsInMeters;
+            onlyShowPartyMembersInMeters = Settings.Instance.OnlyShowPartyMembersInMeters;
             showAbilityScoreInMeters = Settings.Instance.ShowAbilityScoreInMeters;
+            showSeasonStrengthInMeters = Settings.Instance.ShowSeasonStrengthInMeters;
             showSubProfessionNameInMeters = Settings.Instance.ShowSubProfessionNameInMeters;
             useAutomaticWipeDetection = Settings.Instance.UseAutomaticWipeDetection;
             skipTeleportStateCheckInAutomaticWipeDetection = Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection;
-            allowWipeRecalculationOverwriting = Settings.Instance.AllowWipeRecalculationOverwriting;
+            disableWipeRecalculationOverwriting = Settings.Instance.DisableWipeRecalculationOverwriting;
             splitEncountersOnNewPhases = Settings.Instance.SplitEncountersOnNewPhases;
             displayTruePerSecondValuesInMeters = Settings.Instance.DisplayTruePerSecondValuesInMeters;
             allowGamepadNavigationInputInZDPS = Settings.Instance.AllowGamepadNavigationInputInZDPS;
@@ -1525,11 +1527,13 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.ColorClassIconsByRole = colorClassIconsByRole;
             Settings.Instance.ShowSkillIconsInDetails = showSkillIconsInDetails;
             Settings.Instance.OnlyShowDamageContributorsInMeters = onlyShowDamageContributorsInMeters;
+            Settings.Instance.OnlyShowPartyMembersInMeters = onlyShowPartyMembersInMeters;
             Settings.Instance.ShowAbilityScoreInMeters = showAbilityScoreInMeters;
+            Settings.Instance.ShowSeasonStrengthInMeters = showSeasonStrengthInMeters;
             Settings.Instance.ShowSubProfessionNameInMeters = showSubProfessionNameInMeters;
             Settings.Instance.UseAutomaticWipeDetection = useAutomaticWipeDetection;
             Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection = skipTeleportStateCheckInAutomaticWipeDetection;
-            Settings.Instance.AllowWipeRecalculationOverwriting = allowWipeRecalculationOverwriting;
+            Settings.Instance.DisableWipeRecalculationOverwriting = disableWipeRecalculationOverwriting;
             Settings.Instance.SplitEncountersOnNewPhases = splitEncountersOnNewPhases;
             Settings.Instance.DisplayTruePerSecondValuesInMeters = displayTruePerSecondValuesInMeters;
             Settings.Instance.AllowGamepadNavigationInputInZDPS = allowGamepadNavigationInputInZDPS;

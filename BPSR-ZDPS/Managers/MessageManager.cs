@@ -63,7 +63,10 @@ namespace BPSR_ZDPS
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NoticeUpdateTeamInfo, ProcessNoticeUpdateTeamInfo);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NoticeUpdateTeamMemberInfo, ProcessNoticeUpdateTeamMemberInfo);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NotifyJoinTeam, ProcessNotifyJoinTeam);
+            netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NotifyLeaveTeam, ProcessNotifyLeaveTeam);
             //
+            netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NotifyBeTransferLeader, ProcessNotifyBeTransferLeader);
+            netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NoticeTeamDissolve, ProcessNoticeTeamDissolve);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.NotifyTeamActivityState, ProcessNotifyTeamActivityState);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.TeamActivityResult, ProcessTeamActivityResult);
             netCap.RegisterNotifyHandler((ulong)EServiceId.GrpcTeamNtf, (uint)BPSR_ZDPSLib.ServiceMethods.GrpcTeamNtf.TeamActivityListResult, ProcessTeamActivityListResult);
@@ -231,6 +234,60 @@ namespace BPSR_ZDPS
             }
 
             GrpcTeamManager.ProcessNotifyJoinTeam(vData, extraData);
+        }
+
+        public static void ProcessNotifyLeaveTeam(ReadOnlySpan<byte> payloadBuffer, ExtraPacketData extraData)
+        {
+            //System.Diagnostics.Debug.WriteLine("ProcessNotifyLeaveTeam");
+            if (payloadBuffer.Length == 0)
+            {
+                return;
+            }
+
+            var vData = GrpcTeamNtf.Types.NotifyLeaveTeam.Parser.ParseFrom(payloadBuffer);
+
+            if (vData == null)
+            {
+                return;
+            }
+
+            GrpcTeamManager.ProcessNotifyLeaveTeam(vData, extraData);
+        }
+
+        public static void ProcessNotifyBeTransferLeader(ReadOnlySpan<byte> payloadBuffer, ExtraPacketData extraData)
+        {
+            //System.Diagnostics.Debug.WriteLine("ProcessNotifyBeTransferLeader");
+            if (payloadBuffer.Length == 0)
+            {
+                return;
+            }
+
+            var vData = GrpcTeamNtf.Types.NotifyBeTransferLeader.Parser.ParseFrom(payloadBuffer);
+
+            if (vData == null)
+            {
+                return;
+            }
+
+            GrpcTeamManager.ProcessNotifyBeTransferLeader(vData, extraData);
+        }
+
+        public static void ProcessNoticeTeamDissolve(ReadOnlySpan<byte> payloadBuffer, ExtraPacketData extraData)
+        {
+            //System.Diagnostics.Debug.WriteLine("ProcessNoticeTeamDissolve");
+            if (payloadBuffer.Length == 0)
+            {
+                return;
+            }
+
+            var vData = GrpcTeamNtf.Types.NoticeTeamDissolve.Parser.ParseFrom(payloadBuffer);
+
+            if (vData == null)
+            {
+                return;
+            }
+
+            GrpcTeamManager.ProcessNoticeTeamDissolve(vData, extraData);
         }
 
         public static void ProcessNotifyTeamActivityState(ReadOnlySpan<byte> payloadBuffer, ExtraPacketData extraData)
@@ -644,6 +701,24 @@ namespace BPSR_ZDPS
                             hateList.Add(hate);
                         }
                         EncounterManager.Current.SetAttrKV(uuid, "AttrHateList", hateList);
+                        break;
+                    case EAttrType.AttrSkillLevelIdList:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrSkillLevelIdList", reader.ReadInt32());
+                        // TODO: Enable this when we want to track every skill level and tier for players when they appear
+                        /*List<SkillLevelInfo> skillLevelInfoList = new();
+                        while (!reader.IsAtEnd)
+                        {
+                            int len = reader.ReadLength();
+
+                            SkillLevelInfo info = new();
+
+                            reader.ReadMessage(info);
+                            skillLevelInfoList.Add(info);
+                        }*/
+                        
+                        break;
+                    case EAttrType.AttrTeamId:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrTeamId", reader.ReadInt64());
                         break;
                     default:
                         string attr_name = ((EAttrType)attr.Id).ToString();
@@ -1082,6 +1157,11 @@ namespace BPSR_ZDPS
                 {
                     EncounterManager.Current.SetAbilityScore(playerUuid, vData.CharBase.FightPoint);
                 }
+
+                if (vData.CharBase.TeamInfo.TeamId != 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("vData.CharBase.TeamInfo.TeamId != 0");
+                }
             }
 
             var professionList = vData.ProfessionList;
@@ -1363,7 +1443,7 @@ namespace BPSR_ZDPS
                         Log.Debug($"All characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to true.");
                         isStateWipePattern = true;
                     }
-                    if (Settings.Instance.AllowWipeRecalculationOverwriting && !areAllCharactersDead && isStateWipePattern)
+                    if (!Settings.Instance.DisableWipeRecalculationOverwriting && !areAllCharactersDead && isStateWipePattern)
                     {
                         Log.Debug($"Not all characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to false.");
                         isStateWipePattern = false;

@@ -43,6 +43,8 @@ namespace BPSR_ZDPS.Windows
         public Vector2 WindowSize;
         public Vector2 NextWindowSize = new();
 
+        static ImGuiWindowClassPtr ContextMenuClass = ImGui.ImGuiWindowClass();
+
         public void Draw()
         {
             DrawContent();
@@ -170,6 +172,9 @@ namespace BPSR_ZDPS.Windows
                 Meters.Add(new HealingMeter());
                 Meters.Add(new TankingMeter());
                 Meters.Add(new TakenMeter());
+
+                ContextMenuClass.ClassId = ImGuiP.ImHashStr("MainWindowContextMenuClass");
+                ContextMenuClass.ViewportFlagsOverrideSet = ImGuiViewportFlags.TopMost;
             }
             if (RunOnceDelayed == 0)
             {
@@ -341,7 +346,7 @@ namespace BPSR_ZDPS.Windows
                 {
                     //ImGui.SetCursorPosX(MainMenuBarSize.X - (35 * 5)); // This pushes it against the previous button instead of having a gap
                     //ImGui.SetCursorPosX(ImGui.GetContentRegionAvail().X); // This loosely locks it to right side
-                    ImGui.TextDisabled($"v{Utils.AppVersion}");
+                    ImGui.TextDisabled($"v{Utils.AppVersion} (S1)");
                 }
 
                 if (Settings.Instance.AllowEncounterSavingPausingInOpenWorld && BattleStateMachine.DungeonStateHistory.Count > 0 && BattleStateMachine.DungeonStateHistory.LastOrDefault().Key == EDungeonState.DungeonStateNull)
@@ -448,7 +453,11 @@ namespace BPSR_ZDPS.Windows
                     }
                     ImGui.SetItemTooltip("ZDatabase.db の内容を管理します。");
 
-                    if (ImGui.BeginMenu("レイドマネージャー"))
+                    if (windowSettings.TopMost)
+                    {
+                        ImGui.SetNextWindowClass(ContextMenuClass);
+                    }
+                    if (ImGui.BeginMenu("Raid Manager"))
                     {
                         if (ImGui.MenuItem("クールダウン優先度トラッカー"))
                         {
@@ -473,7 +482,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndMenu();
                     }
 
-                    if (ImGui.BeginMenu("ベンチマーク", !AppState.IsEncounterSavingPaused))
+                    if (ImGui.BeginMenu("Benchmark", !AppState.IsEncounterSavingPaused))
                     {
                         ImGui.TextUnformatted("ベンチマークを実行する秒数を入力してください:");
                         ImGui.SetNextItemWidth(-1);
@@ -532,12 +541,16 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndMenu();
                     }
 
-                    if (ImGui.BeginMenu("連携機能"))
+                    if (ImGui.BeginMenu("Integrations"))
                     {
                         bool isBPTimerEnabled = Settings.Instance.External.BPTimerSettings.ExternalBPTimerEnabled;
+                        if (windowSettings.TopMost)
+                        {
+                            ImGui.SetNextWindowClass(ContextMenuClass);
+                        }
                         if (ImGui.BeginMenu("BPTimer", isBPTimerEnabled))
                         {
-                            if (ImGui.MenuItem("スポーントラッカー"))
+                            if (ImGui.MenuItem("Spawn Tracker"))
                             {
                                 SpawnTrackerWindow.Open();
                             }
@@ -568,7 +581,7 @@ namespace BPSR_ZDPS.Windows
                         SettingsWindow.Open();
                     }
                     ImGui.Separator();
-                    if (ImGui.BeginMenu("デバッグ"))
+                    if (ImGui.BeginMenu("Debug"))
                     {
                         if (ImGui.MenuItem("ネットデバッグ"))
                         {
