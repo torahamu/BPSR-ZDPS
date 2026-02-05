@@ -43,7 +43,7 @@
   },
   "7": {
     "Id": 7,
-    "Name": "Asteria Plains",
+    "Name": "アステリア平原",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -86,7 +86,7 @@
   },
   "8": {
     "Id": 8,
-    "Name": "Asterleeds",
+    "Name": "アステルリーズ",
     "SceneType": 1,
     "SceneSubType": 3,
     "ParentId": 0,
@@ -129,7 +129,7 @@
   },
   "9": {
     "Id": 9,
-    "Name": "Bahamar Highlands",
+    "Name": "バハマール高原",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -172,7 +172,7 @@
   },
   "71": {
     "Id": 71,
-    "Name": "Duskdye Woods",
+    "Name": "花明かりの森",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -220,7 +220,7 @@
   },
   "72": {
     "Id": 72,
-    "Name": "Everfall Forest",
+    "Name": "雨止まぬ森",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -268,7 +268,7 @@
   },
   "73": {
     "Id": 73,
-    "Name": "Windhowl Canyon",
+    "Name": "風鳴りの峡谷",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -311,7 +311,7 @@
   },
   "74": {
     "Id": 74,
-    "Name": "Underground District",
+    "Name": "地下集落",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -354,7 +354,7 @@
   },
   "75": {
     "Id": 75,
-    "Name": "Skimmer's Lair",
+    "Name": "黒藍の深窟",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -402,7 +402,7 @@
   },
   "76": {
     "Id": 76,
-    "Name": "Land of Crimson Illusion",
+    "Name": "幻の花の咲き乱れる地",
     "SceneType": 1,
     "SceneSubType": 4,
     "ParentId": 0,
@@ -450,7 +450,7 @@
   },
   "1001": {
     "Id": 1001,
-    "Name": "Tina's Mindrealm",
+    "Name": "ティナ・精神領域",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -494,7 +494,7 @@
   },
   "1002": {
     "Id": 1002,
-    "Name": "Tina's Mindrealm",
+    "Name": "ティナ・精神領域",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -538,7 +538,7 @@
   },
   "1011": {
     "Id": 1011,
-    "Name": "Unstable - Tina's Mindrealm",
+    "Name": "不安定な空間-ティナ・精神領域",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -581,7 +581,7 @@
   },
   "1021": {
     "Id": 1021,
-    "Name": "Unstable - Tina's Mindrealm",
+    "Name": "不安定な空間-ティナ・精神領域",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -624,7 +624,7 @@
   },
   "1031": {
     "Id": 1031,
-    "Name": "Chaotic - Tina's Mindrealm",
+    "Name": "ティナ・精神領域-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -667,7 +667,7 @@
   },
   "1032": {
     "Id": 1032,
-    "Name": "Chaotic - Tina's Mindrealm",
+    "Name": "ティナ・精神領域-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -710,7 +710,7 @@
   },
   "1033": {
     "Id": 1033,
-    "Name": "Chaotic - Tina's Mindrealm",
+    "Name": "ティナ・精神領域-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -753,7 +753,7 @@
   },
   "1101": {
     "Id": 1101,
-    "Name": "Towering Ruin",
+    "Name": "巨塔の遺跡",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -795,7 +795,7 @@
   },
   "1102": {
     "Id": 1102,
-    "Name": "Towering Ruin",
+    "Name": "巨塔の遺跡",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -837,7 +837,7 @@
   },
   "1111": {
     "Id": 1111,
-    "Name": "Unstable - Towering Ruin",
+    "Name": "不安定な空間-巨塔の遺跡",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -880,7 +880,7 @@
   },
   "1112": {
     "Id": 1112,
-    "Name": "Unstable - Towering Ruin",
+    "Name": "不安定な空間-巨塔の遺跡",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -923,7 +923,7 @@
   },
   "1121": {
     "Id": 1121,
-    "Name": "Chaotic - Towering Ruin",
+    "Name": "巨塔の遺跡-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -966,7 +966,7 @@
   },
   "1122": {
     "Id": 1122,
-    "Name": "Chaotic - Towering Ruin",
+    "Name": "巨塔の遺跡-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1009,7 +1009,7 @@
   },
   "1123": {
     "Id": 1123,
-    "Name": "Chaotic - Towering Ruin",
+    "Name": "巨塔の遺跡-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1052,7 +1052,7 @@
   },
   "1201": {
     "Id": 1201,
-    "Name": "Dragon Claw Valley",
+    "Name": "巨竜の爪痕",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1094,7 +1094,7 @@
   },
   "1202": {
     "Id": 1202,
-    "Name": "Dragon Claw Valley",
+    "Name": "巨竜の爪痕",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1136,7 +1136,7 @@
   },
   "1211": {
     "Id": 1211,
-    "Name": "Unstable - Dragon Claw Valley",
+    "Name": "不安定な空間-巨竜の爪痕",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1179,7 +1179,7 @@
   },
   "1212": {
     "Id": 1212,
-    "Name": "Unstable - Dragon Claw Valley",
+    "Name": "不安定な空間-巨竜の爪痕",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1222,7 +1222,7 @@
   },
   "1221": {
     "Id": 1221,
-    "Name": "Chaotic - Dragon Claw Valley",
+    "Name": "巨竜の爪痕-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1265,7 +1265,7 @@
   },
   "1222": {
     "Id": 1222,
-    "Name": "Chaotic - Dragon Claw Valley",
+    "Name": "巨竜の爪痕-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1308,7 +1308,7 @@
   },
   "1223": {
     "Id": 1223,
-    "Name": "Chaotic - Dragon Claw Valley",
+    "Name": "巨竜の爪痕-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1351,7 +1351,7 @@
   },
   "1301": {
     "Id": 1301,
-    "Name": "Dark Mist Fortress",
+    "Name": "暗霧要塞",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1393,7 +1393,7 @@
   },
   "1302": {
     "Id": 1302,
-    "Name": "Dark Mist Fortress",
+    "Name": "暗霧要塞",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1435,7 +1435,7 @@
   },
   "1311": {
     "Id": 1311,
-    "Name": "Unstable - Dark Mist Fortress",
+    "Name": "不安定な空間-暗霧要塞",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1478,7 +1478,7 @@
   },
   "1321": {
     "Id": 1321,
-    "Name": "Unstable - Dark Mist Fortress",
+    "Name": "不安定な空間-暗霧要塞",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1521,7 +1521,7 @@
   },
   "1331": {
     "Id": 1331,
-    "Name": "Chaotic - Dark Mist Fortress",
+    "Name": "暗霧要塞-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1564,7 +1564,7 @@
   },
   "1332": {
     "Id": 1332,
-    "Name": "Chaotic - Dark Mist Fortress",
+    "Name": "暗霧要塞-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -1607,7 +1607,7 @@
   },
   "1333": {
     "Id": 1333,
-    "Name": "Chaotic - Dark Mist Fortress",
+    "Name": "暗霧要塞-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2329,7 +2329,7 @@
   },
   "6005": {
     "Id": 6005,
-    "Name": "Unstable - Goblin Lair",
+    "Name": "不安定な空間-ゴブリンの巣窟",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2372,7 +2372,7 @@
   },
   "6006": {
     "Id": 6006,
-    "Name": "Unstable - Goblin Lair",
+    "Name": "不安定な空間-ゴブリンの巣窟",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2415,7 +2415,7 @@
   },
   "6007": {
     "Id": 6007,
-    "Name": "Chaotic - Goblin Lair",
+    "Name": "ゴブリンの巣窟-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2458,7 +2458,7 @@
   },
   "6008": {
     "Id": 6008,
-    "Name": "Chaotic - Goblin Lair",
+    "Name": "ゴブリンの巣窟-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2501,7 +2501,7 @@
   },
   "6009": {
     "Id": 6009,
-    "Name": "Chaotic - Goblin Lair",
+    "Name": "ゴブリンの巣窟-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2544,7 +2544,7 @@
   },
   "6011": {
     "Id": 6011,
-    "Name": "Unstable - Kanamia Trial",
+    "Name": "不安定な空間-カナミアの試練",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2587,7 +2587,7 @@
   },
   "6012": {
     "Id": 6012,
-    "Name": "Unstable - Kanamia Trial",
+    "Name": "不安定な空間-カナミアの試練",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2630,7 +2630,7 @@
   },
   "6021": {
     "Id": 6021,
-    "Name": "Chaotic - Kanamia Trial",
+    "Name": "カナミアの試練-ノーマル",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2673,7 +2673,7 @@
   },
   "6022": {
     "Id": 6022,
-    "Name": "Chaotic - Kanamia Trial",
+    "Name": "カナミアの試練-ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2716,7 +2716,7 @@
   },
   "6023": {
     "Id": 6023,
-    "Name": "Chaotic - Kanamia Trial",
+    "Name": "カナミアの試練-マスター",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2759,7 +2759,7 @@
   },
   "6031": {
     "Id": 6031,
-    "Name": "Unstable - Kanamia Trial",
+    "Name": "不安定な空間-カナミアの試練",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -2802,7 +2802,7 @@
   },
   "6032": {
     "Id": 6032,
-    "Name": "Unstable - Kanamia Trial",
+    "Name": "不安定な空間-カナミアの試練",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -5838,7 +5838,7 @@
   },
   "13001": {
     "Id": 13001,
-    "Name": "Clash! Floating Island - Dragon Shackles",
+    "Name": "虚空の浮島 - イージー",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -5880,7 +5880,7 @@
   },
   "13002": {
     "Id": 13002,
-    "Name": "Brutal! Floating Island - Dragon Shackles",
+    "Name": "虚空の浮島 - ハード",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -5922,7 +5922,7 @@
   },
   "13003": {
     "Id": 13003,
-    "Name": "Purge! Floating Island - Dragon Shackles",
+    "Name": "虚空の浮島 - ナイトメア",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -11880,7 +11880,7 @@
   },
   "30101": {
     "Id": 30101,
-    "Name": "Stimen Vaults Floor 1",
+    "Name": "レグディニス遺跡 1F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -11923,7 +11923,7 @@
   },
   "30102": {
     "Id": 30102,
-    "Name": "Stimen Vaults Floor 2",
+    "Name": "レグディニス遺跡 2F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -11966,7 +11966,7 @@
   },
   "30103": {
     "Id": 30103,
-    "Name": "Stimen Vaults Floor 3",
+    "Name": "レグディニス遺跡 3F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12009,7 +12009,7 @@
   },
   "30104": {
     "Id": 30104,
-    "Name": "Stimen Vaults Floor 4",
+    "Name": "レグディニス遺跡 4F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12052,7 +12052,7 @@
   },
   "30105": {
     "Id": 30105,
-    "Name": "Stimen Vaults Floor 5",
+    "Name": "レグディニス遺跡 5F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12095,7 +12095,7 @@
   },
   "30106": {
     "Id": 30106,
-    "Name": "Stimen Vaults Floor 6",
+    "Name": "レグディニス遺跡 6F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12138,7 +12138,7 @@
   },
   "30107": {
     "Id": 30107,
-    "Name": "Stimen Vaults Floor 7",
+    "Name": "レグディニス遺跡 7F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12181,7 +12181,7 @@
   },
   "30108": {
     "Id": 30108,
-    "Name": "Stimen Vaults Floor 8",
+    "Name": "レグディニス遺跡 8F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12224,7 +12224,7 @@
   },
   "30109": {
     "Id": 30109,
-    "Name": "Stimen Vaults Floor 9",
+    "Name": "レグディニス遺跡 9F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12267,7 +12267,7 @@
   },
   "30110": {
     "Id": 30110,
-    "Name": "Stimen Vaults Floor 10",
+    "Name": "レグディニス遺跡 10F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12310,7 +12310,7 @@
   },
   "30111": {
     "Id": 30111,
-    "Name": "Stimen Vaults Floor 11",
+    "Name": "レグディニス遺跡 11F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12353,7 +12353,7 @@
   },
   "30112": {
     "Id": 30112,
-    "Name": "Stimen Vaults Floor 12",
+    "Name": "レグディニス遺跡 12F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12396,7 +12396,7 @@
   },
   "30113": {
     "Id": 30113,
-    "Name": "Stimen Vaults Floor 13",
+    "Name": "レグディニス遺跡 13F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12439,7 +12439,7 @@
   },
   "30114": {
     "Id": 30114,
-    "Name": "Stimen Vaults Floor 14",
+    "Name": "レグディニス遺跡 14F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12482,7 +12482,7 @@
   },
   "30115": {
     "Id": 30115,
-    "Name": "Stimen Vaults Floor 15",
+    "Name": "レグディニス遺跡 15F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12525,7 +12525,7 @@
   },
   "30116": {
     "Id": 30116,
-    "Name": "Stimen Vaults Floor 16",
+    "Name": "レグディニス遺跡 16F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12568,7 +12568,7 @@
   },
   "30117": {
     "Id": 30117,
-    "Name": "Stimen Vaults Floor 17",
+    "Name": "レグディニス遺跡 17F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12611,7 +12611,7 @@
   },
   "30118": {
     "Id": 30118,
-    "Name": "Stimen Vaults Floor 18",
+    "Name": "レグディニス遺跡 18F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12654,7 +12654,7 @@
   },
   "30119": {
     "Id": 30119,
-    "Name": "Stimen Vaults Floor 19",
+    "Name": "レグディニス遺跡 19F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12697,7 +12697,7 @@
   },
   "30120": {
     "Id": 30120,
-    "Name": "Stimen Vaults Floor 20",
+    "Name": "レグディニス遺跡 20F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12740,7 +12740,7 @@
   },
   "30121": {
     "Id": 30121,
-    "Name": "Stimen Vaults Floor 21",
+    "Name": "レグディニス遺跡 21F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12783,7 +12783,7 @@
   },
   "30122": {
     "Id": 30122,
-    "Name": "Stimen Vaults Floor 22",
+    "Name": "レグディニス遺跡 22F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12826,7 +12826,7 @@
   },
   "30123": {
     "Id": 30123,
-    "Name": "Stimen Vaults Floor 23",
+    "Name": "レグディニス遺跡 23F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12869,7 +12869,7 @@
   },
   "30124": {
     "Id": 30124,
-    "Name": "Stimen Vaults Floor 24",
+    "Name": "レグディニス遺跡 24F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12912,7 +12912,7 @@
   },
   "30125": {
     "Id": 30125,
-    "Name": "Stimen Vaults Floor 25",
+    "Name": "レグディニス遺跡 25F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12955,7 +12955,7 @@
   },
   "30126": {
     "Id": 30126,
-    "Name": "Stimen Vaults Floor 26",
+    "Name": "レグディニス遺跡 26F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -12998,7 +12998,7 @@
   },
   "30127": {
     "Id": 30127,
-    "Name": "Stimen Vaults Floor 27",
+    "Name": "レグディニス遺跡 27F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13041,7 +13041,7 @@
   },
   "30128": {
     "Id": 30128,
-    "Name": "Stimen Vaults Floor 28",
+    "Name": "レグディニス遺跡 28F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13084,7 +13084,7 @@
   },
   "30129": {
     "Id": 30129,
-    "Name": "Stimen Vaults Floor 29",
+    "Name": "レグディニス遺跡 29F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13127,7 +13127,7 @@
   },
   "30130": {
     "Id": 30130,
-    "Name": "Stimen Vaults Floor 30",
+    "Name": "レグディニス遺跡 30F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13170,7 +13170,7 @@
   },
   "30131": {
     "Id": 30131,
-    "Name": "Stimen Vaults Floor 31",
+    "Name": "レグディニス遺跡 31F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13213,7 +13213,7 @@
   },
   "30132": {
     "Id": 30132,
-    "Name": "Stimen Vaults Floor 32",
+    "Name": "レグディニス遺跡 32F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13256,7 +13256,7 @@
   },
   "30133": {
     "Id": 30133,
-    "Name": "Stimen Vaults Floor 33",
+    "Name": "レグディニス遺跡 33F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13299,7 +13299,7 @@
   },
   "30134": {
     "Id": 30134,
-    "Name": "Stimen Vaults Floor 34",
+    "Name": "レグディニス遺跡 34F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13342,7 +13342,7 @@
   },
   "30135": {
     "Id": 30135,
-    "Name": "Stimen Vaults Floor 35",
+    "Name": "レグディニス遺跡 35F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13385,7 +13385,7 @@
   },
   "30136": {
     "Id": 30136,
-    "Name": "Stimen Vaults Floor 36",
+    "Name": "レグディニス遺跡 36F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13428,7 +13428,7 @@
   },
   "30137": {
     "Id": 30137,
-    "Name": "Stimen Vaults Floor 37",
+    "Name": "レグディニス遺跡 37F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13471,7 +13471,7 @@
   },
   "30138": {
     "Id": 30138,
-    "Name": "Stimen Vaults Floor 38",
+    "Name": "レグディニス遺跡 38F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13514,7 +13514,7 @@
   },
   "30139": {
     "Id": 30139,
-    "Name": "Stimen Vaults Floor 39",
+    "Name": "レグディニス遺跡 39F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13557,7 +13557,7 @@
   },
   "30140": {
     "Id": 30140,
-    "Name": "Stimen Vaults Floor 40",
+    "Name": "レグディニス遺跡 40F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13600,7 +13600,7 @@
   },
   "30141": {
     "Id": 30141,
-    "Name": "Stimen Vaults Floor 41",
+    "Name": "レグディニス遺跡 41F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13643,7 +13643,7 @@
   },
   "30142": {
     "Id": 30142,
-    "Name": "Stimen Vaults Floor 42",
+    "Name": "レグディニス遺跡 42F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13686,7 +13686,7 @@
   },
   "30143": {
     "Id": 30143,
-    "Name": "Stimen Vaults Floor 43",
+    "Name": "レグディニス遺跡 43F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13729,7 +13729,7 @@
   },
   "30144": {
     "Id": 30144,
-    "Name": "Stimen Vaults Floor 44",
+    "Name": "レグディニス遺跡 44F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13772,7 +13772,7 @@
   },
   "30145": {
     "Id": 30145,
-    "Name": "Stimen Vaults Floor 45",
+    "Name": "レグディニス遺跡 45F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13815,7 +13815,7 @@
   },
   "30146": {
     "Id": 30146,
-    "Name": "Stimen Vaults Floor 46",
+    "Name": "レグディニス遺跡 46F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13858,7 +13858,7 @@
   },
   "30147": {
     "Id": 30147,
-    "Name": "Stimen Vaults Floor 47",
+    "Name": "レグディニス遺跡 47F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13901,7 +13901,7 @@
   },
   "30148": {
     "Id": 30148,
-    "Name": "Stimen Vaults Floor 48",
+    "Name": "レグディニス遺跡 48F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13944,7 +13944,7 @@
   },
   "30149": {
     "Id": 30149,
-    "Name": "Stimen Vaults Floor 49",
+    "Name": "レグディニス遺跡 49F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -13987,7 +13987,7 @@
   },
   "30150": {
     "Id": 30150,
-    "Name": "Stimen Vaults Floor 50",
+    "Name": "レグディニス遺跡 50F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14030,7 +14030,7 @@
   },
   "30151": {
     "Id": 30151,
-    "Name": "Stimen Vaults Floor 51",
+    "Name": "レグディニス遺跡 51F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14073,7 +14073,7 @@
   },
   "30152": {
     "Id": 30152,
-    "Name": "Stimen Vaults Floor 52",
+    "Name": "レグディニス遺跡 52F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14116,7 +14116,7 @@
   },
   "30153": {
     "Id": 30153,
-    "Name": "Stimen Vaults Floor 53",
+    "Name": "レグディニス遺跡 53F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14159,7 +14159,7 @@
   },
   "30154": {
     "Id": 30154,
-    "Name": "Stimen Vaults Floor 54",
+    "Name": "レグディニス遺跡 54F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14202,7 +14202,7 @@
   },
   "30155": {
     "Id": 30155,
-    "Name": "Stimen Vaults Floor 55",
+    "Name": "レグディニス遺跡 55F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14245,7 +14245,7 @@
   },
   "30156": {
     "Id": 30156,
-    "Name": "Stimen Vaults Floor 56",
+    "Name": "レグディニス遺跡 56F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14288,7 +14288,7 @@
   },
   "30157": {
     "Id": 30157,
-    "Name": "Stimen Vaults Floor 57",
+    "Name": "レグディニス遺跡 57F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14331,7 +14331,7 @@
   },
   "30158": {
     "Id": 30158,
-    "Name": "Stimen Vaults Floor 58",
+    "Name": "レグディニス遺跡 58F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14374,7 +14374,7 @@
   },
   "30159": {
     "Id": 30159,
-    "Name": "Stimen Vaults Floor 59",
+    "Name": "レグディニス遺跡 59F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14417,7 +14417,7 @@
   },
   "30160": {
     "Id": 30160,
-    "Name": "Stimen Vaults Floor 60",
+    "Name": "レグディニス遺跡 60F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14460,7 +14460,7 @@
   },
   "30161": {
     "Id": 30161,
-    "Name": "Stimen Vaults Floor 61",
+    "Name": "レグディニス遺跡 61F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14503,7 +14503,7 @@
   },
   "30162": {
     "Id": 30162,
-    "Name": "Stimen Vaults Floor 62",
+    "Name": "レグディニス遺跡 62F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14546,7 +14546,7 @@
   },
   "30163": {
     "Id": 30163,
-    "Name": "Stimen Vaults Floor 63",
+    "Name": "レグディニス遺跡 63F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14589,7 +14589,7 @@
   },
   "30164": {
     "Id": 30164,
-    "Name": "Stimen Vaults Floor 64",
+    "Name": "レグディニス遺跡 64F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14632,7 +14632,7 @@
   },
   "30165": {
     "Id": 30165,
-    "Name": "Stimen Vaults Floor 65",
+    "Name": "レグディニス遺跡 65F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14675,7 +14675,7 @@
   },
   "30166": {
     "Id": 30166,
-    "Name": "Stimen Vaults Floor 66",
+    "Name": "レグディニス遺跡 66F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14718,7 +14718,7 @@
   },
   "30167": {
     "Id": 30167,
-    "Name": "Stimen Vaults Floor 67",
+    "Name": "レグディニス遺跡 67F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14761,7 +14761,7 @@
   },
   "30168": {
     "Id": 30168,
-    "Name": "Stimen Vaults Floor 68",
+    "Name": "レグディニス遺跡 68F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14804,7 +14804,7 @@
   },
   "30169": {
     "Id": 30169,
-    "Name": "Stimen Vaults Floor 69",
+    "Name": "レグディニス遺跡 69F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14847,7 +14847,7 @@
   },
   "30170": {
     "Id": 30170,
-    "Name": "Stimen Vaults Floor 70",
+    "Name": "レグディニス遺跡 70F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14890,7 +14890,7 @@
   },
   "30171": {
     "Id": 30171,
-    "Name": "Stimen Vaults Floor 71",
+    "Name": "レグディニス遺跡 71F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14933,7 +14933,7 @@
   },
   "30172": {
     "Id": 30172,
-    "Name": "Stimen Vaults Floor 72",
+    "Name": "レグディニス遺跡 72F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -14976,7 +14976,7 @@
   },
   "30173": {
     "Id": 30173,
-    "Name": "Stimen Vaults Floor 73",
+    "Name": "レグディニス遺跡 73F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -15019,7 +15019,7 @@
   },
   "30174": {
     "Id": 30174,
-    "Name": "Stimen Vaults Floor 74",
+    "Name": "レグディニス遺跡 74F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -15062,7 +15062,7 @@
   },
   "30175": {
     "Id": 30175,
-    "Name": "Stimen Vaults Floor 75",
+    "Name": "レグディニス遺跡 75F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,
@@ -15105,7 +15105,7 @@
   },
   "30200": {
     "Id": 30200,
-    "Name": "Stimen Vaults Floor 75",
+    "Name": "レグディニス遺跡 75F",
     "SceneType": 2,
     "SceneSubType": 5,
     "ParentId": 0,

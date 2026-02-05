@@ -23,7 +23,7 @@ namespace BPSR_ZDPS.DataTypes
         public int SceneResourceId { get; set; }
         public List<string> SceneUI { get; set; }
         public Vector2 MapSize { get; set; }
-        public Vector2  MapOffset { get; set; }
+        public Vector2 MapOffset { get; set; }
         public List<List<int>> MapEntryCondition { get; set; }
         public List<string> AudioBank { get; set; }
         public int BornId { get; set; }

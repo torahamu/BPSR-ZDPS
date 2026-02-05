@@ -457,7 +457,7 @@ namespace BPSR_ZDPS.Windows
                     {
                         ImGui.SetNextWindowClass(ContextMenuClass);
                     }
-                    if (ImGui.BeginMenu("Raid Manager"))
+                    if (ImGui.BeginMenu("レイドマネージャー"))
                     {
                         if (ImGui.MenuItem("クールダウン優先度トラッカー"))
                         {
@@ -541,7 +541,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndMenu();
                     }
 
-                    if (ImGui.BeginMenu("Integrations"))
+                    if (ImGui.BeginMenu("連携機能"))
                     {
                         bool isBPTimerEnabled = Settings.Instance.External.BPTimerSettings.ExternalBPTimerEnabled;
                         if (windowSettings.TopMost)
@@ -550,7 +550,7 @@ namespace BPSR_ZDPS.Windows
                         }
                         if (ImGui.BeginMenu("BPTimer", isBPTimerEnabled))
                         {
-                            if (ImGui.MenuItem("Spawn Tracker"))
+                            if (ImGui.MenuItem("スポーントラッカー"))
                             {
                                 SpawnTrackerWindow.Open();
                             }
@@ -581,7 +581,7 @@ namespace BPSR_ZDPS.Windows
                         SettingsWindow.Open();
                     }
                     ImGui.Separator();
-                    if (ImGui.BeginMenu("Debug"))
+                    if (ImGui.BeginMenu("デバッグ"))
                     {
                         if (ImGui.MenuItem("ネットデバッグ"))
                         {

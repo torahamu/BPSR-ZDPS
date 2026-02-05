@@ -158,7 +158,7 @@ namespace BPSR_ZDPS
                     {
                         if (ImGui.BeginTable("settings_table", 2, ImGuiTableFlags.BordersInnerV | ImGuiTableFlags.PadOuterX | ImGuiTableFlags.BordersInnerH))
                         {
-                            ImGui.TableSetupColumn("項目", ImGuiTableColumnFlags.WidthFixed, 200f);
+                            ImGui.TableSetupColumn("項目", ImGuiTableColumnFlags.WidthFixed, 350f);
                             ImGui.TableSetupColumn("値", ImGuiTableColumnFlags.WidthStretch);
 
                             AddSettingRow("プリセット共有コード: ", () => {
@@ -250,7 +250,7 @@ namespace BPSR_ZDPS
                                 ImGui.SeparatorText("リンクレベルボーナスの説明");
                                 ImGui.TextWrapped(
                                     "リンクレベルが指定した値以上の場合に、モジュール組み合わせへ加算されるボーナスポイントを設定します。\n" +
-                                    $"例: 『Crit Focus』が +16 の場合、リンクレベルは『5』となり、{Settings.Instance.WindowSettings.ModuleWindow.LastUsedPreset.Config.LinkLevelBonus[4]} ポイントのボーナスが加算されます。"
+                                    $"例: 『集中・会心』が +16 の場合、リンクレベルは『5』となり、{Settings.Instance.WindowSettings.ModuleWindow.LastUsedPreset.Config.LinkLevelBonus[4]} ポイントのボーナスが加算されます。"
                                 );
 
                                 ImGui.EndTable();
@@ -673,7 +673,8 @@ namespace BPSR_ZDPS
                 var pos = ImGui.GetCursorPos();
                 var titleWidth = ImGui.CalcTextSize(statInfo.Name).X;
                 var icon = statInfo.IconRef.Value;
-                ImGui.SetCursorPos(pos + new Vector2((size.X / 2) - (titleWidth / 2), 0));
+                float centerBias = 40.0f;
+                ImGui.SetCursorPos(pos + new Vector2((size.X / 2) - (titleWidth / 2) + (titleWidth / 5), 0));
                 ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], 17);
                 ImGui.TextUnformatted(statInfo.Name);
                 ImGui.SetCursorPos(pos + new Vector2((size.X / 2) - (iconSize.X / 2), 25));

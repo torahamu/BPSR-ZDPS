@@ -131,7 +131,7 @@ namespace BPSR_ZDPS.Windows
 
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
 
-            if (ImGui.Begin("Encounter History###EncounterHistoryWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
+            if (ImGui.Begin("戦闘履歴###EncounterHistoryWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
             {
                 ShouldTrackOpenState = true;
 
@@ -154,7 +154,7 @@ namespace BPSR_ZDPS.Windows
                 {
                     ImGui.PushStyleColor(ImGuiCol.Button, Colors.DimGray);
                 }
-                if (ImGui.Button("View By Each Individual Encounter", new Vector2(tabButtonHalfWidth, 0)))
+                if (ImGui.Button("個別エンカウントで表示", new Vector2(tabButtonHalfWidth, 0)))
                 {
                     SelectedViewMode = 0;
                     SelectedEncounterIndex = -1;
@@ -172,7 +172,7 @@ namespace BPSR_ZDPS.Windows
                 {
                     ImGui.PushStyleColor(ImGuiCol.Button, Colors.DimGray);
                 }
-                if (ImGui.Button("View By Each Grouped Battle", new Vector2(tabButtonHalfWidth, 0)))
+                if (ImGui.Button("バトル単位で表示", new Vector2(tabButtonHalfWidth, 0)))
                 {
                     SelectedViewMode = 1;
                     SelectedEncounterIndex = -1;
@@ -190,7 +190,7 @@ namespace BPSR_ZDPS.Windows
 
                 if (IsLoadingFromDatabase)
                 {
-                    ImGui.Text("Please wait, loading encounter history...");
+                    ImGui.Text("戦闘履歴を読み込み中...");
                     ImGui.End();
                     ImGui.PopID();
                     return;
@@ -202,16 +202,16 @@ namespace BPSR_ZDPS.Windows
                 if (SelectedViewMode == 0)
                 {
                     encounters = Encounters;
-                    ImGui.Text($"Encounters: {encounters.Count}");
+                    ImGui.Text($"エンカウント数: {encounters.Count}");
                 }
                 else
                 {
                     encounters = GroupedBattles;
                     // We subtract 2 because the current encounter is also in here
-                    ImGui.Text($"Battles: {Battles.Count}");
+                    ImGui.Text($"バトル数: {Battles.Count}");
                 }
 
-                string[] OrderByOptions = { "Order By Damage", "Order By Healing", "Order By Taken" };
+                string[] OrderByOptions = { "ダメージ順", "回復量順", "被ダメ順" };
                 ImGui.SameLine();
                 ImGui.SetNextItemWidth(ImGui.CalcTextSize($"{OrderByOptions[SelectedOrderByOption]}").X + 32); // Extra spaces to ensure full text is visible
                 ImGui.Combo("##OrderByCombo", ref SelectedOrderByOption, OrderByOptions, OrderByOptions.Length);
@@ -231,11 +231,11 @@ namespace BPSR_ZDPS.Windows
                 {
                     if (SelectedViewMode == 0)
                     {
-                        selectedPreviewText = "Select an encounter...";
+                        selectedPreviewText = "エンカウントを選択...";
                     }
                     else
                     {
-                        selectedPreviewText = "Select a battle...";
+                        selectedPreviewText = "バトルを選択...";
                     }
                 }
 
@@ -245,11 +245,11 @@ namespace BPSR_ZDPS.Windows
                 ImGui.SetNextItemWidth(-1);
                 if (ImGui.BeginCombo("##EncounterHistoryCombo", selectedPreviewText, ImGuiComboFlags.HeightLarge))
                 {
-                    for (int i = encounters.Count - 1; i >= 0 ; i--)
+                    for (int i = encounters.Count - 1; i >= 0; i--)
                     {
                         bool isSelected = SelectedEncounterIndex == i;
 
-                        string encounterIndexText = $"[{(SelectedViewMode == 0 ? encounters[i].EncounterId : i + 1)}]##HistoricalEncounterSelectable_{i+1}";
+                        string encounterIndexText = $"[{(SelectedViewMode == 0 ? encounters[i].EncounterId : i + 1)}]##HistoricalEncounterSelectable_{i + 1}";
                         var encounterTuple = BuildDropdownStringName(encounters[i].StartTime, encounters[i].EndTime, encounters[i].SceneName, i);
                         if (ImGui.Selectable(encounterIndexText, isSelected, ImGuiSelectableFlags.SpanAllColumns))
                         {
@@ -287,7 +287,7 @@ namespace BPSR_ZDPS.Windows
                         if (encounters[i].IsWipe)
                         {
                             ImGui.SameLine();
-                            ImGui.TextColored(Colors.LightRed, $"(Wipe)");
+                            ImGui.TextColored(Colors.LightRed, $"（ワイプ）");
                         }
                     }
 
@@ -295,19 +295,19 @@ namespace BPSR_ZDPS.Windows
                 }
                 if (SelectedEncounterIndex > -1 && ImGui.BeginPopup("##DebugReportPopup"))
                 {
-                    if (ImGui.Selectable("Send Debug Report"))
+                    if (ImGui.Selectable("デバッグレポート送信"))
                     {
                         if (SelectedEncounterIndex != -1 && encounters[SelectedEncounterIndex] != null)
                         {
-                            Serilog.Log.Information($"Sending Debug Report for Selected Encounter Index {SelectedEncounterIndex}...");
+                            Serilog.Log.Information($"選択中エンカウント({SelectedEncounterIndex})のデバッグレポートを送信中...");
                             var img = ReportImgGen.CreateReportImg(encounters[SelectedEncounterIndex]);
                             WebManager.SubmitReportToWebhook(encounters[SelectedEncounterIndex], img, Settings.Instance.WebhookReportsDiscordUrl);
                         }
                     }
-                    ImGui.SetItemTooltip("For Debug Purposes Only!\nForcefully sends the selected Encounter Report to the configured Discord URL Webhook.");
-                    if (ImGui.BeginMenu("Change Wipe Status"))
+                    ImGui.SetItemTooltip("デバッグ目的のみ！\n設定されたDiscord Webhook URLへ、選択中のエンカウントレポートを強制送信します。");
+                    if (ImGui.BeginMenu("ワイプ状態を変更"))
                     {
-                        if (ImGui.MenuItem("Is Wipe", encounters[SelectedEncounterIndex].IsWipe))
+                        if (ImGui.MenuItem("ワイプ扱い", encounters[SelectedEncounterIndex].IsWipe))
                         {
                             var wipeState = !encounters[SelectedEncounterIndex].IsWipe;
                             encounters[SelectedEncounterIndex].SetWipeState(wipeState);
@@ -315,19 +315,19 @@ namespace BPSR_ZDPS.Windows
                         }
                         ImGui.EndMenu();
                     }
-                    ImGui.SetItemTooltip("For Debug Purposes Only!\nAllows changing the Wipe status flag for the selected Encounter.\nDoes not write changes to Database.");
+                    ImGui.SetItemTooltip("デバッグ目的のみ！\n選択中エンカウントのワイプフラグを変更できます。\nDBには保存されません。");
 
                     if (SelectedViewMode == 0)
                     {
                         ImGui.BeginDisabled(!ImGui.IsKeyDown(ImGuiKey.LeftCtrl));
-                        if (ImGui.Selectable("Delete Encounter"))
+                        if (ImGui.Selectable("エンカウント削除"))
                         {
                             DB.DeleteEncounter(encounters[SelectedEncounterIndex].EncounterId);
                             LoadFromDB();
                             SelectedEncounterIndex = Math.Min(encounters.Count - 2, 0);
                             HandleEncounterSelection();
                         }
-                        ImGui.SetItemTooltip("Delete this encounter from the Database, hold Ctrl to enable this option.");
+                        ImGui.SetItemTooltip("DBからこのエンカウントを削除します（Ctrlを押して有効化）。");
                         ImGui.EndDisabled();
                     }
 
@@ -344,34 +344,34 @@ namespace BPSR_ZDPS.Windows
                     {
                         ImGui.TableSetupColumn("#");
                         ImGui.TableSetupColumn("UID");
-                        ImGui.TableSetupColumn("Name");
-                        ImGui.TableSetupColumn("Profession");
-                        ImGui.TableSetupColumn("Ability Score");
-                        ImGui.TableSetupColumn("Total DMG");
-                        ImGui.TableSetupColumn("Total DPS");
-                        ImGui.TableSetupColumn("Shield Break");
-                        ImGui.TableSetupColumn("Crit Rate");
-                        ImGui.TableSetupColumn("Lucky Rate");
-                        ImGui.TableSetupColumn("Crit DMG");
-                        ImGui.TableSetupColumn("Lucky DMG");
-                        ImGui.TableSetupColumn("Crit Lucky DMG");
-                        ImGui.TableSetupColumn("Max Single DPS");
-                        ImGui.TableSetupColumn("Shield Gain");
-                        ImGui.TableSetupColumn("Total Healing");
-                        ImGui.TableSetupColumn("Total HPS");
-                        ImGui.TableSetupColumn("Effective Healing");
-                        ImGui.TableSetupColumn("Total Overhealing");
-                        ImGui.TableSetupColumn("Crit Healing");
-                        ImGui.TableSetupColumn("Lucky Healing");
-                        ImGui.TableSetupColumn("Crit Lucky Healing");
-                        ImGui.TableSetupColumn("Max Single HPS");
-                        ImGui.TableSetupColumn("Damage Taken");
-                        ImGui.TableSetupColumn("Deaths");
+                        ImGui.TableSetupColumn("名前");
+                        ImGui.TableSetupColumn("職業");
+                        ImGui.TableSetupColumn("能力値");
+                        ImGui.TableSetupColumn("総ダメージ");
+                        ImGui.TableSetupColumn("平均DPS");
+                        ImGui.TableSetupColumn("破盾");
+                        ImGui.TableSetupColumn("クリ率");
+                        ImGui.TableSetupColumn("ラッキー率");
+                        ImGui.TableSetupColumn("クリダメ");
+                        ImGui.TableSetupColumn("ラッキーダメ");
+                        ImGui.TableSetupColumn("クリラッキーダメ");
+                        ImGui.TableSetupColumn("最大瞬間DPS");
+                        ImGui.TableSetupColumn("シールド獲得");
+                        ImGui.TableSetupColumn("総回復");
+                        ImGui.TableSetupColumn("平均HPS");
+                        ImGui.TableSetupColumn("有効回復");
+                        ImGui.TableSetupColumn("過剰回復");
+                        ImGui.TableSetupColumn("クリ回復");
+                        ImGui.TableSetupColumn("ラッキー回復");
+                        ImGui.TableSetupColumn("クリラッキー回復");
+                        ImGui.TableSetupColumn("最大瞬間HPS");
+                        ImGui.TableSetupColumn("被ダメージ");
+                        ImGui.TableSetupColumn("死亡回数");
                         ImGui.TableHeadersRow();
 
                         if (IsLoadingFromDatabase)
                         {
-                            ImGui.TextUnformatted("Please wait, loading encounter data...");
+                            ImGui.TextUnformatted("エンカウントデータを読み込み中...");
                         }
 
                         // TODO: This should be created and ordered only when the user changes ordering, not every single frame even if we can afford the cost
@@ -566,27 +566,27 @@ namespace BPSR_ZDPS.Windows
 
                         if (SelectedEncounterIndex > -1 && ImGui.BeginPopupContextWindow("##ReportContextMenu"))
                         {
-                            if (ImGui.BeginMenu("Entity Filter"))
+                            if (ImGui.BeginMenu("対象フィルター"))
                             {
-                                if (ImGui.MenuItem("All", EntityFilterMode == EEntityFilterMode.All))
+                                if (ImGui.MenuItem("全て", EntityFilterMode == EEntityFilterMode.All))
                                 {
                                     EntityFilterMode = EEntityFilterMode.All;
                                 }
-                                if (ImGui.MenuItem("Players Only", EntityFilterMode == EEntityFilterMode.PlayersOnly))
+                                if (ImGui.MenuItem("プレイヤーのみ", EntityFilterMode == EEntityFilterMode.PlayersOnly))
                                 {
                                     EntityFilterMode = EEntityFilterMode.PlayersOnly;
                                 }
-                                if (ImGui.MenuItem("Monsters Only", EntityFilterMode == EEntityFilterMode.MonstersOnly))
+                                if (ImGui.MenuItem("モンスターのみ", EntityFilterMode == EEntityFilterMode.MonstersOnly))
                                 {
                                     EntityFilterMode = EEntityFilterMode.MonstersOnly;
                                 }
-                                if (ImGui.MenuItem("Bosses Only", EntityFilterMode == EEntityFilterMode.BossesOnly))
+                                if (ImGui.MenuItem("ボスのみ", EntityFilterMode == EEntityFilterMode.BossesOnly))
                                 {
                                     EntityFilterMode = EEntityFilterMode.BossesOnly;
                                 }
                                 ImGui.EndMenu();
                             }
-                            if (ImGui.MenuItem("Hide Entities With No Damage", HideEntitiesWithNoDamageDealt))
+                            if (ImGui.MenuItem("ダメージ0の対象を非表示", HideEntitiesWithNoDamageDealt))
                             {
                                 HideEntitiesWithNoDamageDealt = !HideEntitiesWithNoDamageDealt;
                             }

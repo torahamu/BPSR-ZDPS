@@ -580,17 +580,17 @@ namespace BPSR_ZDPS.Windows
 
                                 if (stat.Value.CastsCount > 0)
                                 {
-                                    sb.AppendLine($"Casts Count: {stat.Value.CastsCount}");
+                                    sb.AppendLine($"詠唱回数: {stat.Value.CastsCount}");
                                 }
 
                                 if (stat.Value.ImmuneCount > 0)
                                 {
-                                    immuneString = $"Immune Count: {stat.Value.ImmuneCount}";
+                                    sb.AppendLine($"無効回数: {stat.Value.ImmuneCount}");
                                 }
 
                                 if (stat.Value.LuckyCount > 0)
                                 {
-                                    luckyString = $"{(string.IsNullOrEmpty(immuneString) ? "" : "\n")}Lucky Count: {stat.Value.LuckyCount}";
+                                    sb.AppendLine($"ラッキー回数: {stat.Value.LuckyCount}");
                                 }
 
                                 ImGui.SetItemTooltip($"{sb}");

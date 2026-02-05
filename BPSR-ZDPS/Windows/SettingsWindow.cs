@@ -483,13 +483,13 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Disable Wipe Recalculation Overwriting: ");
+                        ImGui.Text("全滅再計算の上書きを許可: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##DisableWipeRecalculationOverwriting", ref disableWipeRecalculationOverwriting);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
                         //ImGui.TextWrapped("When enabled, the internal process of checking the Dead status of all players in the Encounter is allowed to overwrite the detected wipe status from the normal automatic detector.\nAllowing this to overturn results is experimental so only enable it if you run into incorrect wipe reporting.");
-                        ImGui.TextWrapped("When enabled, the new Wipe Recalcuation logic will be Disabled and the original method will be used (if 'Use Automatic Wipe Detection' if still Enabled).");
+                        ImGui.TextWrapped("有効にすると、新しいワイプ再計算ロジックは無効になり、「自動ワイプ検出を使用」が有効な場合は従来の方式が使用されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -570,7 +570,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Ability Score In Meters: ");
+                        ImGui.Text("メーターにアビリティスコアを表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowAbilityScoreInMeters", ref showAbilityScoreInMeters);
                         ImGui.Indent();
@@ -580,7 +580,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Sub Profession Name In Meters: ");
+                        ImGui.Text("メーターにサブ職業名を表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowSubProfessionNameInMeters", ref showSubProfessionNameInMeters);
                         ImGui.Indent();
@@ -1305,8 +1305,8 @@ namespace BPSR_ZDPS.Windows
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##DevelopmentTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Development");
-                        if (ImGui.Button("Reload DataTables"))
+                        ImGui.SeparatorText("開発");
+                        if (ImGui.Button("データテーブル再読み込み"))
                         {
                             AppState.LoadDataTables();
                         }
