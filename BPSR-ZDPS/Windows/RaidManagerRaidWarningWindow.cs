@@ -188,11 +188,10 @@ namespace BPSR_ZDPS.Windows
                         // This is needed due to Nvidia drivers incorrectly behaving with performing an ImGui drawlist clear via Window Resize and using cached frames instead of drawing new ones like all other GPU vendors
                         Hexa.NET.ImGui.Backends.Win32.ImGuiImplWin32.EnableAlphaCompositing(ImGui.GetWindowViewport().PlatformHandleRaw);
                         Utils.SetWindowLong(User32.GWL_EXSTYLE, User32.GetWindowLong((nint)ImGui.GetWindowViewport().PlatformHandleRaw, User32.GWL_EXSTYLE) | (nint)User32.WS_EX_LAYERED);
-                        User32.SetLayeredWindowAttributes((nint)ImGui.GetWindowViewport().PlatformHandleRaw, 0x00111111, 255, User32.LWA_COLORKEY);
+                        User32.SetLayeredWindowAttributes((nint)ImGui.GetWindowViewport().PlatformHandleRaw, 0x00111111, 200, User32.LWA_COLORKEY | User32.LWA_ALPHA);
                     }
 
-                    ImGui.PushStyleColor(ImGuiCol.ChildBg, new Vector4(0.5f, 0, 0, 0.5f));
-                    //ImGui.PushStyleColor(ImGuiCol.ChildBg, new Vector4(0.2f, 0, 0, windowSettings.MessageBackgroundOpacity));
+                    ImGui.PushStyleColor(ImGuiCol.ChildBg, new Vector4(0, 0, 0, windowSettings.MessageBackgroundOpacity));
                     if (ImGui.BeginChild("##WarningsListChild", ImGuiChildFlags.AutoResizeY, ImGuiWindowFlags.NoInputs))
                     {
                         ImGui.PushFont(null, 34.0f * (windowSettings.MessageTextScale * 0.01f));

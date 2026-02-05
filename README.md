@@ -1,7 +1,12 @@
-# ZDPS - Damage Meter And Companion Tool
+# ZDPS - Damage Meter And Companion Tool (Season 1 Version)
 ZDPS is a Damage Meter and Companion Tool for Blue Protocol: Star Resonance. It's built on modern frameworks, making it fast and efficient at performing the role of a DPS Meter. It however also packs a lot of additional features in it such as complete [Encounter History](#Encounter-History-Browser), [Module Optimizer](#Module-Optimizer), [Log Reporting](#Integrations), [Field Boss/Magical Creature Spawn Tracking](#BPTimer-Integration), [Cooldown Tracking](#Cooldown-Priority-Tracker), [Raid Warnings](#Raid-Warnings), [Chat](#Chat), and more.
 
 ![Example of ZDPS in action on the DPS Meter tab](Screenshots/ZDPS_DPSMeter.png)
+
+
+> [!IMPORTANT]
+> This is the Season 1 branch of ZDPS. This version is expected to only work with Season 1 versions of BPSR. Please see the [master](https://github.com/Blue-Protocol-Source/BPSR-ZDPS/tree/master) branch for the version supporting the latest BPSR game versions.
+
 
 ## Getting Started
 

@@ -38,6 +38,8 @@ namespace BPSR_ZDPS
 
         public static bool IsChatEnabled = true;
 
+        public static long PartyTeamId = 0;
+
         public static void LoadDataTables()
         {
             // Load table data for resolving with in the future
@@ -77,7 +79,7 @@ namespace BPSR_ZDPS
                 Log.Information("Finished SkillTable post-processing");
             }
 
-            string modTableFile = Path.Combine(Utils.DATA_DIR_NAME, "ModTable.json");
+            string modTableFile = Path.Combine(Utils.DATA_DIR_NAME, "ModTable_ja.json");
             if (File.Exists(modTableFile))
             {
                 var modules = JsonConvert.DeserializeObject<Dictionary<int, ModuleData>>(File.ReadAllText(modTableFile));
@@ -85,7 +87,7 @@ namespace BPSR_ZDPS
                 Log.Information("Loaded ModTable.json");
             }
 
-            string modEffectTableFile = Path.Combine(Utils.DATA_DIR_NAME, "ModEffectTable.json");
+            string modEffectTableFile = Path.Combine(Utils.DATA_DIR_NAME, "ModEffectTable_ja.json");
             if (File.Exists(modEffectTableFile))
             {
                 var modEffects = JsonConvert.DeserializeObject<Dictionary<int, EffectData>>(File.ReadAllText(modEffectTableFile));
@@ -94,7 +96,7 @@ namespace BPSR_ZDPS
             }
 
             string ModLinkEffectsFile = Path.Combine(Utils.DATA_DIR_NAME, "ModLinkEffectTable.json");
-            if (File.Exists(modEffectTableFile))
+            if (File.Exists(ModLinkEffectsFile))
             {
                 var modLinkEffects = JsonConvert.DeserializeObject<Dictionary<int, ModLinkEffect>>(File.ReadAllText(ModLinkEffectsFile));
                 HelperMethods.DataTables.ModLinkEffects.Data = modLinkEffects;
@@ -152,7 +154,7 @@ namespace BPSR_ZDPS
                 Log.Information("Loaded TargetTable.json");
             }
 
-            string sceneTableFile = Path.Combine(Utils.DATA_DIR_NAME, "SceneTable.json");
+            string sceneTableFile = Path.Combine(Utils.DATA_DIR_NAME, "SceneTable_ja.json");
             if (File.Exists(sceneTableFile))
             {
                 var scenes = JsonConvert.DeserializeObject<Dictionary<string, Scene>>(File.ReadAllText(sceneTableFile));

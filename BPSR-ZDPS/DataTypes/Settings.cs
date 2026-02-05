@@ -19,11 +19,13 @@ public class Settings
     public bool ColorClassIconsByRole { get; set; } = true;
     public bool ShowSkillIconsInDetails { get; set; } = true;
     public bool OnlyShowDamageContributorsInMeters { get; set; } = false;
+    public bool OnlyShowPartyMembersInMeters { get; set; } = false;
     public bool ShowAbilityScoreInMeters { get; set; } = true;
+    public bool ShowSeasonStrengthInMeters { get; set; } = false;
     public bool ShowSubProfessionNameInMeters { get; set; } = true;
     public bool UseAutomaticWipeDetection { get; set; } = true;
     public bool SkipTeleportStateCheckInAutomaticWipeDetection { get; set; } = false;
-    public bool AllowWipeRecalculationOverwriting { get; set; } = false;
+    public bool DisableWipeRecalculationOverwriting { get; set; } = false;
     public bool SplitEncountersOnNewPhases { get; set; } = true;
     public bool DisplayTruePerSecondValuesInMeters { get; set; } = false;
     public bool AllowGamepadNavigationInputInZDPS { get; set; } = false;

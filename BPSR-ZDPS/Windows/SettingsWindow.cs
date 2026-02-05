@@ -23,11 +23,13 @@ namespace BPSR_ZDPS.Windows
         static bool colorClassIconsByRole;
         static bool showSkillIconsInDetails;
         static bool onlyShowDamageContributorsInMeters;
+        static bool onlyShowPartyMembersInMeters;
         static bool showAbilityScoreInMeters;
+        static bool showSeasonStrengthInMeters;
         static bool showSubProfessionNameInMeters;
         static bool useAutomaticWipeDetection;
         static bool skipTeleportStateCheckInAutomaticWipeDetection;
-        static bool allowWipeRecalculationOverwriting;
+        static bool disableWipeRecalculationOverwriting;
         static bool splitEncountersOnNewPhases;
         static bool displayTruePerSecondValuesInMeters;
         static bool allowGamepadNavigationInputInZDPS;
@@ -175,13 +177,13 @@ namespace BPSR_ZDPS.Windows
                 ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags.FittingPolicyScroll | ImGuiTabBarFlags.NoTooltip | ImGuiTabBarFlags.NoCloseWithMiddleMouseButton;
                 if (ImGui.BeginTabBar("##SettingsTabs", tabBarFlags))
                 {
-                    if (ImGui.BeginTabItem("General"))
+                    if (ImGui.BeginTabItem("一般"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##GeneralTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Network Device");
-                        ImGui.Text("Select the network device to read from:");
+                        ImGui.SeparatorText("ネットワークデバイス");
+                        ImGui.Text("取得に使用するネットワークデバイスを選択してください:");
 
                         ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X);
 
@@ -219,25 +221,25 @@ namespace BPSR_ZDPS.Windows
 
                             if (NetworkDevices == null || NetworkDevices?.Count == 0)
                             {
-                                ImGui.Selectable("<No Network Devices Found>");
+                                ImGui.Selectable("ネットワークデバイスが見つかりません");
                             }
 
                             ImGui.EndCombo();
                         }
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.TextUnformatted("Game Capture Preference: ");
+                        ImGui.TextUnformatted("ゲームキャプチャ設定: ");
                         ImGui.SameLine();
 
                         var gamePrefName = Utils.GameCapturePreferenceToName(GameCapturePreference);
                         ImGui.SetNextItemWidth(150);
                         if (ImGui.BeginCombo("##EGameCapturePreference", gamePrefName))
                         {
-                            if (ImGui.Selectable("Auto"))
+                            if (ImGui.Selectable("自動"))
                             {
                                 GameCapturePreference = EGameCapturePreference.Auto;
                             }
-                            else if (ImGui.Selectable("Standalone"))
+                            else if (ImGui.Selectable("スタンドアロン"))
                             {
                                 GameCapturePreference = EGameCapturePreference.Standalone;
                             }
@@ -257,27 +259,36 @@ namespace BPSR_ZDPS.Windows
                             {
                                 GameCapturePreference = EGameCapturePreference.XDG;
                             }
-                            else if (ImGui.Selectable("Custom"))
+                            else if (ImGui.Selectable("カスタム"))
                             {
                                 GameCapturePreference = EGameCapturePreference.Custom;
                             }
-                            ImGui.SetItemTooltip("Use this if your game version is not listed.\nNote: You will need to enter the name of the game executable for this to work.\nIt is located next to a file named 'GameAssembly.dll'.");
+                            ImGui.SetItemTooltip(
+                                "一覧にないゲームバージョンを使用する場合に選択してください。\n" +
+                                "※ この機能を使うには、ゲーム実行ファイル名の入力が必要です。\n" +
+                                "'GameAssembly.dll' と同じ場所にあります。"
+                            );
 
                             ImGui.EndCombo();
                         }
 
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Select which game version you want ZDPS to capture from.\nAuto will automatically detect and use the currently running version. Two simultaneous clients will cause data problems while on Auto.\nSteam and Standalone will only listen for data from their respective versions, allowing both to be run simultaneously and only report DPS for one.");
+                        ImGui.TextWrapped(
+                            "ZDPS がどのゲームバージョンからデータを取得するか選択します。\n" +
+                            "Auto は現在起動中のバージョンを自動検出して使用します。\n" +
+                            "同時に複数クライアントを起動している場合、Auto ではデータ不整合が発生します。\n" +
+                            "Steam と Standalone はそれぞれのバージョンのみを監視するため、同時起動が可能で、DPSは片方のみ取得されます。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         if (GameCapturePreference == EGameCapturePreference.Custom)
                         {
                             ImGui.Indent();
-                            
+
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Custom BPSR Executable Name: ");
+                            ImGui.Text("カスタムBPSR実行ファイル名: ");
                             ImGui.SameLine();
                             ImGui.SetNextItemWidth(-1);
                             if (ImGui.InputText("##GameCaptureCustomExeName", ref gameCaptureCustomExeName, 512))
@@ -286,64 +297,66 @@ namespace BPSR_ZDPS.Windows
                             }
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("The executable file name of the game to listen to. Ex: BPSR_STEAM");
+                            ImGui.TextWrapped("監視するゲーム実行ファイル名（例: BPSR_STEAM）");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.Unindent();
                         }
 
-                        ImGui.SeparatorText("Keybinds");
+                        ImGui.SeparatorText("キー設定");
 
                         if (IsElevated == false)
                         {
                             ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.Red_Transparent);
                             ImGui.BeginChild("##KeybindsNotice", new Vector2(0, 0), ImGuiChildFlags.AutoResizeY | ImGuiChildFlags.Borders);
-                            ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], ImGui.GetFontSize());
-                            ImGui.TextWrapped("Important Note:");
-                            ImGui.PopFont();
-                            ImGui.TextWrapped("Keybinds only work while the game is in focus if ZDPS is being run as Administrator. This is a limitation imposed by the Game Devs.");
+                            ImGui.TextWrapped("重要なお知らせ:");
+                            ImGui.TextWrapped("ZDPS を管理者として実行していない場合、キー設定はゲームにフォーカスがある時のみ動作します。これはゲーム側の制約です。");
                             ImGui.EndChild();
                             ImGui.PopStyleColor();
                         }
 
-                        ImGui.TextWrapped("Below are global hotkey keybinds for the application. Click on the box and press a key to bind it. Modifier keys (Ctrl/Alt/Shift) are not supported.");
-                        ImGui.TextWrapped("Press Escape to cancel the rebinding process.");
+                        ImGui.TextWrapped("以下はアプリのグローバルホットキー設定です。ボックスをクリックしてキーを押すと割り当てられます。修飾キー（Ctrl/Alt/Shift）は対応していません。");
+                        ImGui.TextWrapped("Escapeキーで再割り当てをキャンセルできます。");
 
                         ImGui.Indent();
 
-                        RebindKeyButton("Encounter Reset", ref EncounterResetKey, ref EncounterResetKeyName, ref IsBindingEncounterResetKey);
+                        RebindKeyButton("エンカウントリセット", ref EncounterResetKey, ref EncounterResetKeyName, ref IsBindingEncounterResetKey);
                         if (splitEncountersOnNewPhases)
                         {
                             ImGui.Indent();
                             ImGui.PushStyleColor(ImGuiCol.Text, Colors.Red_Transparent);
-                            ImGui.TextWrapped("[Split Encounters On New Phases] is Enabled. You likely do not need this keybind to manually reset an Encounter. ZDPS will handle Encounter separation for you.");
+                            ImGui.TextWrapped(
+                                "［フェーズ毎にエンカウントを分割］が有効になっています。\n" +
+                                "通常、このキー設定で手動リセットを行う必要はありません。\n" +
+                                "ZDPS が自動的にエンカウントの分割を処理します。"
+                            );
                             ImGui.PopStyleColor();
                             ImGui.Unindent();
                         }
-                        RebindKeyButton("Pinned Window Clickthrough", ref PinnedWindowClickthroughKey, ref PinnedWindowClickthroughKeyName, ref IsBindingPinnedWindowClickthroughKey);
+                        RebindKeyButton("固定ウィンドウのクリック透過", ref PinnedWindowClickthroughKey, ref PinnedWindowClickthroughKeyName, ref IsBindingPinnedWindowClickthroughKey);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("This allows your mouse input to go 'through' the pinned (Top Most) window, ignoring it, and interacting with whatever may be behind it such as the game or another application.");
+                        ImGui.TextWrapped("固定（最前面）ウィンドウを無視して、マウス入力をその背後（ゲームや他のアプリなど）に通します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.Unindent();
 
-                        ImGui.SeparatorText("ZDPS Update Checking");
+                        ImGui.SeparatorText("ZDPSアップデート確認");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Check For ZDPS Updates On Startup: ");
+                        ImGui.Text("起動時にZDPSの更新を確認: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##CheckForZDPSUpdatesOnStartup", ref checkForZDPSUpdatesOnStartup);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, ZDPS will check online for available updates when the application is launched.");
+                        ImGui.TextWrapped("有効にすると、起動時にオンラインで更新を確認します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Latest ZDPS Version Check URL: ");
+                        ImGui.Text("最新ZDPSバージョン確認URL: ");
                         ImGui.SameLine();
                         ImGui.SetNextItemWidth(-1);
                         if (ImGui.InputText("##LatestZDPSVersionCheckURL", ref latestZDPSVersionCheckURL, 512))
@@ -356,59 +369,64 @@ namespace BPSR_ZDPS.Windows
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("The URL to check for ZDPS version updates at.");
+                        ImGui.TextWrapped("ZDPSの更新確認に使用するURLです。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        ImGui.SeparatorText("Database");
+                        ImGui.SeparatorText("データベース");
 
                         ShowRestartRequiredNotice(Settings.Instance.UseDatabaseForEncounterHistory != useDatabaseForEncounterHistory, "Use Database For Encounter History");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Use Database For Encounter History: ");
+                        ImGui.Text("エンカウント履歴にデータベースを使用: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##UseDatabaseForEncounterHistory", ref useDatabaseForEncounterHistory);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, all encounter data is saved into a local database file (ZDatabase.db) to reduce memory usage and allow viewing between ZDPS sessions. Applies after restarting ZDPS.");
+                        ImGui.TextWrapped("有効にすると、全エンカウントデータをローカルDB（ZDatabase.db）に保存し、メモリ使用量を減らしてセッション間でも閲覧できるようにします。ZDPS再起動後に適用されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.BeginDisabled(!useDatabaseForEncounterHistory);
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Database Encounter History Retention Policy: ");
+                        ImGui.Text("エンカウント履歴の保持期間: ");
                         ImGui.SameLine();
                         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
                         ImGui.SetNextItemWidth(-1);
-                        ImGui.SliderInt("##DatabaseRetentionPolicyDays", ref databaseRetentionPolicyDays, 0, 30, databaseRetentionPolicyDays == 0 ? "Keep Forever" : $"{databaseRetentionPolicyDays} Days");
+                        ImGui.SliderInt("##DatabaseRetentionPolicyDays", ref databaseRetentionPolicyDays, 0, 30, databaseRetentionPolicyDays == 0 ? "無期限" : $"{databaseRetentionPolicyDays} Days");
                         ImGui.PopStyleColor(2);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("How long to keep previous Encounter History data for. When not set to Keep Forever, expired data is automatically deleted on application close.");
+                        ImGui.TextWrapped("過去のエンカウント履歴を保持する期間です。「無期限」以外の場合、期限切れデータはアプリ終了時に自動削除されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
                         ImGui.EndDisabled();
 
                         ImGui.BeginDisabled(useDatabaseForEncounterHistory);
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Limit Encounter Buff Tracking Without Database: ");
+                        ImGui.Text("DBなし時のバフ追跡を制限: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##LimitEncounterBuffTrackingWithoutDatabase", ref limitEncounterBuffTrackingWithoutDatabase);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, buffs are limited to only the latest 100 per entity instead of being limitless. This only applies if the Database is disabled to allow reduced memory usage. This setting is not retroactive.");
+                        ImGui.TextWrapped("有効にすると、バフ履歴をエンティティごとに最新100件までに制限します（無制限ではありません）。DBが無効な場合のみ適用され、メモリ使用量を抑えます。この設定は過去データには遡って適用されません。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
                         ImGui.EndDisabled();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Allow Encounter Saving Pausing In Open World: ");
+                        ImGui.Text("オープンワールドでエンカウント保存の一時停止を許可: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##AllowEncounterSavingPausingInOpenWorld", ref allowEncounterSavingPausingInOpenWorld);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, a button is added to the top of the Main Window that allows the current Encounter to not be saved to the Database.\nThis is only available while in the Open World and will automatically disable when map changing. Benchmarking and Manual New Encounter creation will be disabled while Paused.\nNote: At least one map change is required before the button will appear after starting ZDPS.");
+                        ImGui.TextWrapped(
+                            "有効にすると、現在のエンカウントをデータベースに保存しないようにするボタンがメインウィンドウ上部に表示されます。\n" +
+                            "この機能はオープンワールド中のみ使用でき、マップ移動時に自動的に無効になります。\n" +
+                            "一時停止中は、ベンチマークおよび手動での新規エンカウント作成は無効になります。\n" +
+                            "※ ZDPS起動後、このボタンが表示されるまでに最低1回のマップ移動が必要です。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -416,81 +434,87 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("Combat"))
+                    if (ImGui.BeginTabItem("戦闘"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##CombatTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Combat");
+                        ImGui.SeparatorText("戦闘");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Normalize Meter Contribution Bars: ");
+                        ImGui.Text("メーター貢献度バーを正規化: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##NormalizeMeterContributions", ref normalizeMeterContributions);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the bars for each player in a meter will be based on the top player, not the overall contribution.");
-                        ImGui.TextWrapped("This means the top player is always considered the '100%%' amount.");
+                        ImGui.TextWrapped("有効にすると、各プレイヤーのバーは全体貢献ではなくトッププレイヤー基準になります。");
+                        ImGui.TextWrapped("つまりトッププレイヤーが常に「100%」として扱われます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Use Short Width Number Formatting: ");
+                        ImGui.Text("数値を短縮表記で表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##UseShortWidthNumberFormatting", ref useShortWidthNumberFormatting);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, uses shorter width number formats when values over 1000 would otherwise be shown.");
+                        ImGui.TextWrapped("有効にすると、1000を超える値などで短い数値表記を使用します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Use Automatic Wipe Detection: ");
+                        ImGui.Text("自動全滅検出を使用: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##UseAutomaticWipeDetection", ref useAutomaticWipeDetection);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, ZDPS will attempt to detect party wipes against bosses and start a new encounter automatically.");
+                        ImGui.TextWrapped("有効にすると、ボス戦でのパーティ全滅を検出して自動的に新しいエンカウントを開始します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Skip Teleport State Check In Automatic Wipe Detection: ");
+                        ImGui.Text("自動全滅検出でテレポート状態確認を省略: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##SkipTeleportStateCheckInAutomaticWipeDetection", ref skipTeleportStateCheckInAutomaticWipeDetection);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the 'Teleport' Player State requirement in Automatic Wipe Detection is not performed. You probably want this Disabled.");
+                        ImGui.TextWrapped("有効にすると、自動全滅検出における「Teleport」状態の確認を行いません。通常は無効のままが推奨です。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Allow Wipe Recalculation Overwriting: ");
+                        ImGui.Text("全滅再計算の上書きを許可: ");
                         ImGui.SameLine();
-                        ImGui.Checkbox("##AllowWipeRecalculationOverwriting", ref allowWipeRecalculationOverwriting);
+                        ImGui.Checkbox("##DisableWipeRecalculationOverwriting", ref disableWipeRecalculationOverwriting);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the internal process of checking the Dead status of all players in the Encounter is allowed to overwrite the detected wipe status from the normal automatic detector.\nAllowing this to overturn results is experimental so only enable it if you run into incorrect wipe reporting.");
+                        //ImGui.TextWrapped("When enabled, the internal process of checking the Dead status of all players in the Encounter is allowed to overwrite the detected wipe status from the normal automatic detector.\nAllowing this to overturn results is experimental so only enable it if you run into incorrect wipe reporting.");
+                        ImGui.TextWrapped("有効にすると、新しいワイプ再計算ロジックは無効になり、「自動ワイプ検出を使用」が有効な場合は従来の方式が使用されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Split Encounters On New Phases: ");
+                        ImGui.Text("新フェーズでエンカウントを分割: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##SplitEncountersOnNewPhases", ref splitEncountersOnNewPhases);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, encounters are automatically split across phase changes. This allows bosses to be split from the rest of a dungeon. It also splits raid boss phases. This probably should be enabled.");
+                        ImGui.TextWrapped("有効にすると、フェーズ変更ごとにエンカウントを自動分割します。ダンジョン内のボス部分を分けたり、レイドボスのフェーズを分割できます。基本的に有効推奨です。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Display True Per Second Values In Meters: ");
+                        ImGui.Text("メーターに真の毎秒値を表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##DisplayTruePerSecondValuesInMeters", ref displayTruePerSecondValuesInMeters);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the Damage, Healing, and Taken Per Second value shown in the Meters will have the 'true' Per Second value, shown in square brackets, in addition to the normal 'Active Per Second' value. This means it is recalculated every second instead of only using the time the entity was actively participating in combat pressing buttons.\nNote: Both values are accurate, they are just two different metrics.\nThis only works starting from the Next Encounter. It is not retroactive and this value currently only will be shown in the Meters UI.");
+                        ImGui.TextWrapped(
+                            "有効にすると、メーターに表示されるダメージ・回復・被ダメージの毎秒値に、通常の「アクティブ毎秒値」に加えて、角括弧で表示される「真の毎秒値」が表示されます。\n" +
+                            "真の毎秒値は、実際の戦闘参加時間ではなく、毎秒ごとに再計算された値です。\n" +
+                            "※ どちらの値も正確であり、計算方式が異なるだけです。\n" +
+                            "この設定は次のエンカウントからのみ有効になります。過去のエンカウントには反映されず、現在はメーターUI上のみ表示されます。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -498,99 +522,105 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("User Interface"))
+                    if (ImGui.BeginTabItem("ユーザーインターフェース"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##UserInterfaceTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("User Interface");
+                        ImGui.SeparatorText("ユーザーインターフェース");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Class Icons In Meters: ");
+                        ImGui.Text("メーターにクラスアイコンを表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowClassIconsInMeters", ref showClassIconsInMeters);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, class icons will be shown next to players in the meters.");
+                        ImGui.TextWrapped("有効にすると、メーター上でプレイヤー名の横にクラスアイコンを表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Color Class Icons By Role Type: ");
+                        ImGui.Text("ロール別にクラスアイコンを色分け: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ColorClassIconsByRole", ref colorClassIconsByRole);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, class icons shown in meters will be colored by their role instead of all being white.");
+                        ImGui.TextWrapped("有効にすると、クラスアイコンを白一色ではなくロール別の色で表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Skill Icons In Details: ");
+                        ImGui.Text("詳細にスキルアイコンを表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowSkillIconsInDetails", ref showSkillIconsInDetails);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, skill icons will be displayed, when possible, in the details panel next to skill names.");
+                        ImGui.TextWrapped("有効にすると、可能な場合に詳細パネルでスキル名の横にスキルアイコンを表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Only Show Damage Contributors In Meters: ");
+                        ImGui.Text("メーターにダメージ貢献者のみ表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##OnlyShowContributorsInMeters", ref onlyShowDamageContributorsInMeters);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, only players who have dealt damage will show in the DPS meter.");
+                        ImGui.TextWrapped("有効にすると、ダメージを与えたプレイヤーのみDPSメーターに表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Ability Score In Meters: ");
+                        ImGui.Text("メーターにアビリティスコアを表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowAbilityScoreInMeters", ref showAbilityScoreInMeters);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the Ability Score for players will be shown in the meters.");
+                        ImGui.TextWrapped("有効にすると、プレイヤーのアビリティスコアをメーターに表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Show Sub Profession Name In Meters: ");
+                        ImGui.Text("メーターにサブ職業名を表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##ShowSubProfessionNameInMeters", ref showSubProfessionNameInMeters);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, allows showing the detected Sub Profession name in the meters. If no Sub Profession is detected, just the base class name is shown. If no base class is found, 'Unknown' is shown.");
+                        ImGui.TextWrapped("有効にすると、検出されたサブ職業名をメーターに表示します。サブ職業が検出できない場合は基本クラス名のみ表示します。基本クラスも不明な場合は『不明』と表示します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Allow Gamepad Navigation Input In ZDPS: ");
+                        ImGui.Text("ZDPSでゲームパッド操作を許可: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##AllowGamepadNavigationInputInZDPS", ref allowGamepadNavigationInputInZDPS);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, gamepad input can navigate and control the ZDPS windows.\nNote: Gamepad input may control the windows even without them specifically in focus.");
+                        ImGui.TextWrapped(
+                            "有効にすると、ゲームパッド入力で ZDPS のウィンドウ操作やナビゲーションが可能になります。\n" +
+                            "※ ウィンドウにフォーカスが無い状態でも、ゲームパッド入力が反映される場合があります。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Keep Past Encounter In Meter UI Until Next Damage: ");
+                        ImGui.Text("次のダメージまで前回エンカウントを表示: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##KeepPastEncounterInMeterUntilNextDamage", ref keepPastEncounterInMeterUntilNextDamage);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the previous Encounter will remain in the Meter UI until damage has been dealt in the current Encounter.\nThe Meter UI will still swap to the current Encounter on Battle change events (these are generally Map changes).");
+                        ImGui.TextWrapped(
+                            "有効にすると、現在のエンカウントでダメージが発生するまで、前回のエンカウント内容がメーターUIに表示され続けます。\n" +
+                            "ただし、戦闘切り替えイベント（通常はマップ移動）が発生した場合は、自動的に現在のエンカウントへ切り替わります。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.CollapsingHeader("Pinned (Top Most) Window Opacities"))
+                        if (ImGui.CollapsingHeader("固定（最前面）ウィンドウの不透明度"))
                         {
                             ImGui.Indent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Main Window: ");
+                            ImGui.Text("メインウィンドウ: ");
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -601,12 +631,12 @@ namespace BPSR_ZDPS.Windows
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("How transparent the Main Window is while pinned.");
+                            ImGui.TextWrapped("固定中のメインウィンドウの透明度です。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Cooldown Priority Tracker Window: ");
+                            ImGui.Text("クールダウン優先度トラッカー: ");
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -617,12 +647,12 @@ namespace BPSR_ZDPS.Windows
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("How transparent the Cooldown Priority Tracker Window is while pinned.");
+                            ImGui.TextWrapped("固定中のクールダウントラッカーの透明度です。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Entity Cache Viewer Window: ");
+                            ImGui.Text("エンティティキャッシュ表示: ");
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -633,18 +663,18 @@ namespace BPSR_ZDPS.Windows
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("How transparent the Entity Cache Viewer Window is while pinned.");
+                            ImGui.TextWrapped("固定中のエンティティキャッシュ表示の透明度です。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
-                            ImGui.SeparatorText("Integrations");
+                            ImGui.SeparatorText("連携");
 
                             if (ImGui.CollapsingHeader("BPTimer##BPTimerOpacitySection", ImGuiTreeNodeFlags.DefaultOpen))
                             {
                                 ImGui.Indent();
 
                                 ImGui.AlignTextToFramePadding();
-                                ImGui.Text("Spawn Tracker Window: ");
+                                ImGui.Text("スポーントラッカー: ");
                                 ImGui.SetNextItemWidth(-1);
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -655,7 +685,7 @@ namespace BPSR_ZDPS.Windows
                                 ImGui.PopStyleColor(2);
                                 ImGui.Indent();
                                 ImGui.BeginDisabled(true);
-                                ImGui.TextWrapped("How transparent the Spawn Tracker Window is while pinned.");
+                                ImGui.TextWrapped("固定中のスポーントラッカーの透明度です。");
                                 ImGui.EndDisabled();
                                 ImGui.Unindent();
 
@@ -665,12 +695,12 @@ namespace BPSR_ZDPS.Windows
                             ImGui.Unindent();
                         }
 
-                        if (ImGui.CollapsingHeader("Window Scales"))
+                        if (ImGui.CollapsingHeader("ウィンドウスケール"))
                         {
                             ImGui.Indent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Meter Bar Scale: ");
+                            ImGui.Text("メーターバーのスケール: ");
                             ImGui.SetNextItemWidth(-1);
                             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                             ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -681,18 +711,18 @@ namespace BPSR_ZDPS.Windows
                             ImGui.PopStyleColor(2);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("Scaling for how large the bars in the meter windows should be. 100%% is the default scale.");
+                            ImGui.TextWrapped("メーターのバーの大きさ（スケール）です。100%が標準です。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
-                            ImGui.SeparatorText("Integrations");
+                            ImGui.SeparatorText("連携");
 
                             if (ImGui.CollapsingHeader("BPTimer##BPTimerScaleSection", ImGuiTreeNodeFlags.DefaultOpen))
                             {
                                 ImGui.Indent();
 
                                 ImGui.AlignTextToFramePadding();
-                                ImGui.Text("Spawn Tracker Text Scale: ");
+                                ImGui.Text("スポーントラッカー文字スケール: ");
                                 ImGui.SetNextItemWidth(-1);
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -703,12 +733,12 @@ namespace BPSR_ZDPS.Windows
                                 ImGui.PopStyleColor(2);
                                 ImGui.Indent();
                                 ImGui.BeginDisabled(true);
-                                ImGui.TextWrapped("Scaling for how the text in the Spawn Tracker window should be. 100%% is the default scale.");
+                                ImGui.TextWrapped("スポーントラッカーの文字サイズ（スケール）です。100%が標準です。");
                                 ImGui.EndDisabled();
                                 ImGui.Unindent();
 
                                 ImGui.AlignTextToFramePadding();
-                                ImGui.Text("Spawn Tracker Line Scale: ");
+                                ImGui.Text("スポーントラッカーラインスケール: ");
                                 ImGui.SetNextItemWidth(-1);
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                                 ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -719,7 +749,7 @@ namespace BPSR_ZDPS.Windows
                                 ImGui.PopStyleColor(2);
                                 ImGui.Indent();
                                 ImGui.BeginDisabled(true);
-                                ImGui.TextWrapped("Scaling for how large the Line (channel) bars in the Spawn Tracker window should be. 100%% is the default scale.");
+                                ImGui.TextWrapped("スポーントラッカーのライン（チャンネル）バーの大きさです。100%が標準です。");
                                 ImGui.EndDisabled();
                                 ImGui.Unindent();
 
@@ -729,56 +759,56 @@ namespace BPSR_ZDPS.Windows
                             ImGui.Unindent();
                         }
 
-                        if(ImGui.CollapsingHeader("Meter Settings"))
+                        if (ImGui.CollapsingHeader("メーター設定"))
                         {
-                            ImGui.SeparatorText("Tanking");
+                            ImGui.SeparatorText("タンク");
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Show Deaths: ");
+                            ImGui.Text("死亡数を表示: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##MeterSettingsTankingShowDeaths", ref meterSettingsTankingShowDeaths);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, shows a Death counter for each entry in the Tanking Meter.");
+                            ImGui.TextWrapped("有効にすると、タンクメーターの各項目に死亡数カウンターを表示します。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
-                            ImGui.SeparatorText("NPC Taken");
+                            ImGui.SeparatorText("NPC被ダメ");
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Show HP Data: ");
+                            ImGui.Text("HPデータを表示: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##MeterSettingsNpcTakenShowHpData", ref meterSettingsNpcTakenShowHpData);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, adds Current HP, Max HP, and HP Percent to each entry in the NPC Taken Meter.");
+                            ImGui.TextWrapped("有効にすると、NPC被ダメメーターの各項目に現在HP/最大HP/HP%を追加表示します。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Hide Max HP: ");
+                            ImGui.Text("最大HPを非表示: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##MeterSettingsNpcTakenHideMaxHp", ref meterSettingsNpcTakenHideMaxHp);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, removes the Max HP value shown.");
+                            ImGui.TextWrapped("有効にすると、最大HPの表示を消します。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Show HP Percent Bar: ");
+                            ImGui.Text("HP%バーを表示: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##MeterSettingsNpcTakenUseHpMeter", ref meterSettingsNpcTakenUseHpMeter);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, shows the current HP Percentage as a Red Bar instead of the Blue Bar that would normally show how much total damage the NPC has taken.");
+                            ImGui.TextWrapped("有効にすると、通常はNPCの総被ダメ量を示す青バーの代わりに、現在HP%を赤バーで表示します。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
                         }
 
-                        ImGui.SeparatorText("Window Property Resets");
+                        ImGui.SeparatorText("ウィンドウ設定のリセット");
 
-                        if (ImGui.Button("Reset Main Window Position"))
+                        if (ImGui.Button("メインウィンドウ位置をリセット"))
                         {
                             var glfwMonitor = Hexa.NET.GLFW.GLFW.GetPrimaryMonitor();
                             var glfwVidMode = Hexa.NET.GLFW.GLFW.GetVideoMode(glfwMonitor);
@@ -786,59 +816,59 @@ namespace BPSR_ZDPS.Windows
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Resets the Main Window back to the original default center screen position on your primary monitor.");
+                        ImGui.TextWrapped("メインウィンドウを初期のデフォルト位置（プライマリモニター中央）に戻します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Reset Main Window Size"))
+                        if (ImGui.Button("メインウィンドウサイズをリセット"))
                         {
                             mainWindow.NextWindowSize = mainWindow.DefaultWindowSize;
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Resets the Main Window back to the original size.");
+                        ImGui.TextWrapped("メインウィンドウを初期サイズに戻します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Reset Raid Manager Cooldown Tracker Size"))
+                        if (ImGui.Button("レイドマネージャーCDトラッカーサイズをリセット"))
                         {
                             RaidManagerCooldownsWindow.ResetWindowSize = true;
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Resets the Raid Manager Cooldown Tracker window back to the original size.");
+                        ImGui.TextWrapped("レイドマネージャーCDトラッカーを初期サイズに戻します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Reset Entity Cache Viewer Size"))
+                        if (ImGui.Button("エンティティキャッシュ表示サイズをリセット"))
                         {
                             EntityCacheViewerWindow.ResetWindowSize = true;
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Resets the Entity Cache Viewer window back to the original size.");
+                        ImGui.TextWrapped("エンティティキャッシュ表示を初期サイズに戻します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Reset BPTimer Spawn Tracker Size"))
+                        if (ImGui.Button("BPTimerスポーントラッカーサイズをリセット"))
                         {
                             SpawnTrackerWindow.ResetWindowSize = true;
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Resets the BPTimer Spawn Tracker window back to the original size.");
+                        ImGui.TextWrapped("BPTimerスポーントラッカーを初期サイズに戻します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        ImGui.SeparatorText("Low Performance Mode");
+                        ImGui.SeparatorText("低負荷モード");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Low Performance Mode: ");
+                        ImGui.Text("低負荷モード: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##LowPerformanceMode", ref lowPerformanceMode);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, will force ZDPS to run at a lower rate, potentially causing stuttering UI when moving windows. Only turn this on if you experience Very High CPU usage from ZDPS.");
+                        ImGui.TextWrapped("有効にすると、ZDPSの更新レートを下げます。ウィンドウ移動時にUIがカクつく可能性があります。ZDPSのCPU使用率が非常に高い場合のみ有効にしてください。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -846,19 +876,19 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("Matchmaking"))
+                    if (ImGui.BeginTabItem("マッチメイキング"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##MatchmakingTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Matchmaking");
+                        ImGui.SeparatorText("マッチメイキング");
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Play Notification Sound On Matchmake: ");
+                        ImGui.Text("マッチ成立時に通知音を再生: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##PlayNotificationSoundOnMatchmake", ref playNotificationSoundOnMatchmake);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, play a notification sound alert when the matchmaker finds players and is waiting for you to accept.");
+                        ImGui.TextWrapped("有効にすると、マッチメイカーが成立して承認待ちになった時に通知音を再生します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -866,7 +896,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Indent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Matchmake Notification Sound Path: ");
+                        ImGui.Text("通知音ファイルパス: ");
                         ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 140 - ImGui.GetStyle().ItemSpacing.X);
                         ImGui.InputText("##MatchmakeNotificationSoundPath", ref matchmakeNotificationSoundPath, 1024);
                         ImGui.SameLine();
@@ -874,31 +904,35 @@ namespace BPSR_ZDPS.Windows
                         {
                             string defaultDir = File.Exists(matchmakeNotificationSoundPath) ? Path.GetDirectoryName(matchmakeNotificationSoundPath) : "";
 
-                            ImFileBrowser.OpenFile((selectedFilePath)=>
+                            ImFileBrowser.OpenFile((selectedFilePath) =>
                             {
                                 System.Diagnostics.Debug.WriteLine($"MatchmakeNotificationSoundPath = {selectedFilePath}");
                                 matchmakeNotificationSoundPath = selectedFilePath;
                             },
-                            "Select a sound file...", defaultDir, "MP3 (*.mp3)|*.mp3|WAV (*.wav)|*.wav|All Files (*.*)|*.*", 0);
+                            "音声ファイルを選択...", defaultDir, "MP3 (*.mp3)|*.mp3|WAV (*.wav)|*.wav|All Files (*.*)|*.*", 0);
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("File path to a custom sound file to play when the matchmake notification occurs.\nA default sound will be used if none is set or the file is invalid.\nNote: Only MP3 and WAV are supported formats.");
+                        ImGui.TextWrapped(
+                            "マッチング通知時に再生するカスタム音声ファイルのパスを指定します。\n" +
+                            "未設定、またはファイルが無効な場合は、デフォルトの通知音が使用されます。\n" +
+                            "※ 対応している形式は MP3 および WAV のみです。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Loop Notification Sound On Matchmake: ");
+                        ImGui.Text("マッチ成立通知音をループ再生: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##loopNotificationSoundOnMatchmake", ref loopNotificationSoundOnMatchmake);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the notification sound will loop until you accept the queue pop or it is canceled.");
+                        ImGui.TextWrapped("有効にすると、承認するかキャンセルされるまで通知音をループ再生します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Matchmake Notification Volume Level: ");
+                        ImGui.Text("通知音量: ");
                         ImGui.SetNextItemWidth(-1);
                         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -909,7 +943,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.PopStyleColor(2);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Volume scale of the played back notification sound. 100%% is the normal sound level of the audio file. Values above 100%% may not always appear louder. If you need a louder sound, please edit your file in an external program to increase loudness.");
+                        ImGui.TextWrapped("通知音の音量スケールです。100%が元の音量です。100%を超えても必ずしも大きくなるとは限りません。さらに大きくしたい場合は外部ツールで音量を上げてください。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -917,12 +951,12 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndDisabled();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Play Notification Sound On Ready Check: ");
+                        ImGui.Text("レディチェック時に通知音を再生: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##PlayNotificationSoundOnReadyCheck", ref playNotificationSoundOnReadyCheck);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, play a notification sound alert when a party ready check is performed and is waiting for you to accept.");
+                        ImGui.TextWrapped("有効にすると、レディチェックが行われ承認待ちになった時に通知音を再生します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -930,7 +964,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.Indent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Ready Check Notification Sound Path: ");
+                        ImGui.Text("レディチェック通知音パス: ");
                         ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 140 - ImGui.GetStyle().ItemSpacing.X);
                         ImGui.InputText("##ReadyCheckNotificationSoundPath", ref readyCheckNotificationSoundPath, 1024);
                         ImGui.SameLine();
@@ -943,26 +977,30 @@ namespace BPSR_ZDPS.Windows
                                 System.Diagnostics.Debug.WriteLine($"ReadyCheckNotificationSoundPath = {selectedFilePath}");
                                 readyCheckNotificationSoundPath = selectedFilePath;
                             },
-                            "Select a sound file...", defaultDir, "MP3 (*.mp3)|*.mp3|WAV (*.wav)|*.wav|All Files (*.*)|*.*", 0);
+                            "音声ファイルを選択...", defaultDir, "MP3 (*.mp3)|*.mp3|WAV (*.wav)|*.wav|All Files (*.*)|*.*", 0);
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("File path to a custom sound file to play when the ready check notification occurs.\nA default sound will be used if none is set or the file is invalid.\nNote: Only MP3 and WAV are supported formats.");
+                        ImGui.TextWrapped(
+                            "レディチェック通知時に再生するカスタム音声ファイルのパスを指定します。\n" +
+                            "未設定、またはファイルが無効な場合は、デフォルトの通知音が使用されます。\n" +
+                            "※ 対応している形式は MP3 および WAV のみです。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Loop Notification Sound On Ready Check: ");
+                        ImGui.Text("レディチェック通知音をループ再生: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##loopNotificationSoundOnReadyCheck", ref loopNotificationSoundOnReadyCheck);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, the notification sound will loop until you respond to the ready check.");
+                        ImGui.TextWrapped("有効にすると、レディチェックに応答するまで通知音をループ再生します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Ready Check Notification Volume Level: ");
+                        ImGui.Text("レディチェック通知音量: ");
                         ImGui.SetNextItemWidth(-1);
                         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -973,7 +1011,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.PopStyleColor(2);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Volume scale of the played back notification sound.");
+                        ImGui.TextWrapped("再生する通知音の音量スケールです。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -984,73 +1022,76 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("Integrations"))
+                    if (ImGui.BeginTabItem("連携"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##IntegrationsTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Integrations");
+                        ImGui.SeparatorText("連携");
 
                         ShowGenericImportantNotice(!useAutomaticWipeDetection, "AutoWipeDetectionDisabled", "[Use Automatic Wipe Detection] is currently Disabled. Reports may be incorrect until it is Enabled again.");
                         ShowGenericImportantNotice(skipTeleportStateCheckInAutomaticWipeDetection, "SkipTeleportStateCheckInAutomaticWipeDetectionEnabled", "[Skip Teleport State Check In Automatic Wipe Detection] is currently Enabled. Reports may be incorrect until it is Disabled again.");
                         ShowGenericImportantNotice(!splitEncountersOnNewPhases, "SplitEncountersOnNewPhasesDisabled", "[Split Encounters On New Phases] is currently Disabled. Reports may be incorrect until it is Enabled again.");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Save Encounter Report To File: ");
+                        ImGui.Text("エンカウントレポートをファイル保存: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##SaveEncounterReportToFile", ref saveEncounterReportToFile);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, writes a report file to the Reports folder located next to ZDPS.");
+                        ImGui.TextWrapped("有効にすると、ZDPSと同じ場所のReportsフォルダにレポートファイルを書き込みます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.BeginDisabled(!saveEncounterReportToFile);
                         ImGui.Indent();
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Report File Retention Policy: ");
+                        ImGui.Text("レポートファイル保持期間: ");
                         ImGui.SameLine();
                         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
                         ImGui.SetNextItemWidth(-1);
-                        ImGui.SliderInt("##ReportFileRetentionPolicyDays", ref reportFileRetentionPolicyDays, 0, 30, reportFileRetentionPolicyDays == 0 ? "Keep Forever" : $"{reportFileRetentionPolicyDays} Days");
+                        ImGui.SliderInt("##ReportFileRetentionPolicyDays", ref reportFileRetentionPolicyDays, 0, 30, reportFileRetentionPolicyDays == 0 ? "無期限" : $"{reportFileRetentionPolicyDays} Days");
                         ImGui.PopStyleColor(2);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("How long to keep locally saved Report files for. When not set to Keep Forever, expired data is automatically deleted on application close.");
+                        ImGui.TextWrapped("ローカル保存したレポートファイルを保持する期間です。「無期限」以外の場合、期限切れはアプリ終了時に自動削除されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
                         ImGui.Unindent();
                         ImGui.EndDisabled();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Minimum Player Count To Create Report: ");
+                        ImGui.Text("レポート作成に必要な最小プレイヤー数: ");
                         ImGui.SameLine();
                         ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                         ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
                         ImGui.SetNextItemWidth(-1);
-                        ImGui.SliderInt("##MinimumPlayerCountToCreateReport", ref minimumPlayerCountToCreateReport, 0, 20, minimumPlayerCountToCreateReport == 0 ? "Any" : $"{minimumPlayerCountToCreateReport} Players");
+                        ImGui.SliderInt("##MinimumPlayerCountToCreateReport", ref minimumPlayerCountToCreateReport, 0, 20, minimumPlayerCountToCreateReport == 0 ? "任意" : $"{minimumPlayerCountToCreateReport} Players");
                         ImGui.PopStyleColor(2);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("The number of players required in an Encounter to create a report for. This applies to both local saving and Webhook sending.");
+                        ImGui.TextWrapped("レポートを作成するために必要なエンカウント内プレイヤー数です。ローカル保存とWebhook送信の両方に適用されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Always Create Report At Dungeon End: ");
+                        ImGui.Text("ダンジョン終了時に常にレポートを作成: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##AlwaysCreateReportAtDungeonEnd", ref alwaysCreateReportAtDungeonEnd);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, Reports are created at the end of a Dungeon if one was not created already.\nIf this is disabled Reports may not be created if a Dungeon did not end with a boss fight.");
+                        ImGui.TextWrapped(
+                            "有効にすると、ダンジョン終了時にレポートが未作成の場合でも自動的にレポートが作成されます。\n" +
+                            "この設定が無効の場合、ボス戦で終了しなかったダンジョンではレポートが作成されないことがあります。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        ImGui.SeparatorText("ZDPS Report Webhooks");
+                        ImGui.SeparatorText("ZDPSレポートWebhook");
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.TextUnformatted("Webhook Mode: ");
+                        ImGui.TextUnformatted("Webhookモード: ");
                         ImGui.SameLine();
                         ImGui.SetNextItemWidth(-1);
 
@@ -1058,58 +1099,61 @@ namespace BPSR_ZDPS.Windows
                         switch (webhookReportsMode)
                         {
                             case EWebhookReportsMode.DiscordDeduplication:
-                                reportsModeName = "Discord Deduplication";
+                                reportsModeName = "Discord重複防止";
                                 break;
                             case EWebhookReportsMode.Discord:
                                 reportsModeName = "Discord Webhook";
                                 break;
                             case EWebhookReportsMode.Custom:
-                                reportsModeName = "Custom URL";
+                                reportsModeName = "カスタムURL";
                                 break;
                             case EWebhookReportsMode.FallbackDiscordDeduplication:
-                                reportsModeName = "Fallback Discord Deduplication";
+                                reportsModeName = "代替Discord重複防止";
                                 break;
                         }
 
                         if (ImGui.BeginCombo("##WebhookMode", $"{reportsModeName}", ImGuiComboFlags.None))
                         {
-                            if (ImGui.Selectable("Discord Deduplication"))
+                            if (ImGui.Selectable("Discord重複防止"))
                             {
                                 webhookReportsMode = EWebhookReportsMode.DiscordDeduplication;
                             }
-                            ImGui.SetItemTooltip("Send to a Discord Webhook after using an External Server to check if the same report was sent already within a short timeframe.");
+                            ImGui.SetItemTooltip("外部サーバーで短時間内の重複送信を確認した後、Discord Webhookへ送信します。");
                             if (ImGui.Selectable("Discord Webhook"))
                             {
                                 webhookReportsMode = EWebhookReportsMode.Discord;
                             }
-                            ImGui.SetItemTooltip("Send directly to a Discord Webhook.");
-                            if (ImGui.Selectable("Custom URL"))
+                            ImGui.SetItemTooltip("Discord Webhookへ直接送信します。");
+                            if (ImGui.Selectable("カスタムURL"))
                             {
                                 webhookReportsMode = EWebhookReportsMode.Custom;
                             }
-                            ImGui.SetItemTooltip("Send directly to a custom URL of your choice.");
-                            if (ImGui.Selectable("Fallback Discord Deduplication"))
+                            ImGui.SetItemTooltip("指定したカスタムURLへ直接送信します。");
+                            if (ImGui.Selectable("代替Discord重複防止"))
                             {
                                 webhookReportsMode = EWebhookReportsMode.FallbackDiscordDeduplication;
                             }
-                            ImGui.SetItemTooltip("Have an External Server forward to a Discord Webhook after using the External Server to check if the same report was sent already within a short timeframe.");
+                            ImGui.SetItemTooltip("外部サーバーで短時間内の重複送信を確認した後、外部サーバーがDiscord Webhookへ転送します。");
                             ImGui.EndCombo();
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Select the type of Webhook Mode you want to use for sending ZDPS Reports.\n'Discord Deduplication' is recommended if other users may be sending the same Encounter Report to the same Discord Channel at the same time to avoid duplicate messages.");
+                        ImGui.TextWrapped(
+                            "ZDPS レポート送信に使用する Webhook モードを選択します。\n" +
+                            "複数のユーザーが同じエンカウントレポートを同じ Discord チャンネルへ送信する可能性がある場合は、重複防止のため「Discord Deduplication」の使用を推奨します。"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         // TODO: Maybe allow adding multiple Webhooks and toggling the enabled state of each one (should allow entering a friendly name next to them too)
 
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text($"Send Encounter Reports To {reportsModeName}: ");
+                        ImGui.Text($"エンカウントレポートを {reportsModeName} に送信: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##WebhookReportsEnabled", ref webhookReportsEnabled);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped($"When enabled, sends an Encounter Report to the given {reportsModeName} server.");
+                        ImGui.TextWrapped($"有効にすると、指定した {reportsModeName} へエンカウントレポートを送信します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
@@ -1124,16 +1168,16 @@ namespace BPSR_ZDPS.Windows
                                 if (webhookReportsMode == EWebhookReportsMode.DiscordDeduplication || webhookReportsMode == EWebhookReportsMode.FallbackDiscordDeduplication)
                                 {
                                     ImGui.AlignTextToFramePadding();
-                                    ImGui.Text("Deduplication Server URL: ");
+                                    ImGui.Text("重複防止サーバーURL: ");
                                     ImGui.SameLine();
                                     ImGui.SetNextItemWidth(-1);
                                     ImGui.InputText("##WebhookReportsDeduplicationServerHost", ref webhookReportsDeduplicationServerUrl, 512);
                                     ImGui.Indent();
                                     ImGui.BeginDisabled(true);
-                                    ImGui.TextWrapped("The Discord Deduplication Server URL to prevent duplicate reports with.");
+                                    ImGui.TextWrapped("重複レポート送信を防ぐためのDiscord重複防止サーバーURLです。");
                                     if (webhookReportsMode == EWebhookReportsMode.FallbackDiscordDeduplication)
                                     {
-                                        ImGui.TextWrapped("Note: The server must have Fallback support Enabled for this to work as expected since it will handle sending the Discord request for you.");
+                                        ImGui.TextWrapped("注意: 期待通り動作させるには、サーバー側でFallback対応を有効にする必要があります（Discordへの送信はサーバーが行います）。");
                                     }
                                     ImGui.EndDisabled();
                                     ImGui.Unindent();
@@ -1160,7 +1204,7 @@ namespace BPSR_ZDPS.Windows
                                     ImGui.Indent();
                                     ImGui.BeginDisabled(true);
                                     ImGui.PushStyleColor(ImGuiCol.Text, Colors.Red);
-                                    ImGui.TextWrapped("The entered URL appears invalid.");
+                                    ImGui.TextWrapped("入力されたURLが正しくありません。");
                                     ImGui.PopStyleColor();
                                     ImGui.EndDisabled();
                                     ImGui.Unindent();
@@ -1168,7 +1212,7 @@ namespace BPSR_ZDPS.Windows
 
                                 ImGui.Indent();
                                 ImGui.BeginDisabled(true);
-                                ImGui.TextWrapped("The Discord Webhook URL to send reports to.");
+                                ImGui.TextWrapped("レポート送信先のDiscord Webhook URLです。");
                                 ImGui.EndDisabled();
                                 ImGui.Unindent();
                                 break;
@@ -1180,7 +1224,7 @@ namespace BPSR_ZDPS.Windows
                                 ImGui.InputText("##WebhookReportsCustomUrl", ref webhookReportsCustomUrl, 512);
                                 ImGui.Indent();
                                 ImGui.BeginDisabled(true);
-                                ImGui.TextWrapped("The Custom URL to send reports to.");
+                                ImGui.TextWrapped("レポート送信先のカスタムURLです。");
                                 ImGui.EndDisabled();
                                 ImGui.Unindent();
                                 break;
@@ -1192,12 +1236,12 @@ namespace BPSR_ZDPS.Windows
                         if (ImGui.CollapsingHeader("BPTimer", ImGuiTreeNodeFlags.DefaultOpen))
                         {
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("BPTimer Enabled: ");
+                            ImGui.Text("BPTimerを有効化: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##ExternalBPTimerEnabled", ref externalBPTimerEnabled);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, allows sending reports back to BPTimer.com.");
+                            ImGui.TextWrapped("有効にすると、BPTimer.comへレポート送信できるようになります。");
                             bool hasBPTimerReports = externalBPTimerFieldBossHpReportsEnabled;
                             if (!hasBPTimerReports)
                             {
@@ -1207,20 +1251,20 @@ namespace BPSR_ZDPS.Windows
                             {
                                 ImGui.PushStyleColor(ImGuiCol.Text, Colors.Green);
                             }
-                            ImGui.TextWrapped("Note: This setting alone does not enable reports. They must be enabled individually below.");
+                            ImGui.TextWrapped("注意: この設定だけではレポート送信は有効になりません。下の項目で個別に有効化してください。");
                             ImGui.PopStyleColor();
 
                             ImGui.EndDisabled();
                             if (ImGui.CollapsingHeader("Data Collection##BPTimerDataCollectionSection"))
                             {
                                 ImGui.Indent();
-                                ImGui.TextUnformatted("BPTimer collects the following data:");
-                                ImGui.BulletText("Boss ID/HP/Position");
-                                ImGui.BulletText("Character Line Number");
-                                ImGui.BulletText("Account ID");
-                                ImGui.SetItemTooltip("This is being used to determine what game region is being played on.");
-                                ImGui.BulletText("Character UID (if you opt-in below)");
-                                ImGui.BulletText("Your IP Address");
+                                ImGui.TextUnformatted("BPTimerは次のデータを収集します:");
+                                ImGui.BulletText("ボスID / HP / 位置");
+                                ImGui.BulletText("キャラクター行番号");
+                                ImGui.BulletText("アカウントID");
+                                ImGui.SetItemTooltip("プレイしているゲームリージョン判定に使用されます。");
+                                ImGui.BulletText("キャラクターUID（下で同意した場合）");
+                                ImGui.BulletText("あなたのIPアドレス");
                                 ImGui.Unindent();
                             }
                             ImGui.Unindent();
@@ -1229,22 +1273,22 @@ namespace BPSR_ZDPS.Windows
                             ImGui.Indent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("Include Own Character Data In Report: ");
+                            ImGui.Text("自分のキャラクターデータをレポートに含める: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##ExternalBPTimerIncludeCharacterId", ref externalBPTimerIncludeCharacterId);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, your Character UID will be included in the reported data.");
+                            ImGui.TextWrapped("有効にすると、あなたのキャラクターUIDが送信データに含まれます。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
                             ImGui.AlignTextToFramePadding();
-                            ImGui.Text("BPTimer Field Boss HP Reports: ");
+                            ImGui.Text("BPTimer フィールドボスHPレポート: ");
                             ImGui.SameLine();
                             ImGui.Checkbox("##ExternalBPTimerFieldBossHpReportsEnabled", ref externalBPTimerFieldBossHpReportsEnabled);
                             ImGui.Indent();
                             ImGui.BeginDisabled(true);
-                            ImGui.TextWrapped("When enabled, reports Field Boss (and Magical Creature) HP data back to BPTimer.com.");
+                            ImGui.TextWrapped("有効にすると、フィールドボス（および魔獣）のHPデータをBPTimer.comへ送信します。");
                             ImGui.EndDisabled();
                             ImGui.Unindent();
 
@@ -1256,55 +1300,55 @@ namespace BPSR_ZDPS.Windows
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem("Development"))
+                    if (ImGui.BeginTabItem("開発"))
                     {
                         var contentRegionAvail = ImGui.GetContentRegionAvail();
                         ImGui.BeginChild("##DevelopmentTabContent", new Vector2(contentRegionAvail.X, contentRegionAvail.Y - 56), ImGuiChildFlags.Borders);
 
-                        ImGui.SeparatorText("Development");
-                        if (ImGui.Button("Reload DataTables"))
+                        ImGui.SeparatorText("開発");
+                        if (ImGui.Button("データテーブル再読み込み"))
                         {
                             AppState.LoadDataTables();
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Does not update most existing values - mainly works for data set in new Encounters.");
+                        ImGui.TextWrapped("既存の多くの値は更新されません（新規エンカウントで設定されるデータが主対象です）。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Restart Capture"))
+                        if (ImGui.Button("キャプチャ再起動"))
                         {
                             MessageManager.StopCapturing();
                             MessageManager.InitializeCapturing();
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Turns the MessageManager off and on to resolve issues of stalled data.");
+                        ImGui.TextWrapped("データ取得が止まった問題を解決するため、MessageManagerを再起動します。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Reload Module Save"))
+                        if (ImGui.Button("モジュール保存を再読み込み"))
                         {
                             ModuleSolver.Init();
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("Reloads your module inventory from the 'ModulesSaveData.json' file.");
+                        ImGui.TextWrapped("'ModulesSaveData.json' からモジュール所持状況を再読み込みします。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ShowRestartRequiredNotice(Settings.Instance.LogToFile != logToFile, "Write Debug Log To File");
                         ImGui.AlignTextToFramePadding();
-                        ImGui.Text("Write Debug Log To File: ");
+                        ImGui.Text("デバッグログをファイル出力: ");
                         ImGui.SameLine();
                         ImGui.Checkbox("##LogToFile", ref logToFile);
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped("When enabled, writes a debug log for ZDPS (ZDPS_log.txt). Applies after restarting ZDPS.");
+                        ImGui.TextWrapped("有効にすると、ZDPSのデバッグログ（ZDPS_log.txt）を出力します。ZDPS再起動後に適用されます。");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
-                        if (ImGui.Button("Open GitHub Project Page"))
+                        if (ImGui.Button("GitHubプロジェクトページを開く"))
                         {
                             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
                             {
@@ -1314,20 +1358,22 @@ namespace BPSR_ZDPS.Windows
                         }
                         ImGui.Indent();
                         ImGui.BeginDisabled(true);
-                        ImGui.TextWrapped($"Open a web page to the GitHub Project located at\n{Settings.Instance.ZDPSWebsiteURL}");
+                        ImGui.TextWrapped(
+                            $"以下の URL にある GitHub プロジェクトページを開きます。\n{Settings.Instance.ZDPSWebsiteURL}"
+                        );
                         ImGui.EndDisabled();
                         ImGui.Unindent();
 
                         ImGui.EndChild();
                         ImGui.EndTabItem();
                     }
-                    
+
                     ImGui.EndTabBar();
                 }
 
                 ImGui.NewLine();
                 float buttonWidth = 120;
-                if (ImGui.Button("Save", new Vector2(buttonWidth, 0)))
+                if (ImGui.Button("保存", new Vector2(buttonWidth, 0)))
                 {
                     Save(mainWindow);
 
@@ -1336,7 +1382,7 @@ namespace BPSR_ZDPS.Windows
 
                 ImGui.SameLine();
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() + ImGui.GetContentRegionAvail().X - buttonWidth);
-                if (ImGui.Button("Close", new Vector2(buttonWidth, 0)))
+                if (ImGui.Button("閉じる", new Vector2(buttonWidth, 0)))
                 {
                     SelectedNetworkDeviceIdx = PreviousSelectedNetworkDeviceIdx;
 
@@ -1383,11 +1429,13 @@ namespace BPSR_ZDPS.Windows
             colorClassIconsByRole = Settings.Instance.ColorClassIconsByRole;
             showSkillIconsInDetails = Settings.Instance.ShowSkillIconsInDetails;
             onlyShowDamageContributorsInMeters = Settings.Instance.OnlyShowDamageContributorsInMeters;
+            onlyShowPartyMembersInMeters = Settings.Instance.OnlyShowPartyMembersInMeters;
             showAbilityScoreInMeters = Settings.Instance.ShowAbilityScoreInMeters;
+            showSeasonStrengthInMeters = Settings.Instance.ShowSeasonStrengthInMeters;
             showSubProfessionNameInMeters = Settings.Instance.ShowSubProfessionNameInMeters;
             useAutomaticWipeDetection = Settings.Instance.UseAutomaticWipeDetection;
             skipTeleportStateCheckInAutomaticWipeDetection = Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection;
-            allowWipeRecalculationOverwriting = Settings.Instance.AllowWipeRecalculationOverwriting;
+            disableWipeRecalculationOverwriting = Settings.Instance.DisableWipeRecalculationOverwriting;
             splitEncountersOnNewPhases = Settings.Instance.SplitEncountersOnNewPhases;
             displayTruePerSecondValuesInMeters = Settings.Instance.DisplayTruePerSecondValuesInMeters;
             allowGamepadNavigationInputInZDPS = Settings.Instance.AllowGamepadNavigationInputInZDPS;
@@ -1479,11 +1527,13 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.ColorClassIconsByRole = colorClassIconsByRole;
             Settings.Instance.ShowSkillIconsInDetails = showSkillIconsInDetails;
             Settings.Instance.OnlyShowDamageContributorsInMeters = onlyShowDamageContributorsInMeters;
+            Settings.Instance.OnlyShowPartyMembersInMeters = onlyShowPartyMembersInMeters;
             Settings.Instance.ShowAbilityScoreInMeters = showAbilityScoreInMeters;
+            Settings.Instance.ShowSeasonStrengthInMeters = showSeasonStrengthInMeters;
             Settings.Instance.ShowSubProfessionNameInMeters = showSubProfessionNameInMeters;
             Settings.Instance.UseAutomaticWipeDetection = useAutomaticWipeDetection;
             Settings.Instance.SkipTeleportStateCheckInAutomaticWipeDetection = skipTeleportStateCheckInAutomaticWipeDetection;
-            Settings.Instance.AllowWipeRecalculationOverwriting = allowWipeRecalculationOverwriting;
+            Settings.Instance.DisableWipeRecalculationOverwriting = disableWipeRecalculationOverwriting;
             Settings.Instance.SplitEncountersOnNewPhases = splitEncountersOnNewPhases;
             Settings.Instance.DisplayTruePerSecondValuesInMeters = displayTruePerSecondValuesInMeters;
             Settings.Instance.AllowGamepadNavigationInputInZDPS = allowGamepadNavigationInputInZDPS;
@@ -1553,9 +1603,9 @@ namespace BPSR_ZDPS.Windows
                 ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.Red_Transparent);
                 ImGui.BeginChild($"##RestartRequiredNotice_{settingName}", new Vector2(0, 0), ImGuiChildFlags.AutoResizeY | ImGuiChildFlags.Borders);
                 ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], ImGui.GetFontSize());
-                ImGui.TextUnformatted("Important Note:");
+                ImGui.TextUnformatted("重要なお知らせ:");
                 ImGui.PopFont();
-                ImGui.TextWrapped($"Changing the [{settingName}] setting requires restarting ZDPS to take effect.");
+                ImGui.TextWrapped($"[{settingName}] の変更を反映するにはZDPSの再起動が必要です。");
                 ImGui.EndChild();
                 ImGui.PopStyleColor();
             }
@@ -1568,7 +1618,7 @@ namespace BPSR_ZDPS.Windows
                 ImGui.PushStyleColor(ImGuiCol.ChildBg, Colors.Red_Transparent);
                 ImGui.BeginChild($"##GenericImportantNotice_{uniqueName}", new Vector2(0, 0), ImGuiChildFlags.AutoResizeY | ImGuiChildFlags.Borders);
                 ImGui.PushFont(HelperMethods.Fonts["Segoe-Bold"], ImGui.GetFontSize());
-                ImGui.TextUnformatted("Important Note:");
+                ImGui.TextUnformatted("重要なお知らせ:");
                 ImGui.PopFont();
                 ImGui.TextWrapped($"{text}");
                 ImGui.EndChild();
@@ -1640,7 +1690,7 @@ namespace BPSR_ZDPS.Windows
                             ImGuiKey.MouseLeft, ImGuiKey.MouseMiddle, ImGuiKey.MouseRight, ImGuiKey.MouseWheelX, ImGuiKey.MouseWheelY,
                             ImGuiKey.Escape, ImGuiKey.F12
                             ];
-                        
+
                         if (!blacklistedKeys.Contains((ImGuiKey)key))
                         {
                             string keyName = ImGui.GetKeyNameS((ImGuiKey)key);
@@ -1680,7 +1730,7 @@ namespace BPSR_ZDPS.Windows
                 bindingState = false;
             }
             ImGui.EndDisabled();
-            ImGui.SetItemTooltip("Clear Keybinding.");
+            ImGui.SetItemTooltip("キー割り当てを解除");
         }
     }
 }

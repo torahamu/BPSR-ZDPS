@@ -350,27 +350,34 @@ namespace BPSR_ZDPS
 
             // Merging additional fonts into Segoe for multi-language support
 
-            // Japanese character supporting font (this is a bit heavy to load into memory - 5MB)
-            //ff = new FontFile("BPSR_ZDPS.Fonts.fot-seuratpron-m.otf");
-            var ff = new FontFile("BPSR_ZDPS.Fonts.fot-seuratpron-m.otf", new GlyphRange(0x3000, 0x303F));
+            var ff = new FontFile("BPSR_ZDPS.Fonts.fot-seuratpron-m.otf");
             var res = ff.BindToImGui(18.0f, true);
             ff.Dispose();
+            // Japanese character supporting font (this is a bit heavy to load into memory - 5MB)
+            //var ff = new FontFile("BPSR_ZDPS.Fonts.fot-seuratpron-m.otf", new GlyphRange(0x3000, 0x303F));
+            //var res = ff.BindToImGui(18.0f, true);
+            //ff.Dispose();
 
-            // Chinese character supporting font (this is very heavy to load into memory - 16MB)
-            ff = new FontFile("BPSR_ZDPS.Fonts.SourceHanSansSC-Regular.otf", new GlyphRange(0x4E00, 0x9FFF));
-            res = ff.BindToImGui(18.0f, true);
-            ff.Dispose();
+            //// Chinese character supporting font (this is very heavy to load into memory - 16MB)
+            //ff = new FontFile("BPSR_ZDPS.Fonts.SourceHanSansSC-Regular.otf", new GlyphRange(0x4E00, 0x9FFF));
+            //res = ff.BindToImGui(18.0f, true);
+            //ff.Dispose();
 
-            // Korean character supporting font
-            ff = new FontFile("BPSR_ZDPS.Fonts.NotoSansKR-Regular.ttf", new GlyphRange(0x4E00, 0x9FFF));
-            res = ff.BindToImGui(18.0f, true);
-            ff.Dispose();
+            //// Korean character supporting font
+            //ff = new FontFile("BPSR_ZDPS.Fonts.NotoSansKR-Regular.ttf", new GlyphRange(0x4E00, 0x9FFF));
+            //res = ff.BindToImGui(18.0f, true);
+            //ff.Dispose();
 
             // Setting Segoe to be the default application font (though the other fonts will be used if their glyphs are required)
             ImGui.AddFontDefault(HelperMethods.Fonts["Segoe"].ContainerAtlas);
 
             // Note: Segoe-Bold will not support multi-language when it's used
             HelperMethods.Fonts.Add("Segoe-Bold", io.Fonts.AddFontFromFileTTF(@"C:\Windows\Fonts\segoeuib.ttf", 18.0f));
+
+            // Segoe-Bold に CJK をマージ
+            var ffBold = new FontFile("BPSR_ZDPS.Fonts.SourceHanSansSC-Regular.otf", new GlyphRange(0x4E00, 0x9FFF));
+            ffBold.BindToImGui(18.0f, true);
+            ffBold.Dispose();
 
             ff = new FontFile("BPSR_ZDPS.Fonts.FAS.ttf", new GlyphRange(0x0021, 0xF8FF));
             res = ff.BindToImGui(18.0f);
