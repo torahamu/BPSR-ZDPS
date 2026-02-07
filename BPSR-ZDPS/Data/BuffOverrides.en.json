@@ -75,6 +75,76 @@
         "Name": "Basic Attack: Fourth Hit Regen",
         "Desc": "Fourth Basic Attack regenerates health"
     },
+    "25401":
+    {
+        "Name": "Ultra Cold",
+        "Desc": "Enhances certain skills. While in Ultra Cold targets are treated as Frozen",
+        "BuffType": 1
+    },
+    "25204":
+    {
+        "Name": "Check Stacks for Frozen",
+        "Desc": "Checks if enough Slowed stacks have been applied to enter Frozen state"
+    },
+    "27004":
+    {
+        "Name": "Ice Domain",
+        "Desc": "Within the Domain, restores Ice Energy over time and gains Ultra Cold.\nEnemies within the domain are contiously Slowed until Frozen",
+        "BuffType": 1
+    },
+    "27005":
+    {
+        "Name": "Frostbeam Attribute Control",
+        "Desc": "",
+        "BuffType": 1
+    },
+    "27006":
+    {
+        "Name": "Frostbeam DMG Amp",
+        "Desc": "Each time Frostbeam deals DMG, it increases its own DMG by 8%, up to 80%",
+        "BuffType": 1
+    },
+    "27009":
+    {
+        "Name": "Frost Shelter",
+        "Desc": "Encases yourself in ice, rendering you immune to all DMG but immobilized.\nDeals Magic Damage to all nearby enemies, and inflicts Slow until they are Frozen",
+        "BuffType": 1
+    },
+    "27011":
+    {
+        "Name": "Ice Domain (Slowed)",
+        "Desc": "Enemies within the domain are contiously Slowed until Frozen"
+    },
+    "27013":
+    {
+        "Name": "Ice Energy",
+        "Desc": "Frostmage Class resource",
+        "BuffType": 1
+    },
+    "27014":
+    {
+        "Name": "Frost Crystal",
+        "Desc": "Frostmage Class resource",
+        "BuffType": 1
+    },
+    "27015":
+    {
+        "Name": "Frozen Gale - Charge Layers",
+        "Desc": "Layer stacking for Frozen Gale charging",
+        "BuffType": 1
+    },
+    "27016":
+    {
+        "Name": "Endless Cold Stacks",
+        "Desc": "Tracking stacks for Endless Cold buff to activate",
+        "BuffType": 1
+    },
+    "27017":
+    {
+        "Name": "Frost Lance Consume Crystal",
+        "Desc": "Frost Lance consumes Frost Crystals to skip casting and deal increased DMG",
+        "BuffType": 1
+    },
     "30001":
     {
         "Name": "Wind Knight Courage Buff",
@@ -575,6 +645,11 @@
         "Name": "Blade - Agility",
         "BuffType": 1
     },
+    "2031002":
+    {
+        "Name": "Staff - Intellect",
+        "BuffType": 1
+    },
     "2031004":
     {
         "Name": "Lance - Strength",
@@ -600,6 +675,11 @@
         "Name": "Blade - Luck",
         "BuffType": 1
     },
+    "2031102":
+    {
+        "Name": "Staff - Luck",
+        "BuffType": 1
+    },
     "2031104":
     {
         "Name": "Lance - Luck",
@@ -613,6 +693,35 @@
     "2031105":
     {
         "Name": "Forest Ring - Luck",
+        "BuffType": 1
+    },
+    "2100406":
+    {
+        "Name": "Silent Command",
+        "Desc": "Dispels debuffs from up to 10 allies within 25m",
+        "BuffType": 1
+    },
+    "2100407":
+    {
+        "Name": "Silent Command (Dispel)",
+        "Desc": "Dispels debuffs from up to 10 allies within 25m",
+        "BuffType": 1
+    },
+    "2100409":
+    {
+        "Name": "Life Barrier",
+        "Desc": "Immediately grants the caster and up to 10 nearby allies a shield equal to 20% Max HP, and while the shield persists, increases 15% additional Resistance for 10%",
+        "BuffType": 1
+    },
+    "2100410":
+    {
+        "Name": "Life Barrier Shield",
+        "Desc": "Shield equal to 20% Support Caster's Max HP"
+    },
+    "2100413":
+    {
+        "Name": "Mocking Roar - Universal Taunt",
+        "Desc": "Interrupting all targets within 10m and taunts them.\nGreatly increases Aggro against the targets for 10s",
         "BuffType": 1
     },
     "2110081":
@@ -2042,6 +2151,442 @@
     {
         "Name": "Chain Explosion",
         "Desc": "When Blast Shot explodes, inflicts 10 stacks of Steel Beak to all targets hit",
+        "BuffType": 1
+    },
+    "2204010":
+    {
+        "Name": "Cold Intent - Sharp",
+        "Desc": "Max Ice Energy +10.\nSpecial Attack DMG +12%",
+        "BuffType": 1
+    },
+    "2204030":
+    {
+        "Name": "Frost Curse Sigil",
+        "Desc": "When a Special Attack deals DMG, it has a 5% chance to Freeze the target",
+        "BuffType": 1
+    },
+    "2204040":
+    {
+        "Name": "Ice Revelation",
+        "Desc": "Summons 2 permanent Ice Crystal Cores that float beside you.\nIce Crystal Core: When Basic Attacks deal DMG, Ice Crystal Cores have a 20% chance to fire 2 Ice Arrows.\nIce Arrow: Each arrow deals Magic Damage equal to 28% ATK to the target and grants 1 Frost Crystal (up to 2 can be stored)",
+        "BuffType": 1
+    },
+    "2204050":
+    {
+        "Name": "Breath of Frost",
+        "Desc": "Frost Crystal cap +1",
+        "BuffType": 1
+    },
+    "2204060":
+    {
+        "Name": "Tide Mastery (Talent)",
+        "Desc": "While casting Frostbeam, you can channel Tidepool",
+        "BuffType": 1
+    },
+    "2204061":
+    {
+        "Name": "Tide Mastery",
+        "Desc": "While casting Frostbeam, you can channel Tidepool",
+        "BuffType": 1
+    },
+    "2204070":
+    {
+        "Name": "Crystal Resonance",
+        "Desc": "When Frostbeam deals DMG, it has a 30% chance to make Ice Crystal Core fire an Ice Arrow.\nUp to 1 Ice Arrow can be fired every 0.5s.\nThe final DMG of Ice Arrow is doubled",
+        "BuffType": 1
+    },
+    "2204080":
+    {
+        "Name": "Frost Explosion (Talent)",
+        "Desc": "Ice Arrows fired by Ice Crystal Cores deal an additional instance of AoE Magic Damage equal to 28% ATK",
+        "BuffType": 1
+    },
+    "2204081":
+    {
+        "Name": "Frost Explosion",
+        "Desc": "Ice Arrows fired by Ice Crystal Cores deal an additional instance of AoE Magic Damage equal to 28% ATK"
+    },
+    "2204090":
+    {
+        "Name": "Ice Crystal Expansion II",
+        "Desc": "Max Ice Energy +40",
+        "BuffType": 1
+    },
+    "2204100":
+    {
+        "Name": "Ice Shard Pact",
+        "Desc": "Increases Maelstrom's Ice Energy recovery rate by 200%",
+        "BuffType": 1
+    },
+    "2204110":
+    {
+        "Name": "Cold Wind Convergence",
+        "Desc": "When Frozen Gale hits a target (only triggers once when hitting multiple targets), it consumes all Frost Crystals to summon Icy Bolt, with the number of Icy Bolt equal to the consumed Frost Crystals.\nIcy Bolt deals DMG, restores 5 Ice Energy, and reduces the Ice Energy cost of skills by 3% for the next 15s, stacking up to 6 times",
+        "BuffType": 1
+    },
+    "2204120":
+    {
+        "Name": "Frostbeam Spec",
+        "Desc": "Replaces Special Attack with Frostbeam and enhances the skill.\nEvery Frost Crystal increases Frostbeam DMG by 15%.\nEach 10% Mastery grants an additional 0.85% DMG bonus (up to 5%) and increases the Ice Energy consumed by 30%.\nWhen Frostbeam hits a target, every 13 hits reduce the remaining CD of Permafrost by 1s (multiple targets count as one)",
+        "BuffType": 1
+    },
+    "2204130":
+    {
+        "Name": "Snow Shadow",
+        "Desc": "For every 25 Ice Energy consumed, the CD of Crystal Veil -1s",
+        "BuffType": 1
+    },
+    "2204150":
+    {
+        "Name": "Frozen Stars",
+        "Desc": "When Frost Lance triggers both a Crit and a Lucky Strike, Meteor Storm's CD is immediately reset.\nIf Meteor Storm is already off cooldown, it will be automatically cast (but this Meteor Storm will deal half damage)",
+        "BuffType": 1
+    },
+    "2204140":
+    {
+        "Name": "Frost Comet (Talent)",
+        "Desc": "When Frost Lance that consumes Frost Crystals deals DMG, there is a 21% chance to summon Frost Comet",
+        "BuffType": 1
+    },
+    "2204160":
+    {
+        "Name": "Blizzard Dual Spears",
+        "Desc": "Within 8s after casting Blizzard, Frost Lance can fire an additional Frost Lance at another target near the original one",
+        "BuffType": 1
+    },
+    "2204170":
+    {
+        "Name": "Stormy Encounter",
+        "Desc": "When Crystal Veil deals DMG, it has a chance to reduce the CD of Blizzard by 1s. The chance equals half of your Luck percentage",
+        "BuffType": 1
+    },
+    "2204180":
+    {
+        "Name": "Shattering Strike",
+        "Desc": "When Meteor Storm deals DMG, it causes Ice Crystal Cores to fire Ice Arrows. This effect can trigger up to once per Meteor Storm cast",
+        "BuffType": 1
+    },
+    "2204190":
+    {
+        "Name": "Glacier Fury",
+        "Desc": "Consuming 15 Frost Crystals enhances the next Blizzard.\nBlizzard: Bypasses the casting time and increases the DMG dealt by 30%, and trigger Lucky Strike",
+        "BuffType": 1
+    },
+    "2204200":
+    {
+        "Name": "Icicle Volley",
+        "Desc": "For every 10 casts of Frost Lance, a Piercing Ice Spear is launched forward",
+        "BuffType": 1
+    },
+    "2204210":
+    {
+        "Name": "Glazed Vastness",
+        "Desc": "Ice skills deal 8% more DMG to Elites and stronger targets",
+        "BuffType": 1
+    },
+    "2204220":
+    {
+        "Name": "Continuous Stream",
+        "Desc": "Dealing DMG triggers Trickle.\nTrickle: Grants a 1% Ice damage bonus for 6s, stacking up to 5 times",
+        "BuffType": 1
+    },
+    "2204230":
+    {
+        "Name": "Boundless Frost",
+        "Desc": "Every 50 Ice Energy consumed grants 1 Frost Crystal.\nMax Frost Crystal +3. Each possessed Frost Crystal increases Frostbeam DMG by 5%",
+        "BuffType": 1
+    },
+    "2204240":
+    {
+        "Name": "Frost Shock (Talent)",
+        "Desc": "When an Expertise Skill or Ultimate lands a Lucky Strike, it has a 30% chance to trigger Frost Shock, once every 3s",
+        "BuffType": 1
+    },
+    "2204250":
+    {
+        "Name": "Quick Frozen Blast",
+        "Desc": "When an Expertise Skill or Ultimate deals DMG to a target with Frozen, it triggers Frost Shock, once per second",
+        "BuffType": 1
+    },
+    "2204260":
+    {
+        "Name": "Icy Calm",
+        "Desc": "Each additional target hit by an Expertise Skill or Ultimate grants a 2% bonus to your highest stat among Mastery, Haste, Crit, or Luck for 5s.\nHitting more than 5 additional targets still only counts as 5",
+        "BuffType": 1
+    },
+    "2204270":
+    {
+        "Name": "Instant Cooling",
+        "Desc": "Every 35 Ice Energy consumed reduces the remaining CD of Meteor Storm and Frozen Gale by 1.3s",
+        "BuffType": 1
+    },
+    "2204280":
+    {
+        "Name": "Cold Stream",
+        "Desc": "Max Ice Energy +25.\nEvery 1% Haste increases Ice Energy's auto Regen Speed by 1%",
+        "BuffType": 1
+    },
+    "2204290":
+    {
+        "Name": "Frostjade Staff",
+        "Desc": "When Ice Arrow cast with Ice Crystal Core deals DMG, restores 1 Ice Energy.\nIn the Permafrost status, the recovery doubles",
+        "BuffType": 1
+    },
+    "2204300":
+    {
+        "Name": "Icicle Spec",
+        "Desc": "Further enhances Frost Lance.\nWhen Frost Lance deals Crit DMG, there is a 30% chance for Ice Crystal Cores to fire Ice Arrows",
+        "BuffType": 1
+    },
+    "2204310":
+    {
+        "Name": "Frost Domain (Talent)",
+        "Desc": "The area of Glacier Hymn -50%.\nWhile within the domain, you gain a 25% Ice bonus",
+        "BuffType": 1
+    },
+    "2204320":
+    {
+        "Name": "Cold Pulse (Talent)",
+        "Desc": "Every 50 hits by Frostbeam trigger a Cold Pulse.\nFor each additional enemy hit, increases Cold Pulse DMG by 20%, up to 500%",
+        "BuffType": 1
+    },
+    "2204330":
+    {
+        "Name": "Intellect Cooling",
+        "Desc": "When Intellect reaches 300, skill CD -10%",
+        "BuffType": 1
+    },
+    "2204340":
+    {
+        "Name": "Secondary Amp",
+        "Desc": "Boost the highest stat among the following 5 stats: Crit, Haste, Luck, Mastery, and Versatility by 3.5% as a final value",
+        "BuffType": 1
+    },
+    "2204350":
+    {
+        "Name": "Cold Intent - Flow",
+        "Desc": "Ice Energy cap +40.\nSpecial Attack damage +4%",
+        "BuffType": 1
+    },
+    "2204360":
+    {
+        "Name": "Ice Comet",
+        "Desc": "When Intellect reaches 500, gain 5% Ice Bonus",
+        "BuffType": 1
+    },
+    "2204370":
+    {
+        "Name": "Endless Cold (Talent)",
+        "Desc": "Every 20 Frost Crystals consumed grants Endless Cold effect",
+        "BuffType": 1
+    },
+    "2204380":
+    {
+        "Name": "Frost Lance Barrage (Talent)",
+        "Desc": "During Permafrost, Frost Lance fires 2 consecutive shots",
+        "BuffType": 1
+    },
+    "2204390":
+    {
+        "Name": "Freezing Meteor Storm",
+        "Desc": "When Meteor Storm deals damage, 20% chance to apply Frozen to the target.\nThroughout the duration of Permafrost, when Frost Lance and Meteor Storm critically hit, extends the duration of Permafrost by 0.5s, up to 5s of extension",
+        "BuffType": 1
+    },
+    "2204400":
+    {
+        "Name": "Energy Saving",
+        "Desc": "When consuming Frost Crystal to cast Frost Lance, refunds 50% of the Ice Energy consumed after the cast.\nWhen casting Frost Lance without consuming Frost Crystal, an additional 50% of the Frost Energy consumed is deducted after the cast",
+        "BuffType": 1
+    },
+    "2204410":
+    {
+        "Name": "Frost Blade",
+        "Desc": "Frost Lances that consume Frost Crystal deal 20% more DMG",
+        "BuffType": 1
+    },
+    "2204420":
+    {
+        "Name": "Deep Cold Magic Spear",
+        "Desc": "Frost Lance deals 70% more DMG.\nFrost Lance costs 100% more time to use",
+        "BuffType": 1
+    },
+    "2204430":
+    {
+        "Name": "Meteor Storm Expansion",
+        "Desc": "Meteor Storm hit count +1\nMeteor Storm gains 10% Ice Bonus",
+        "BuffType": 1
+    },
+    "2204440":
+    {
+        "Name": "Frost Lance Crit (Talent)",
+        "Desc": "When Frost Lance deals Crit DMG, gain Frost Lance Crit.\nFrost Lance Crit: Frost Lance deals 1.5% more Crit DMG. The effect lasts 6s and stacks up to 10 times",
+        "BuffType": 1
+    },
+    "2204450":
+    {
+        "Name": "Infusion Sublimation",
+        "Desc": "Increases Max Frost Crystal by 1.\nDuring Permafrost, Ice ATK increases by 150.\nWhen Permafrost ends, your Frost Crystal resets to the amount you had before the activation of Permafrost",
+        "BuffType": 1
+    },
+    "2204460":
+    {
+        "Name": "Deadly Frost Lance",
+        "Desc": "Frost Lance deals 20% more DMG to targets with HP less than 35%",
+        "BuffType": 1
+    },
+    "2204470":
+    {
+        "Name": "Critical Cold (Talent)",
+        "Desc": "During Permafrost, increases Crit DMG dealt by 15%.\nDuring Permafrost, increases allies' critical rate by 3%",
+        "BuffType": 1
+    },
+    "2204471":
+    {
+        "Name": "Critical Cold",
+        "Desc": "Increases allies' critical rate by 3%",
+        "BuffType": 1
+    },
+    "2204480":
+    {
+        "Name": "Bitter Cold",
+        "Desc": "Every 150 Intellect grants 0.5 bonus Crit DMG"
+    },
+    "2204490":
+    {
+        "Name": "Sharp Blizzard",
+        "Desc": "Increases the critical rate of Blizzard by 50%.\nIncreases the Crit DMG of Blizzard by 15%",
+        "BuffType": 1
+    },
+    "2204500":
+    {
+        "Name": "Frost Crystal Empowerment (Talent)",
+        "Desc": "Each Frost Crystal consumed increases Intellect by 40. This effect lasts 10s and stacks up to 5 times",
+        "BuffType": 1
+    },
+    "2204501":
+    {
+        "Name": "Frost Crystal Empowerment",
+        "Desc": "Each Frost Crystal consumed increases Intellect by 40",
+        "BuffType": 1
+    },
+    "2204510":
+    {
+        "Name": "Frost Assault (Talent)",
+        "Desc": "Blizzard reduces the Ice Resistance of targets hit by 10%.\nThe effect lasts 10s and does not stack, and only works on your own",
+        "BuffType": 1
+    },
+    "2204511":
+    {
+        "Name": "Frost Assault",
+        "Desc": "Ice Resistance reduced by 10%",
+        "BuffType": 1
+    },
+    "2204520":
+    {
+        "Name": "Luck Damage",
+        "Desc": "Lucky Strike DMG Multiplier +15%.\nEvery 2% Luck grants 1% Lucky Strike DMG Multiplier",
+        "BuffType": 1
+    },
+    "2204530":
+    {
+        "Name": "Cold Retention",
+        "Desc": "In the Permafrost status, the cost of Frostbeam decreases by 25%",
+        "BuffType": 1
+    },
+    "2204540":
+    {
+        "Name": "Frost Revelation",
+        "Desc": "The first hit of Tidepool on the target grants 5 Ice Energy. Each additional Frost Crystal increases Ice Energy restored by 10",
+        "BuffType": 1
+    },
+    "2204550":
+    {
+        "Name": "Law of Energy Surge (Talent)",
+        "Desc": "Every 50 Ice Arrows shot increases the DMG of your next Frozen Gale by 200% for 30s. Additionally, casting Frozen Gale grants the Law of Energy Surge",
+        "BuffType": 1
+    },
+    "2204560":
+    {
+        "Name": "Power of Ice Crystals",
+        "Desc": "When Ice Energy is above 50%, deals 8% more Ice damage",
+        "BuffType": 1
+    },
+    "2204570":
+    {
+        "Name": "Ice Crystal Recovery",
+        "Desc": "When Ice Energy is below 50%, enhances the recovery rate of Ice Energy by 10%",
+        "BuffType": 1
+    },
+    "2204580":
+    {
+        "Name": "Rapid Ice Arrow",
+        "Desc": "During Permafrost, Frostbeam fires 2 additional Ice Arrows generated by Ice Crystal Core.\nHowever, during Permafrost, Lucky Strike's final damage is reduced by 50%",
+        "BuffType": 1
+    },
+    "2204590":
+    {
+        "Name": "Endless Tide",
+        "Desc": "During Permafrost, each Ice Arrow triggered by Ice Crystal Core extends the duration of Permafrost by 0.5s, up to 5s",
+        "BuffType": 1
+    },
+    "2204600":
+    {
+        "Name": "Frost Tide (Talent)",
+        "Desc": "When dealing DMG, Frostbeam has a 20% chance to grant Frost Crystal.\nIf Max Frost Crystal is reached, grants 5% bonus Ice damage dealt instead for 3s",
+        "BuffType": 1
+    },
+    "2204601":
+    {
+        "Name": "Frost Tide",
+        "Desc": "Grants 5% bonus Ice damage dealt",
+        "BuffType": 1
+    },
+    "2204610":
+    {
+        "Name": "Ray Mastery I",
+        "Desc": "Frostbeam deals 2% more Ice damage.\nFrostbeam deals 5% more Ice damage to the main target",
+        "BuffType": 1
+    },
+    "2204620":
+    {
+        "Name": "Wide Area Ice Arrow",
+        "Desc": "Every 15 hits of Expertise Skill allows Ice Crystal Core to fire Ice Arrow",
+        "BuffType": 1
+    },
+    "2204630":
+    {
+        "Name": "Intellect Ice Crystal",
+        "Desc": "Every 50 Intellect grants 1 Max Ice Energy, up to 100 from this source",
+        "BuffType": 1
+    },
+    "2204640":
+    {
+        "Name": "Quick Chant",
+        "Desc": "Increases Haste by 1000.\nDuring Permafrost, Cast Speed increases by 15%",
+        "BuffType": 1
+    },
+    "2204650":
+    {
+        "Name": "Sharp Ice Arrow",
+        "Desc": "Increases the critical rate of Ice Arrows from Ice Crystal Core by 50%.\nIncreases the Crit DMG of Ice Arrows from Ice Crystal Core by 10%",
+        "BuffType": 1
+    },
+    "2204660":
+    {
+        "Name": "Ray's Swan Song (Talent)",
+        "Desc": "When dealing DMG, Frostbeam gains a 10% chance to double Mastery for 3s (which can only be triggered once on multiple hits)",
+        "BuffType": 1
+    },
+    "2204661":
+    {
+        "Name": "Ray's Swan Song",
+        "Desc": "Double Mastery",
+        "BuffType": 1
+    },
+    "2204670":
+    {
+        "Name": "Ice Crystal Expansion",
+        "Desc": "Max Ice Energy +40",
         "BuffType": 1
     },
     "2205010":

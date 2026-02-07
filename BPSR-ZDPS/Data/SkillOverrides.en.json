@@ -31,7 +31,7 @@
     },
     "1216":
     {
-        "Name": "Enhanced Crystal Veil",
+        "Name": "Ultra Cold: Crystal Veil",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx05"
     },
     "1219":
@@ -107,7 +107,8 @@
     },
     "1250":
     {
-        "Name": "Water Vortex"
+        "Name": "Maelstrom",
+        "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx06"
     },
     "1251":
     {
@@ -125,20 +126,24 @@
     },
     "1258":
     {
-        "Name": "Talent - Crystal Fall"
+        "Name": "Icy Bolt",
+        "Desc": "From Cold Wind Convergence talent"
     },
     "1259":
     {
-        "Name": "Frost Comet"
+        "Name": "Frost Comet",
+        "Desc": "From Frost Comet talent"
     },
     "1260":
     {
-        "Name": "Ice Meteor Hologram",
+        "Name": "Meteor Storm",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx07"
     },
     "1261":
     {
-        "Name": "Instant Blizzard"
+        "Name": "Blizzard (Glacier Fury)",
+        "Desc": "From Glacier Fury talent",
+        "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx03"
     },
     "1262":
     {
@@ -147,7 +152,8 @@
     },
     "1263":
     {
-        "Name": "Staff Ultimate: Powerful Ice Meteor"
+        "Name": "Glacier Hymn (Comet)",
+        "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_ult"
     },
     "1401":
     {
@@ -1140,7 +1146,8 @@
     },
     "27009":
     {
-        "Name": "Ice Buff"
+        "Name": "Frost Shelter",
+        "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx02"
     },
     "31901":
     {
@@ -1587,7 +1594,7 @@
     },
     "120201":
     {
-        "Name": "Raincall Surge - Curved Bullet",
+        "Name": "Raincall Surge - Final Curved 1",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_skill_atk"
     },
     "120301":
@@ -1597,25 +1604,33 @@
     },
     "120401":
     {
-        "Name": "Raincall Surge - Normal Attack Stage 1",
+        "Name": "Raincall Surge - Stage 1/2",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_skill_atk"
     },
     "120501":
     {
-        "Name": "Raincall Surge",
+        "Name": "Raincall Surge - Final Curved 2",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_skill_atk"
     },
     "120901":
     {
-        "Name": "Piercing Ice Spear"
+        "Name": "Piercing Ice Spear",
+        "Desc": "From Icicle Volley talent"
     },
     "120902":
     {
-        "Name": "Ice Spear"
+        "Name": "Frost Lance",
+        "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_tg02"
+    },
+    "121301":
+    {
+        "Name": "Ice Arrow",
+        "Desc": "From Ice Revelation talent"
     },
     "121302":
     {
-        "Name": "Ice Arrow"
+        "Name": "Ice Arrow",
+        "Desc": "From Frost Explosion talent"
     },
     "121501":
     {
@@ -2421,9 +2436,20 @@
     {
         "Name": "Poisoned"
     },
+    "990801":
+    {
+        "Name": "Rend",
+        "Desc": "Moving causes HP loss and refreshes the duration"
+    },
+    "990803":
+    {
+        "Name": "Executed",
+        "Desc": "After a short duration, suffer a high-damage hit"
+    },
     "990821":
     {
-        "Name": "Petrified"
+        "Name": "Petrified",
+        "Desc": "Unable to act while petrified. After it ends, suffer a high-damage hit"
     },
     "995129":
     {
@@ -3552,15 +3578,18 @@
     },
     "2204081":
     {
-        "Name": "Frostbolt Explosion"
+        "Name": "Ice Arrow (Frost Explosion)",
+        "Desc": "From Frost Explosion talent"
     },
     "2204241":
     {
-        "Name": "Frost Blast"
+        "Name": "Frost Shock",
+        "Desc": "From Frost Shock and Quick Frozen Blast talents"
     },
     "2204320":
     {
-        "Name": "Icy Pulse"
+        "Name": "Cold Pulse",
+        "Desc": "From Cold Pulse talent"
     },
     "2205060":
     {
