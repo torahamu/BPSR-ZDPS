@@ -545,9 +545,33 @@
         "Name": "Holy Barrier Ending",
         "Desc": "Shielding nearby allies from DMG"
     },
+    "55412":
+    {
+        "Name": "Zeal Crusade",
+        "Desc": "Deals DMG to nearby targets for the effect's duration",
+        "BuffType": 1
+    },
     "55418":
     {
         "Name": "Divine Circle Buff",
+        "BuffType": 1
+    },
+    "55428":
+    {
+        "Name": "Radiance",
+        "Desc": "Radiance",
+        "BuffType": 1
+    },
+    "55431":
+    {
+        "Name": "Zeal Crusade DMG",
+        "Desc": "Zeal Crusade's continous DMG tick",
+        "BuffType": 1
+    },
+    "55432":
+    {
+        "Name": "Bold Fearless Doubled",
+        "Desc": "Zeal Crusade is boosting Bold Fearless effect from Wide Raid talent",
         "BuffType": 1
     },
     "500105":
@@ -657,6 +681,11 @@
     {
         "Name": "Automatic Health Regen In City"
     },
+    "683114":
+    {
+        "Name": "Power of Unity (Detection)",
+        "BuffType": 1
+    },
     "701008":
     {
         "Name": "Dungeon Mode Marker - PT",
@@ -671,6 +700,15 @@
     {
         "Name": "Dungeon Mode Marker - M",
         "Desc": "Main Mode"
+    },
+    "823238":
+    {
+        "Name": "Skills Disabled"
+    },
+    "881803":
+    {
+        "Name": "Learn Throw Bomb",
+        "BuffType": 1
     },
     "882576":
     {
@@ -760,6 +798,11 @@
     "2031107":
     {
         "Name": "Guardblade - Luck",
+        "BuffType": 1
+    },
+    "2031110":
+    {
+        "Name": "Sword and Shield - Luck",
         "BuffType": 1
     },
     "2031111":
@@ -1969,19 +2012,19 @@
     "2202261":
     {
         "Name": "Wings of Revival (Tracking)",
-        "Desc": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once every 45s.\nRevival: Restores HP equal to 50% of the DMG taken over 5s",
+        "Desc": "Tracking Buff for Wings of Revival",
         "BuffType": 1
     },
     "2202262":
     {
         "Name": "Wings of Revival",
-        "Desc": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once every 45s.\nRevival: Restores HP equal to 50% of the DMG taken over 5s",
+        "Desc": "Restores HP equal to 50% of the DMG taken over 5s",
         "BuffType": 1
     },
     "2202263":
     {
         "Name": "Wings of Revival (CD)",
-        "Desc": "When an ally within 20 meters takes DMG exceeding 30% of their HP, Revival triggers, which can affect the same target up to once every 45s.\nRevival: Restores HP equal to 50% of the DMG taken over 5s"
+        "Desc": "Cooldown tracker for Wings of Revival"
     },
     "2202270":
     {
@@ -3649,37 +3692,461 @@
     "2206010":
     {
         "Name": "Lightforged Body",
+        "Desc": "Every 1 Holy Sigil consumed grants a Radiant Shield equal to 4% ATK (depending on Level up to 90%)",
         "BuffType": 1
     },
     "2206020":
     {
         "Name": "Condemn",
+        "Desc": "When casting a skill that consumes Photon Energy, there is a 30% chance for Basic Attacks to evolve into Condemn",
+        "BuffType": 1
+    },
+    "2206021":
+    {
+        "Name": "Condemn Replace",
+        "Desc": "Basic Attacks evolves into Condemn",
+        "BuffType": 1
+    },
+    "2206030":
+    {
+        "Name": "Blessing of Holy Sigil",
+        "Desc": "When using a Skill that consumes Holy Sigils, 20% chance for your next Holy Sigil-consuming skill to consume no Holy Sigils.\nThe effect lasts for 8s or until a Holy Sigil-consuming skill is cast",
         "BuffType": 1
     },
     "2206040":
     {
         "Name": "Ring of Judgment",
-        "Desc": "Casting Judgment generates a Divine Circle."
+        "Desc": "Casting Judgment generates a Divine Circle"
+    },
+    "2206042":
+    {
+        "Name": "Ring of Judgment CD",
+        "Desc": "Generating a Divine Circle from Judgment is on Cooldown"
     },
     "2206041":
     {
         "Name": "Ring of Judgment - Buff"
     },
+    "2206050":
+    {
+        "Name": "Lightforge Continuum",
+        "Desc": "For every 20 Photon Energy consumed, gains Radiant Shield equal to 45% ATK (scaled with Level up to 90%)",
+        "BuffType": 1
+    },
     "2206060":
     {
         "Name": "Haste Sigil",
-        "Desc": "Haste increases the recovery speed of Holy Sigil."
+        "Desc": "Haste increases the recovery speed of Holy Sigil",
+        "BuffType": 1
+    },
+    "2206080":
+    {
+        "Name": "Light of Condemn",
+        "Desc": "While inside a Divine Circle, your Condemn is enhanced, thrusting a blade of light forward and dealing double DMG",
+        "BuffType": 1
+    },
+    "2206090":
+    {
+        "Name": "Recovery Spec",
+        "Desc": "Further enhances your ability to use Valor Bash.\nValor Bash is accompanied by Radiant Impact",
+        "BuffType": 1
+    },
+    "2206100":
+    {
+        "Name": "Oracle",
+        "Desc": "When a skill that consumes Holy Sigil critically hits, gain an additional 30% Photon Energy.\nCrit DMG of skills that consume Photon Energy +30%",
+        "BuffType": 1
+    },
+    "2206110":
+    {
+        "Name": "Judgment Revelation",
+        "Desc": "When Divine Strike Crits, there's a 50% chance to automatically cast Judgment on the target.\nThis Judgment cannot trigger Divine Strike",
+        "BuffType": 1
+    },
+    "2206120":
+    {
+        "Name": "Divine Circle Defender",
+        "Desc": "While within the Divine Circle, the Armor effect provided by Valor Bash +30%",
+        "BuffType": 1
+    },
+    "2206130":
+    {
+        "Name": "Radiant Guard",
+        "Desc": "Casting Shield Toss immediately grants a Radiant Shield equal to 150% ATK (scaled with Level up to 300%).\nThe charge count of Shield Toss +1",
+        "BuffType": 1
+    },
+    "2206140":
+    {
+        "Name": "Aegis Ward's Anthem",
+        "Desc": "For every 2 Holy Sigils consumed, the remaining CD of Aegis Ward -1s",
+        "BuffType": 1
+    },
+    "2206150":
+    {
+        "Name": "Fearless Shield",
+        "Desc": "Each time Shield Toss deals DMG, gains Radiant Shield equal to 37.5% ATK (scaled by Level up to 75%)",
+        "BuffType": 1
+    },
+    "2206160":
+    {
+        "Name": "Aegis Ward's Retribution",
+        "Desc": "During Aegis Ward, Block chance is increased to 1.5 times.\nWhen attacked, reduces Aegis Ward's remaining CD by 0.5s.\nThis effect can only trigger once per second",
+        "BuffType": 1
+    },
+    "2206170":
+    {
+        "Name": "Lightforged Greatsword (Talent)",
+        "Desc": "After every 10 casts of Judgment, the next Judgment is enhanced into Scorching Judgment.\nScorching Judgment: Summon a holy greatsword to descend upon the target area for 5s",
+        "BuffType": 1
     },
     "2206171":
     {
         "Name": "Lightforged Greatsword",
-        "Desc": "Aegis Ward Sword - Sub Buff",
+        "Desc": "Judgment is evolved into Scorching Judgment",
+        "BuffType": 1
+    },
+    "2206172":
+    {
+        "Name": "Lightforged Greatsword (Scorch)",
+        "Desc": "Reduces damage dealt to Shield Knight Caster by 3% per stack"
+    },
+    "2206173":
+    {
+        "Name": "Judgment Count",
+        "Desc": "Judgment cast tracker for Lightforged Greatsword talent",
+        "BuffType": 1
+    },
+    "2206180":
+    {
+        "Name": "Holy Barrier",
+        "Desc": "Using Ultimate creates a Holy Barrier, shielding nearby allies from DMG. The Holy Barrier lasts for 15s or until it absrobs DMG equal to 150% Max HP +3000% Armor",
+        "BuffType": 1
+    },
+    "2206190":
+    {
+        "Name": "Shield Spec",
+        "Desc": "Replaces Special Attack with Vanguard Strike and enhances its power.\nEach additional enemy hit by Vanguard Strike grants 2 extra Photon Energy, up to 10.\nSuccessfully Blocking prevents losing the stacks of Lightforged Barrier",
+        "BuffType": 1
+    },
+    "2206200":
+    {
+        "Name": "Light Barrier",
+        "Desc": "Lightforged Barrier cap +2",
+        "BuffType": 1
+    },
+    "2206210":
+    {
+        "Name": "Ascension of the Lightforged Barrier",
+        "Desc": "Photon Energy cap +20.\nWhen you have at least 5 stacks of Lightforged Barrier, Judgment consumes 5 less Photon Energy",
+        "BuffType": 1
+    },
+    "2206220":
+    {
+        "Name": "Divine Circle Chant",
+        "Desc": "The recovery rate of Holy Sigils from Haste +100%",
+        "BuffType": 1
+    },
+    "2206230":
+    {
+        "Name": "Holy Strike",
+        "Desc": "Each time 1 stack of Lightforged Barrier is consumed or deducted, 10% chance to obtain 1 Holy Sigil",
+        "BuffType": 1
+    },
+    "2206240":
+    {
+        "Name": "Holy Radiance",
+        "Desc": "When Sacred Blade hits an enemy target, it applies a Holy Mark to the target.\nVanguard Strike can spread this Holy Mark to hit enemy targets",
+        "BuffType": 1
+    },
+    "2206242":
+    {
+        "Name": "Holy Mark (Spread)",
+        "Desc": "Vanguard Strike spreads Holy Mark if possible"
+    },
+    "2206243":
+    {
+        "Name": "Holy Mark DMG",
+        "Desc": "Holy Mark DMG from Holy Radiance talent"
+    },
+    "2206250":
+    {
+        "Name": "Determination Slash",
+        "Desc": "When Lightforged Barrier has 5 or fewer stacks, taking DMG no longer reduces its stacks.\nWhen Lightforged Barrier has more than 5 stacks, taking DMG has a 50% chance not to reduce its stacks",
+        "BuffType": 1
+    },
+    "2206260":
+    {
+        "Name": "Lightforged Drive",
+        "Desc": "When casting Radiance, it automatically releases Judgment to up to 5 nearby enemy targets",
+        "BuffType": 1
+    },
+    "2206270":
+    {
+        "Name": "Ruthless Rewind",
+        "Desc": "During Zeal Crusade, each Holy Sigil consumed grants Zeal Crusade 1 stack of charge.\nWhen the charge reaches 3 stacks, Zeal Crusade bursts outward, dealing DMG equal to 6% Max HP",
+        "BuffType": 1
+    },
+    "2206280":
+    {
+        "Name": "Divine Circle Resonance",
+        "Desc": "For each enemy inside Divine Circle, increases Divine Circle DMG by 25% and Divine Circle Healing by 5% (caps at 10 enemies)",
+        "BuffType": 1
+    },
+    "2206290":
+    {
+        "Name": "Judgment of All Beings",
+        "Desc": "When Judgment hits only 1 enemy target, its damage +25%",
+        "BuffType": 1
+    },
+    "2206300":
+    {
+        "Name": "Divine Circle Blessing",
+        "Desc": "While within Divine Circle, your Healing Received +10%",
+        "BuffType": 1
+    },
+    "2206310":
+    {
+        "Name": "Lightforged Balance",
+        "Desc": "When your HP percentage is higher than your target's, DMG taken from that target -5%.\nWhen your HP percentage is lower, Judgment deals 50% more DMG",
+        "BuffType": 1
+    },
+    "2206320":
+    {
+        "Name": "Lightforged Fortitude",
+        "Desc": "Throughout the duration of Radiant Shield, Block chance +10%",
+        "BuffType": 1
+    },
+    "2206330":
+    {
+        "Name": "Energy Guard",
+        "Desc": "After casting an Ultimate, all allies' Max HP is increased by 10% for 10s",
+        "BuffType": 1
+    },
+    "2206340":
+    {
+        "Name": "Life Enhancement",
+        "Desc": "When Strength reaches 500 points, Max HP +12%"
+    },
+    "2206350":
+    {
+        "Name": "Condemn Time Limit",
+        "Desc": "When Condemn deals damage, it immediately cools down 1 Holy Sigil (prioritizing the Holy Sigil with the longest remaining CD)",
+        "BuffType": 1
+    },
+    "2206360":
+    {
+        "Name": "Sword Dance",
+        "Desc": "When a Expertise Skill critically heals, gain a 15% healing bonus",
+        "BuffType": 1
+    },
+    "2206370":
+    {
+        "Name": "Shield Impact",
+        "Desc": "Hold Valor Bash to charge, then dash forward a short distance",
+        "BuffType": 1
+    },
+    "2206380":
+    {
+        "Name": "Reckon Shield",
+        "Desc": "Each time Inferno Reckoning or Reckoning deals Crit DMG to 1 enemy target, Block chance +5%, lasting for 10s, stacking up to 5 times",
+        "BuffType": 1
+    },
+    "2206390":
+    {
+        "Name": "Holy Light Time Limit",
+        "Desc": "During Aegis Ward, when an Expertise Skill deals Crit DMG, there's a 50% chance to instantly reset 1 Holy Sigil CD (prioritizing the Holy Sigil with the longest remaining CD)",
+        "BuffType": 1
+    },
+    "2206400":
+    {
+        "Name": "Holy Summon",
+        "Desc": "When Shield Toss or Judgment deals DMG, 10% chance to trigger Divine Strike. If Crit DMG is dealt, the chance increases to 50%",
+        "BuffType": 1
+    },
+    "2206410":
+    {
+        "Name": "Light Chain",
+        "Desc": "While Aegis Ward is active, the chance of Divine Strike is doubled.\nEvery 3 times Divine Strike is triggered, the duration of Aegis Ward is extended by 1s",
+        "BuffType": 1
+    },
+    "2206420":
+    {
+        "Name": "Reckon Blaze",
+        "Desc": "When Valor Bash deals Crit DMG, gain Blazing.\nCasting Aegis Ward guarantees Blazing.\nBlazing: For the next 10s, Reckoning evolves into Inferno Reckoning",
+        "BuffType": 1
+    },
+    "2206421":
+    {
+        "Name": "Scorching Heat",
+        "Desc": "Reckoning evolves into Inferno Reckoning",
+        "BuffType": 1
+    },
+    "2206430":
+    {
+        "Name": "Holy Heal",
+        "Desc": "While having Radiant Shield, gains 12% healing bonus",
+        "BuffType": 1
+    },
+    "2206450":
+    {
+        "Name": "Ultimate Guard",
+        "Desc": "For 10s after casting Shield Toss, increases Block Chance by 15%",
+        "BuffType": 1
+    },
+    "2206460":
+    {
+        "Name": "Shield Guard (Talent)",
+        "Desc": "Valor Bash heals for 120% ATK when it deals DMG, and increases DMG dealt by 8% for 8s",
+        "BuffType": 1
+    },
+    "2206461":
+    {
+        "Name": "Shield Guard",
+        "Desc": "DMG dealt +8%",
+        "BuffType": 1
+    },
+    "2206470":
+    {
+        "Name": "Radiant Heal",
+        "Desc": "Increases Judgment Healing by 25%",
+        "BuffType": 1
+    },
+    "2206480":
+    {
+        "Name": "Ultimate Strike",
+        "Desc": "When Divine Strike deals DMG, increases Strength by 2% for 10s, stacking up to 5 times",
+        "BuffType": 1
+    },
+    "2206490":
+    {
+        "Name": "Shield Strike Enhancement",
+        "Desc": "Increases Valor Bash DMG by 10%",
+        "BuffType": 1
+    },
+    "2206500":
+    {
+        "Name": "Ultimate Conquest",
+        "Desc": "Increases Zeal Crusade DMG by 50%",
+        "BuffType": 1
+    },
+    "2206520":
+    {
+        "Name": "Adversity Enhancement",
+        "Desc": "Special Attack and damaging Expertise are enhanced based on missing HP. For every 1% HP lost, increases their DMG by 1%",
+        "BuffType": 1
+    },
+    "2206530":
+    {
+        "Name": "Wide Raid",
+        "Desc": "Increases Zeal Crusade range by 100%.\nWhile Zeal Crusade is active, the effect of Bold Fearless is doubled",
+        "BuffType": 1
+    },
+    "2206540":
+    {
+        "Name": "Bold Fearless (Talent)",
+        "Desc": "When Sacred Blade or Judgment deals DMG, there is a 25% chance to cause Vanguard Strike to evolve into Vanguard Hunt.\nBold Fearless: Increases Haste by 3% for 10s, stacking up to 10 times",
+        "BuffType": 1
+    },
+    "2206541":
+    {
+        "Name": "Bold Fearless",
+        "Desc": "Increases Haste by 3% for 10s, stacking up to 10 times",
+        "BuffType": 1
+    },
+    "2206550":
+    {
+        "Name": "Radiant Core (Talent)",
+        "Desc": "Vanguard Hunt can grant Radiant Core.\nGaining Radiant Core again reduces its burst time by 2s",
+        "BuffType": 1
+    },
+    "2206551":
+    {
+        "Name": "Radiant Core",
+        "Desc": "After 10s, unleash Holy Energy dealing Attack Damage equal to 500% of ATK and restoring 15% of Max HP",
+        "BuffType": 1
+    },
+    "2206552":
+    {
+        "Name": "Radiant Core Explosion",
+        "Desc": "Unleash Holy Energy dealing Attack Damage and restoring HP",
+        "BuffType": 1
+    },
+    "2206560":
+    {
+        "Name": "Conquest Pursuit (Talent)",
+        "Desc": "While Zeal Crusade is active, Vanguard Strike evolves into Vanguard Hunt",
+        "BuffType": 1
+    },
+    "2206561":
+    {
+        "Name": "Conquest Pursuit",
+        "Desc": "Vanguard Strike evolved into Vanguard Hunt",
+        "BuffType": 1
+    },
+    "2206570":
+    {
+        "Name": "Decisive Blade",
+        "Desc": "After Radiant Core explodes, Sacred Blade DMG +100% for 20s.\nHolds up to 3 charges, casting Sacred Blade consumes one charge",
+        "BuffType": 1
+    },
+    "2206580":
+    {
+        "Name": "Zeal Haste",
+        "Desc": "For every 15 points of Photon Energy consumed, the remaining CD of Zeal Crusade -1s",
+        "BuffType": 1
+    },
+    "2206590":
+    {
+        "Name": "Holy Sigil Enhancement",
+        "Desc": "When Judgment deals DMG, the target takes double DMG from Holy Mark for 5s",
+        "BuffType": 1
+    },
+    "2206600":
+    {
+        "Name": "Divine Guard",
+        "Desc": "When in the Divine Circle, reduces all DMG taken by 10%.\nFor each enemy within 10m, ATK Reduction increases by 1.5% up to 9%, and MATK Reduction increases by 0.75% up to 4.5%",
+        "BuffType": 1
+    },
+    "2206610":
+    {
+        "Name": "Judgment Improvement",
+        "Desc": "For each 1 stack of Lightforged Barrier you possess, Judgment gains 2% healing bonus. When Lightforged Barrier >= 5 stacks, Resistance +8%",
+        "BuffType": 1
+    },
+    "2206620":
+    {
+        "Name": "Sigil Pursuit",
+        "Desc": "DMG dealt by Vanguard Hunt and Sacred Blade to targets with Holy Mark increases by 20%",
+        "BuffType": 1
+    },
+    "2206630":
+    {
+        "Name": "Overflow Healwall",
+        "Desc": "When your accumulated overhealing reaches 10% of your Max HP, gains 1 stack of Lightforged Barrier",
+        "BuffType": 1
+    },
+    "2206640":
+    {
+        "Name": "Light Healing",
+        "Desc": "While having Radiant Shield, gains 12% healing bonus",
+        "BuffType": 1
+    },
+    "2206650":
+    {
+        "Name": "Light Protection",
+        "Desc": "While having Radiant Shield, gain 5% Light bonus",
         "BuffType": 1
     },
     "2206660":
     {
-        "Name": "Sacred Blade Enhancement",
-        "Desc": "Resolved to Return Talent."
+        "Name": "Resolved to Return",
+        "Desc": "Each time 1 stack of Lightforged Barrier is consumed or deducted, reduces the remaining CD of Radiance by 1s"
+    },
+    "2206670":
+    {
+        "Name": "Halo",
+        "Desc": "Divine Circle now has a halo effect, stunning enemy targets for 3s the first time it deals DMG",
+        "BuffType": 1
     },
     "2207010":
     {

@@ -147,7 +147,8 @@
     },
     "1262":
     {
-        "Name": "Ice Meteor Hologram",
+        "Name": "Meteor Storm (Expansion)",
+        "Desc": "From Meteor Storm Expansion talent",
         "Icon": "ui/atlas/skill_weapon_mz/weapon_mz-01_kx07"
     },
     "1263":
@@ -877,7 +878,7 @@
     },
     "55412":
     {
-        "Name": "Zeal Crusade",
+        "Name": "Zeal Crusade (Ruthless Rewind)",
         "Icon": "ui/atlas/skill_weapon_jd/weapon_jd-01_kx07"
     },
     "55416":
@@ -887,7 +888,7 @@
     },
     "55417":
     {
-        "Name": "Zeal Crusade (Ruthless Rewind)",
+        "Name": "Zeal Crusade (Wide Ruthless Rewind)",
         "Icon": "ui/atlas/skill_weapon_jd/weapon_jd-01_kx07"
     },
     "55431":
@@ -936,6 +937,24 @@
         "Desc": "",
         "Icon": ""
     },
+    "3501":
+    {
+        "Name": "Spreading Calamity Wave",
+        "Desc": "",
+        "Icon": ""
+    },
+    "3506":
+    {
+        "Name": "Illusory Essence - Basic Attack",
+        "Desc": "",
+        "Icon": ""
+    },
+    "3507":
+    {
+        "Name": "Goblin Mage - Light Orb",
+        "Desc": "",
+        "Icon": ""
+    },
     "3603":
     {
         "Name": "Binding Shot",
@@ -945,6 +964,18 @@
     "3604":
     {
         "Name": "Lightning Ball",
+        "Desc": "",
+        "Icon": ""
+    },
+    "3700":
+    {
+        "Name": "Infected Laser",
+        "Desc": "",
+        "Icon": ""
+    },
+    "3701":
+    {
+        "Name": "Throw Thunder Arrows",
         "Desc": "",
         "Icon": ""
     },
@@ -1315,7 +1346,7 @@
     },
     "55432":
     {
-        "Name": "Zeal Crusade (DMG Boost)",
+        "Name": "Zeal Crusade (Wide Raid)",
         "Icon": "ui/atlas/skill_weapon_jd/weapon_jd-01_kx07"
     },
     "100101":
@@ -1362,6 +1393,18 @@
     {
         "Name": "Shield Goblin - Small Heroic Elite Stab"
     },
+    "100433":
+    {
+        "Name": "Stonefury"
+    },
+    "100434":
+    {
+        "Name": "Stonefury Rockfall"
+    },
+    "100435":
+    {
+        "Name": "Shield Goblin - Double Strike"
+    },
     "100503":
     {
         "Name": "Meteor Strike"
@@ -1381,6 +1424,10 @@
     "100570":
     {
         "Name": "Light Lich Eater - Flame Wave"
+    },
+    "100577":
+    {
+        "Name": "Goblin Mage - Basic Swing (Master)"
     },
     "100702":
     {
@@ -2342,6 +2389,10 @@
     {
         "Name": "Burn"
     },
+    "855153":
+    {
+        "Name": "Kanamia Axelord's Flame Pulse"
+    },
     "880628":
     {
         "Name": "Touch of Darkness"
@@ -2386,6 +2437,10 @@
     {
         "Name": "Corrosion"
     },
+    "881722":
+    {
+        "Name": "Energy Absorption"
+    },
     "881733":
     {
         "Name": "Corrosive Rain"
@@ -2418,9 +2473,33 @@
     {
         "Name": "Soulchain"
     },
+    "882719":
+    {
+        "Name": "Blazing Domain"
+    },
+    "882842":
+    {
+        "Name": "Soul Shock"
+    },
     "882847":
     {
         "Name": "Undead Revival"
+    },
+    "883101":
+    {
+        "Name": "Rend Wound"
+    },
+    "883114":
+    {
+        "Name": "Mutant Yeti - Eclipse Zone"
+    },
+    "883205":
+    {
+        "Name": "Haunting Nightmare - Linked"
+    },
+    "883206":
+    {
+        "Name": "Haunting Nightmare - Explosion"
     },
     "900052":
     {
@@ -2441,6 +2520,10 @@
     "900071":
     {
         "Name": "Tower Climb: Purifying Wave"
+    },
+    "920211":
+    {
+        "Name": "Caprahorn - Headbutt (Master)"
     },
     "990103":
     {
@@ -2551,9 +2634,17 @@
     {
         "Name": "Frost Thorns"
     },
+    "100432":
+    {
+        "Name": "Overpower (Tankbuster)"
+    },
     "1004804":
     {
         "Name": "[S2] Rift-Hidden Yeti - Right Punch"
+    },
+    "1004808":
+    {
+        "Name": "Mutant Yeti - Eclipse Zone"
     },
     "1004810":
     {
@@ -2874,6 +2965,10 @@
         "Name": "Stunt! Thunder Suppress",
         "Desc": "Lizardman Hunter"
     },
+    "1010705":
+    {
+        "Name": "Guard - Cleave Attack"
+    },
     "1010804":
     {
         "Name": "Front Slash"
@@ -2962,6 +3057,14 @@
     {
         "Name": "Goblin Chief - Enrage"
     },
+    "1102001":
+    {
+        "Name": "Nether Caprahorn - Basic Attack 1"
+    },
+    "1102003":
+    {
+        "Name": "Nether Caprahorn - Charge Attack"
+    },
     "1102301":
     {
         "Name": "Flamehorn - Normal Attack"
@@ -3042,6 +3145,14 @@
     {
         "Name": "Spider - Right Strike - Heroic"
     },
+    "1700380":
+    {
+        "Name": "Hardshell Spider - Leap Smash (Master)"
+    },
+    "1700382":
+    {
+        "Name": "Spider - Strike (Master)"
+    },
     "1700401":
     {
         "Name": "Muku Chief - Basic Attack"
@@ -3079,6 +3190,10 @@
     {
         "Name": "Foxen - Double Claw Basic Attack"
     },
+    "1700714":
+    {
+        "Name": "Shadow Foxen - Basic Attack"
+    },
     "1700715":
     {
         "Name": "Foxen - Scratch Basic Attack"
@@ -3110,6 +3225,22 @@
     "1700852":
     {
         "Name": "Crimson Foxen - Enrage"
+    },
+    "1700857":
+    {
+        "Name": "Nocturne Foxen - Basic Attack"
+    },
+    "1700858":
+    {
+        "Name": "Nocturne Foxen - Tail Sweep"
+    },
+    "1700860":
+    {
+        "Name": "Nocturne Foxen - Seed of the Soul Ember"
+    },
+    "1700861":
+    {
+        "Name": "Nocturne Foxen - Detonate Soul Ember"
     },
     "1701103":
     {
@@ -3160,6 +3291,10 @@
         "Name": "Kanamia High Hunter's Spreadshot"
     },
     "2000211":
+    {
+        "Name": "Charged Shot"
+    },
+    "2000213":
     {
         "Name": "Charged Shot"
     },
@@ -3271,6 +3406,10 @@
     {
         "Name": "Stunt! Blink Ambush"
     },
+    "2001812":
+    {
+        "Name": "Bite (Master)"
+    },
     "2002212":
     {
         "Name": "Wind Ball Explosion"
@@ -3354,7 +3493,7 @@
     },
     "2002824":
     {
-        "Name": "Lethal Skill - Sweep"
+        "Name": "Lethal Skill: Sweep"
     },
     "2002825":
     {
@@ -3385,9 +3524,17 @@
     {
         "Name": "Whirlwind Slash"
     },
+    "2002907":
+    {
+        "Name": "Vengful Flame Whirlwind Slash"
+    },
     "2002910":
     {
         "Name": "Ancestral Flame Burst"
+    },
+    "2002912":
+    {
+        "Name": "Axe Smash (Tankbuster)"
     },
     "2110012":
     {
@@ -3869,9 +4016,17 @@
         "Name": "Arcane! Pulse Benediction (Passive Shield)",
         "Desc": "Muku King"
     },
+    "3320109":
+    {
+        "Name": "Lethal Skill: Tail Sweep Vertical Chop"
+    },
     "3320198":
     {
         "Name": "Tailspike (Tankbuster)"
+    },
+    "3320199":
+    {
+        "Name": "Corrosive Poison Bomb"
     },
     "3330103":
     {
@@ -3953,9 +4108,45 @@
     {
         "Name": "Blade Rift"
     },
+    "3350105":
+    {
+        "Name": "Dreamfall (Tankbuster)"
+    },
+    "3350109":
+    {
+        "Name": "Dream Spirit Death Explosion"
+    },
     "3350110":
     {
         "Name": "Basic Attack Headbutt"
+    },
+    "3350115":
+    {
+        "Name": "Cone Cleave"
+    },
+    "3350129":
+    {
+        "Name": "Summon Inner Demon"
+    },
+    "3350131":
+    {
+        "Name": "Forgotten Floor (Rectangles)"
+    },
+    "3350133":
+    {
+        "Name": "Forgotten Floor (45 Degrees)"
+    },
+    "3350134":
+    {
+        "Name": "Forgotten Floor (90 Degrees)"
+    },
+    "3350135":
+    {
+        "Name": "Forgotten Floor (Half Room)"
+    },
+    "3350154":
+    {
+        "Name": "Summon Inner Demon E1"
     },
     "3913001":
     {
@@ -4121,10 +4312,28 @@
         "Name": "Dagger of Execution - Warning",
         "Desc": "Selects a target to execute at the end of the timer if not protected"
     },
+    "4050007":
+    {
+        "Name": "Pursuit Strike",
+        "Desc": ""
+    },
+    "4050008":
+    {
+        "Name": "Lethal Skill: Blade Spin",
+        "Desc": ""
+    },
     "4050050":
     {
         "Name": "Dagger of Execution - Force-Kill",
         "Desc": "Forcefully kills the marked target if not protected"
+    },
+    "4050051":
+    {
+        "Name": "Shackles of Souls - Totem Explosion"
+    },
+    "8035624":
+    {
+        "Name": "Burrowing Rock Serpent"
     },
     "10010301":
     {
