@@ -2525,6 +2525,14 @@
     {
         "Name": "Caprahorn - Headbutt (Master)"
     },
+    "965430":
+    {
+        "Name": "On Fire"
+    },
+    "965431":
+    {
+        "Name": "Lightning Strike (Paralyzed)"
+    },
     "990103":
     {
         "Name": "Golden Juggernaut - Earth Corruption Impact"
@@ -2563,6 +2571,22 @@
     "995270":
     {
         "Name": "Thunder Suppress"
+    },
+    "1000106":
+    {
+        "Name": "Red Firecracker"
+    },
+    "1000107":
+    {
+        "Name": "Green Firecracker"
+    },
+    "1000108":
+    {
+        "Name": "Blue Firecracker"
+    },
+    "1000109":
+    {
+        "Name": "Yellow Firecracker"
     },
     "1002101":
     {
@@ -4330,6 +4354,22 @@
     "4050051":
     {
         "Name": "Shackles of Souls - Totem Explosion"
+    },
+    "6910201":
+    {
+        "Name": "Glare Burn"
+    },
+    "6910204":
+    {
+        "Name": "Flame Breath"
+    },
+    "6910205":
+    {
+        "Name": "Lightning Strike"
+    },
+    "6910210":
+    {
+        "Name": "Flame Breath (Continous)"
     },
     "8035624":
     {

@@ -3925,7 +3925,8 @@
     "2206340":
     {
         "Name": "Life Enhancement",
-        "Desc": "When Strength reaches 500 points, Max HP +12%"
+        "Desc": "When Strength reaches 500 points, Max HP +12%",
+        "BuffType": 1
     },
     "2206350":
     {
@@ -4140,7 +4141,8 @@
     "2206660":
     {
         "Name": "Resolved to Return",
-        "Desc": "Each time 1 stack of Lightforged Barrier is consumed or deducted, reduces the remaining CD of Radiance by 1s"
+        "Desc": "Each time 1 stack of Lightforged Barrier is consumed or deducted, reduces the remaining CD of Radiance by 1s",
+        "BuffType": 1
     },
     "2206670":
     {
@@ -4653,6 +4655,61 @@
         "Name": "Fantasia Impact CD",
         "BuffType": 1
     },
+    "3003211":
+    {
+        "Name": "Shattered Illusion - Sub-Buff Timer",
+        "Desc": "Timeout for triggering Shattered Illusion",
+        "BuffType": 0
+    },
+    "3003212":
+    {
+        "Name": "Shattered Illusion - Sub-Buff Trigger",
+        "Desc": "Timeout for triggering Shattered Illusion",
+        "BuffType": 0
+    },
+    "3003213":
+    {
+        "Name": "Shattered Illusion - Sub-Buff Skill",
+        "Desc": "Illusory Countershock CD",
+        "BuffType": 0
+    },
+    "3003610":
+    {
+        "Name": "Illusion Bond 1",
+        "BuffType": 1
+    },
+    "3003620":
+    {
+        "Name": "Illusion Bond 2",
+        "BuffType": 1
+    },
+    "3003630":
+    {
+        "Name": "Illusion Bond 3",
+        "BuffType": 1
+    },
+    "3003640":
+    {
+        "Name": "Illusion Bond 4",
+        "BuffType": 1
+    },
+    "3003650":
+    {
+        "Name": "Illusion Bond 5",
+        "BuffType": 1
+    },
+    "3054060":
+    {
+        "Name": "Shield Knight X6",
+        "Desc": "Mastery grants ATK",
+        "BuffType": 1
+    },
+    "3054100":
+    {
+        "Name": "Shield Knight X10",
+        "Desc": "Radiance charge count increased; Radiance Dream DMG increased",
+        "BuffType": 1
+    },
     "3056071":
     {
         "Name": "Verdant Oracle X7",
@@ -4692,12 +4749,14 @@
     "3058070":
     {
         "Name": "Polarity X7",
-        "Desc": "Mastery gained in any way increased, but Luck gained in any way decreased"
+        "Desc": "Mastery gained in any way increased, but Luck gained in any way decreased",
+        "BuffType": 1
     },
     "3059050":
     {
         "Name": "Stasis X5",
-        "Desc": "Increase Max HP. When incoming damage exceeds current HP, that damage is reduced"
+        "Desc": "Increase Max HP. When incoming damage exceeds current HP, that damage is reduced",
+        "BuffType": 1
     },
     "3059061":
     {
