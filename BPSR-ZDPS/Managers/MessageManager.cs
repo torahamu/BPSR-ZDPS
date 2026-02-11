@@ -562,7 +562,7 @@ namespace BPSR_ZDPS
         {
             System.Diagnostics.Debug.WriteLine($"ProcessSyncHitInfo");
         }
-
+        public static bool IsWipeCheckQueued = false;
         public static void ProcessAttrs(long uuid, RepeatedField<Attr> attrs)
         {
             foreach (var attr in attrs)
@@ -637,7 +637,7 @@ namespace BPSR_ZDPS
 
                         if (uuid == currentUserUuid)
                         {
-                            CheckForWipe();
+                            IsWipeCheckQueued = true;
                         }
                         
                         break;
@@ -800,6 +800,12 @@ namespace BPSR_ZDPS
                 }*/
             }
 
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
+            }
+
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
             BattleStateMachine.CheckDeferredCalls();
         }
@@ -816,6 +822,12 @@ namespace BPSR_ZDPS
             foreach (var aoiSyncDelta in syncNearDeltaInfo.DeltaInfos)
             {
                 ProcessAoiSyncDelta(aoiSyncDelta, extraData);
+            }
+
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
             }
 
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
@@ -1131,6 +1143,12 @@ namespace BPSR_ZDPS
             }
             ProcessAoiSyncDelta(aoiSyncDelta, extraData);
 
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
+            }
+
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
             BattleStateMachine.CheckDeferredCalls();
         }
@@ -1403,7 +1421,14 @@ namespace BPSR_ZDPS
             {
                 if (EncounterManager.Current.IsWipe)
                 {
+                    // TODO: This is a workaround for some encounters instantly running the wipe detection while still in a dead state
+                    if (EncounterManager.Current.GetDuration().TotalSeconds < 2)
+                    {
+                        System.Diagnostics.Debug.WriteLine("EncounterManager.Current Duration was under 2 seconds, correcting the Wipe State to false");
+                        EncounterManager.Current.SetWipeState(false);
+                    }
                     // This Encounter already has been reported as a wipe and should be in the processing of ending already
+                    System.Diagnostics.Debug.WriteLine("EncounterManager.Current.IsWipe already true");
                     return;
                 }
 
@@ -1480,14 +1505,41 @@ namespace BPSR_ZDPS
                         var charState = character.Value.GetAttrKV("AttrState");
                         if (charState != null)
                         {
-                            if (((EActorState)charState != EActorState.ActorStateDead || (EActorState)charState != EActorState.ActorStateResurrection) && character.Value.Hp > 0)
+                            EActorState actorState = (EActorState)charState;
+                            if (actorState != EActorState.ActorStateDead && actorState != EActorState.ActorStateResurrection && character.Value.Hp > 0)
                             {
+                                // Sometimes characters go directly from their last state into TelePort (skipping Dead and Resurrection) when a wipe happens
+                                // Since all characters also go into the TelePort state for regular group teleport events, like entering a raid boss room, we need special handling
+                                // Unfortunately we cannot rely on current HP values as they are often times already reset to max when this state happens
+                                if (actorState == EActorState.ActorStateTelePort && character.Value.RecentHpHistory.Count > 0)
+                                {
+                                    long lowestHp = character.Value.MaxHp;
+
+                                    int stackSize = character.Value.RecentHpHistory.Count > 3 ? 3 : character.Value.RecentHpHistory.Count;
+                                    for (int i = 0; i < stackSize; i++)
+                                    {
+                                        long historicalHp = character.Value.RecentHpHistory.ElementAt(i);
+                                        if (historicalHp < lowestHp)
+                            {
+                                            lowestHp = historicalHp;
+                                        }
+                                    }
+
+                                    if (lowestHp == 0)
+                                    {
+                                        // Character is actually dead
+                                        continue;
+                                    }
+                                }
+
                                 areAllCharactersDead = false;
+                                //Log.Debug($"Character {character.Value.Name} AttrState={charState} HP={character.Value.Hp}, MaxHP={character.Value.MaxHp}; areAllCharactersDead = false");
                             }
                         }
                         else if (character.Value.Hp > 0 || character.Value.MaxHp == 0)
                         {
                             areAllCharactersDead = false;
+                            //Log.Debug($"Character {character.Value.Name} HP={character.Value.Hp}, MaxHP={character.Value.MaxHp}; areAllCharactersDead = false");
                         }
                     }
                     if (areAllCharactersDead && !isStateWipePattern)
@@ -1499,6 +1551,15 @@ namespace BPSR_ZDPS
                     {
                         Log.Debug($"Not all characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to false.");
                         isStateWipePattern = false;
+                    }
+                }
+                else
+                {
+                    // There's no combat data recorded for the Encounter, we don't need to worry about wipe logic yet
+                    isStateWipePattern = false;
+                    if (EncounterManager.Current.IsWipe)
+                    {
+                        EncounterManager.Current.SetWipeState(false);
                     }
                 }
 
@@ -1521,7 +1582,7 @@ namespace BPSR_ZDPS
                             long? maxHp = boss.Value.GetAttrKV("AttrMaxHp") as long?;
                             var bossState = boss.Value.GetAttrKV("AttrState");
                             // Might need to use MaxHpTotal?
-                            if ((bossState != null && (EActorState)bossState == EActorState.ActorStateBorn) || (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp))
+                            if ((bossState != null && (EActorState)bossState == EActorState.ActorStateBorn) || (boss.Value.RecentHpHistory.Count > 1 && (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp)))
                             {
                                 EncounterManager.Current.SetWipeState(true);
                                 System.Diagnostics.Debug.WriteLine($"We've hit a wipe (bossesAtMaxHp = {bossesAtMaxHp})! Start up a new encounter");

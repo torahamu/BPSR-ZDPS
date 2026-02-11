@@ -193,6 +193,7 @@ namespace BPSR_ZDPS
                     Current.SceneSubName = $"Phase {priorEncounterPhase + 1}";
                 }
             }
+            Current.SetWipeState(false);
 
             // Reuse last sceneId as our current one (it may not always be right but hopefully is right enough)
             if (LevelMapId > 0)
@@ -220,6 +221,7 @@ namespace BPSR_ZDPS
                 }
             }
 
+            Serilog.Log.Debug("EncounterManager sending OnEncounterStart event");
             OnEncounterStart(new EventArgs());
         }
 
@@ -588,10 +590,6 @@ namespace BPSR_ZDPS
             {
                 if ((EActorState)value == EActorState.ActorStateDead)
                 {
-                    // The server does not send a final HP value update when the State also changes, so we'll fake one
-                    // We do this before fully processing the State change
-                    SetAttrKV(uuid, "AttrHp", 0L);
-
                     entity.IncrementDeaths();
                     if (entity.EntityType == EEntityType.EntChar)
                     {
@@ -601,6 +599,10 @@ namespace BPSR_ZDPS
                     {
                         IncrementNpcDeaths();
                     }
+
+                    // The server does not send a final HP value update when the State also changes, so we'll fake one
+                    // We do this before fully processing the State change
+                    SetAttrKV(uuid, "AttrHp", 0L);
                 }
             }
             else if (key == "AttrShieldList")
