@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Serilog;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace BPSR_ZDPS
             if (File.Exists(appStringsFile))
             {
                 var appStrings = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(File.ReadAllText(appStringsFile));
-                AppStrings.Strings = appStrings;
+                AppStrings.Strings = appStrings.ToFrozenDictionary();
                 Log.Information("Loaded AppStrings.json");
             }
 
