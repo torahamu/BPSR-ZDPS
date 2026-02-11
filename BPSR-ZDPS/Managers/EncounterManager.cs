@@ -2371,7 +2371,7 @@ namespace BPSR_ZDPS
                 Level = level,
                 Value = value,
                 HpLessen = hpLessenValue,
-                ShieldBrkeak = shieldBreak,
+                ShieldBreak = shieldBreak,
                 IsCrit = isCrit,
                 IsLucky = isLucky,
                 IsCritLucky = isCrit && isLucky,
@@ -2538,7 +2538,7 @@ namespace BPSR_ZDPS
 
         public long Value { get; set; }
         public long HpLessen { get; set; }
-        public long ShieldBrkeak { get; set; }
+        public long ShieldBreak { get; set; }
 
         public EDamageProperty DamageElement { get; set; }
         public EDamageType DamageType { get; set; }
