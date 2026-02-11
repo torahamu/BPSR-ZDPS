@@ -616,6 +616,18 @@
         "Name": "Condemn Boost",
         "BuffType": 1
     },
+    "500111":
+    {
+        "Name": "Wipe Reset Timer",
+        "Desc": "Begins the wipe reset process",
+        "BuffType": 0
+    },
+    "510072":
+    {
+        "Name": "Wipe Restores HP And Resets CDs",
+        "Desc": "Occurs after player's wipe. Their HP is fully restored and all of their Cooldowns are reset",
+        "BuffType": 0
+    },
     "522001":
     {
         "Name": "Successful Counter Attack",
