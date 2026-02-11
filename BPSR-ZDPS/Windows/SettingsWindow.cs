@@ -39,6 +39,7 @@ namespace BPSR_ZDPS.Windows
         static int databaseRetentionPolicyDays;
         static bool skipSavingEncountersWithNoCombatData;
         static bool limitEncounterBuffTrackingInOpenWorld;
+        static bool skipSkillSnapshotSavingInOpenWorld;
         static bool allowEncounterSavingPausingInOpenWorld;
         static bool persistEncounterSavingPauseStateBetweenMaps;
         static bool minimalProcessingWhileEncounterSavingPaused;
@@ -423,7 +424,16 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TextWrapped("When enabled, buffs are limited to only the latest 100 per entity instead of being limitless. This setting is not retroactive.");
                         ImGui.EndDisabled();
                         ImGui.Unindent();
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.Text("Skip Skill Snapshot Saving In Open World: ");
+                        ImGui.SameLine();
+                        ImGui.Checkbox("##SkipSkillSnapshotSavingInOpenWorld", ref skipSkillSnapshotSavingInOpenWorld);
+                        ImGui.Indent();
+                        ImGui.BeginDisabled(true);
+                        ImGui.TextWrapped("When enabled, Skill Snapshots are no longer stored whenever a Skill Event occurs. Snapshots makes it possible to view Skill Snapshots (Instances) in the Entity Inspector. They also allow Database Migrations to occur without losing data.\nEnabling this setting can help save a lot of memory while in the Open World.\nNote: By default your current 'Map' is considered to be the 'Open World' before your first Map Change just after launching ZDPS even if you're not in the Open World.");
                         ImGui.EndDisabled();
+                        ImGui.Unindent();
 
                         ImGui.AlignTextToFramePadding();
                         ImGui.Text("Allow Encounter Saving Pausing In Open World: ");
@@ -1482,6 +1492,7 @@ namespace BPSR_ZDPS.Windows
             databaseRetentionPolicyDays = Settings.Instance.DatabaseRetentionPolicyDays;
             skipSavingEncountersWithNoCombatData = Settings.Instance.SkipSavingEncountersWithNoCombatData;
             limitEncounterBuffTrackingInOpenWorld = Settings.Instance.LimitEncounterBuffTrackingInOpenWorld;
+            skipSkillSnapshotSavingInOpenWorld = Settings.Instance.SkipSkillSnapshotSavingInOpenWorld;
             allowEncounterSavingPausingInOpenWorld = Settings.Instance.AllowEncounterSavingPausingInOpenWorld;
             persistEncounterSavingPauseStateBetweenMaps = Settings.Instance.PersistEncounterSavingPauseStateBetweenMaps;
             minimalProcessingWhileEncounterSavingPaused = Settings.Instance.MinimalProcessingWhileEncounterSavingPaused;
@@ -1585,6 +1596,7 @@ namespace BPSR_ZDPS.Windows
             Settings.Instance.DatabaseRetentionPolicyDays = databaseRetentionPolicyDays;
             Settings.Instance.SkipSavingEncountersWithNoCombatData = skipSavingEncountersWithNoCombatData;
             Settings.Instance.LimitEncounterBuffTrackingInOpenWorld = limitEncounterBuffTrackingInOpenWorld;
+            Settings.Instance.SkipSkillSnapshotSavingInOpenWorld = skipSkillSnapshotSavingInOpenWorld;
             Settings.Instance.PersistEncounterSavingPauseStateBetweenMaps = persistEncounterSavingPauseStateBetweenMaps;
             Settings.Instance.MinimalProcessingWhileEncounterSavingPaused = minimalProcessingWhileEncounterSavingPaused;
 

@@ -27,6 +27,7 @@ public class Settings
     public bool SkipTeleportStateCheckInAutomaticWipeDetection { get; set; } = false;
     public bool DisableWipeRecalculationOverwriting { get; set; } = false;
     public bool SplitEncountersOnNewPhases { get; set; } = true;
+    public bool SkipSkillSnapshotSavingInOpenWorld { get; set; } = false;
     public bool DisplayTruePerSecondValuesInMeters { get; set; } = false;
     public bool AllowGamepadNavigationInputInZDPS { get; set; } = false;
     public bool KeepPastEncounterInMeterUntilNextDamage { get; set; } = false;

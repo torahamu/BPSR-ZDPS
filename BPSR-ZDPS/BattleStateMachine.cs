@@ -279,6 +279,22 @@ namespace BPSR_ZDPS
                 // We do not null the DeferredEncounterEndFinalData as we use it to ensure we don't send multiple End Final calls
             }
         }
+
+        public static bool IsInOpenWorld()
+        {
+            if (DungeonStateHistory.IsEmpty)
+            {
+                return true;
+            }
+            else if (DungeonStateHistory.Last().Key == EDungeonState.DungeonStateNull)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public class EncounterEndFinalData

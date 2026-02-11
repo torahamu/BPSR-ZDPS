@@ -2161,6 +2161,11 @@ namespace BPSR_ZDPS
                 }
             }
 
+            if (Settings.Instance.SkipSkillSnapshotSavingInOpenWorld && BattleStateMachine.IsInOpenWorld())
+            {
+                return;
+            }
+
             AddSnapshot(otherUuid, skillId, level, value, isCrit, isLucky, hpLessenValue, shieldBreak, isCauseLucky, damageElement, damageType, damageMode, isDead, damagePos, instigatorPos, targetPos, now);
         }
 
