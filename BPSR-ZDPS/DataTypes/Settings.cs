@@ -30,6 +30,7 @@ public class Settings
     public bool DisplayTruePerSecondValuesInMeters { get; set; } = false;
     public bool AllowGamepadNavigationInputInZDPS { get; set; } = false;
     public bool KeepPastEncounterInMeterUntilNextDamage { get; set; } = false;
+    public bool ShowChannelLineNumberInStatus { get; set; } = false;
     public bool UseDatabaseForEncounterHistory { get; set; } = true;
     public int DatabaseRetentionPolicyDays { get; set; } = 0;
     public bool SkipSavingEncountersWithNoCombatData { get; set; } = false;

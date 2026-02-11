@@ -696,6 +696,15 @@ namespace BPSR_ZDPS.Windows
                 ImGui.TextUnformatted($"- {EncounterManager.Current.SceneName}{subName}");
             }
 
+            if (Settings.Instance.ShowChannelLineNumberInStatus)
+            {
+                ImGui.SameLine();
+                if (EncounterManager.Current.ChannelLine > 0)
+                {
+                    ImGui.TextUnformatted($"(L - {EncounterManager.Current.ChannelLine})");
+                }
+            }
+
             if (AppState.IsBenchmarkMode)
             {
                 ImGui.SameLine();
