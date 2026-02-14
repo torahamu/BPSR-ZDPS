@@ -136,6 +136,11 @@ namespace BPSR_ZDPS.DataTypes
 
         public bool IsImagineSlot()
         {
+            if (SlotPositionId == null)
+            {
+                return false;
+            }
+
             if (SlotPositionId.Contains(7) || SlotPositionId.Contains(8))
             {
                 return true;
@@ -146,6 +151,11 @@ namespace BPSR_ZDPS.DataTypes
 
         public bool IsRoleSlot()
         {
+            if (SlotPositionId == null)
+            {
+                return false;
+            }
+
             if (SlotPositionId.Contains(21) || SlotPositionId.Contains(22) || SlotPositionId.Contains(23) || SlotPositionId.Contains(24))
             {
                 return true;

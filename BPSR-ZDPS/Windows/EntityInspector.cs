@@ -575,7 +575,12 @@ namespace BPSR_ZDPS.Windows
 
                                     if (!string.IsNullOrEmpty(skillIconName))
                                     {
-                                        var tex = ImageArchive.LoadImage(Path.Combine("Skills", skillIconName));
+                                        string baseDir = "Skills";
+                                        if (skill.IsImagineSlot())
+                                        {
+                                            baseDir = "Skills_Imagines";
+                                        }
+                                        var tex = ImageArchive.LoadImage(Path.Combine(baseDir, skillIconName));
                                         var itemRectSize = ImGui.GetItemRectSize().Y;
                                         float texSize = itemRectSize;
                                         if (tex != null)
@@ -1309,7 +1314,13 @@ namespace BPSR_ZDPS.Windows
 
                                         if (!string.IsNullOrEmpty(skillIconName))
                                         {
-                                            var tex = ImageArchive.LoadImage(Path.Combine("Skills", skillIconName));
+                                            string baseDir = "Skills";
+                                            if (item.IsImagineSlot())
+                                            {
+                                                baseDir = "Skills_Imagines";
+                                            }
+
+                                            var tex = ImageArchive.LoadImage(Path.Combine(baseDir, skillIconName));
 
                                             if (tex != null)
                                             {

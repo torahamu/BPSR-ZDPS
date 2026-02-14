@@ -47,6 +47,20 @@ namespace BPSR_ZDPS.DataTypes.Skills
             return Icon;
         }
 
+        public bool IsImagineSlot()
+        {
+            // TODO: Store SlotPositionId so it can be used later for this check, making it much cheaper
+            if (Icon != null && Icon.Length > 0)
+            {
+                if (Icon.Contains("skill_aoyi"))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static implicit operator Zproto.SkillLevelInfo(SkillLevelInfo skillLevelInfo)
         {
             var data = new Zproto.SkillLevelInfo()
