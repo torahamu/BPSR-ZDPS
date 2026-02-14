@@ -76,7 +76,7 @@ namespace BPSR_ZDPS.Meters
                 {
                     var teamList = playerList.Where(x =>
                     {
-                        if (x.Value.UUID != AppState.PlayerUID)
+                        if (x.Value.UUID != AppState.PlayerUUID)
                         {
                             var teamId = x.Value.GetAttrKV("AttrTeamId") as long?;
                             if (teamId == null || (teamId != null && AppState.PartyTeamId != teamId))
