@@ -155,6 +155,11 @@ namespace BPSR_ZDPS.Managers
 
                 if (!isTextMsg)
                 {
+                    if (msg.Msg.MsgType == ChitChatMsgType.ChatMsgPictureEmoji && Settings.Instance.WindowSettings.ChatWindow.HideStickers)
+                    {
+                        return false;
+                    }
+
                     return isFromChannel && isOverLevel;
                 }
 
