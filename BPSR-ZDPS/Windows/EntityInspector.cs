@@ -15,6 +15,8 @@ namespace BPSR_ZDPS.Windows
     public class EntityInspector
     {
         public const string LAYER = "EntityInspectorLayer";
+        public static string TITLE_ID = "###EntityInspectorWindow";
+        public static string TITLE = "Entity Inspector";
 
         // This entity will only be valid within the context of the current Encounter
         // TODO: Pull from a global entity storage instead of per-encounter or
@@ -29,6 +31,10 @@ namespace BPSR_ZDPS.Windows
         private int LoadedFromEncounterIdx = -1;
 
         static int RunOnceDelayed = 0;
+        bool HasInitBindings = false;
+        static Vector2 MenuBarSize;
+        static int LastPinnedOpacity = 100;
+        public bool IsPinned = false;
 
         public ETableFilterMode TableFilterMode = ETableFilterMode.SkillsDamage;
 
@@ -64,6 +70,7 @@ namespace BPSR_ZDPS.Windows
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
             //ImGui.OpenPopup("###EntityInspectorWindow");
             IsOpened = true;
+            IsPinned = false;
             ImGui.PopID();
         }
 
@@ -78,6 +85,8 @@ namespace BPSR_ZDPS.Windows
             {
                 return;
             }
+
+            var windowSettings = Settings.Instance.WindowSettings.EntityInspector;
 
             var main_viewport = ImGui.GetMainViewport();
             //ImGui.SetNextWindowPos(new Vector2(main_viewport.WorkPos.X + 200, main_viewport.WorkPos.Y + 120), ImGuiCond.FirstUseEver);
@@ -109,7 +118,13 @@ namespace BPSR_ZDPS.Windows
                 entityName = $"[{LoadedEntity.UID}]";
             }
 
-            if (ImGui.Begin($"Entity Inspector - {entityName}###EntityInspectorWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
+            ImGuiWindowFlags exWindowFlags = ImGuiWindowFlags.None;
+            if (AppState.MousePassthrough && windowSettings.TopMost)
+            {
+                exWindowFlags |= ImGuiWindowFlags.NoInputs;
+            }
+
+            if (ImGui.Begin($"{TITLE} - {entityName}{TITLE_ID}", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoTitleBar | exWindowFlags))
             {
                 if (RunOnceDelayed == 0)
                 {
@@ -120,7 +135,25 @@ namespace BPSR_ZDPS.Windows
                     RunOnceDelayed++;
                     Utils.SetCurrentWindowIcon();
                     Utils.BringWindowToFront();
+
+                    if (windowSettings.TopMost && !IsPinned)
+                    {
+                        IsPinned = true;
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                    }
                 }
+                else if (RunOnceDelayed >= 2)
+                {
+                    if (windowSettings.TopMost && LastPinnedOpacity != windowSettings.Opacity)
+                    {
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                    }
+                }
+
+                DrawMenuBar();
 
                 if (ImGui.BeginTable("##EntityProperties", 2, ImGuiTableFlags.None))
                 {
@@ -1406,6 +1439,66 @@ namespace BPSR_ZDPS.Windows
             ImGui.PopID();
         }
 
+        static float MenuBarButtonWidth = 0.0f;
+        public void DrawMenuBar()
+        {
+            if (ImGui.BeginMenuBar())
+            {
+                var windowSettings = Settings.Instance.WindowSettings.EntityInspector;
+
+                MenuBarSize = ImGui.GetWindowSize();
+
+                string entityName = "";
+                if (!string.IsNullOrEmpty(LoadedEntity.Name))
+                {
+                    entityName = $"{LoadedEntity.Name} [{LoadedEntity.UID}]";
+                }
+                else
+                {
+                    entityName = $"[{LoadedEntity.UID}]";
+                }
+
+                ImGui.Text($"{TITLE} - {entityName}");
+
+                ImGui.SetCursorPosX(MenuBarSize.X - (MenuBarButtonWidth * 2));
+                ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, AppState.MousePassthrough ? 0.0f : 1.0f, AppState.MousePassthrough ? 0.0f : 1.0f, windowSettings.TopMost ? 1.0f : 0.5f));
+                if (ImGui.MenuItem($"{FASIcons.Thumbtack}##TopMostBtn"))
+                {
+                    if (!windowSettings.TopMost)
+                    {
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                        windowSettings.TopMost = true;
+                        IsPinned = true;
+                    }
+                    else
+                    {
+                        Utils.UnsetWindowTopmost();
+                        Utils.SetWindowOpacity(1.0f);
+                        windowSettings.TopMost = false;
+                        IsPinned = false;
+                    }
+                }
+                ImGui.PopStyleColor();
+                ImGui.PopFont();
+                ImGui.SetItemTooltip("Pin Window As Top Most");
+
+                ImGui.SetCursorPosX(MenuBarSize.X - (MenuBarButtonWidth));
+                ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
+                if (ImGui.MenuItem($"X##CloseBtn"))
+                {
+                    IsOpened = false;
+                }
+                ImGui.PopFont();
+
+                MenuBarButtonWidth = ImGui.GetItemRectSize().X;
+
+                ImGui.EndMenuBar();
+            }
+        }
+
         public void LoadEntity(Entity entity, DateTime encounterStartTime)
         {
             LoadedEntity = entity;
@@ -1420,6 +1513,11 @@ namespace BPSR_ZDPS.Windows
             SkillScatterMap.Clear();
             ShowAllInstancesSkillIds = new();
         }
+    }
+
+    public class EntityInspectorWindowSettings : WindowSettingsBase
+    {
+
     }
 
     public class ScatterPlotSkillMap

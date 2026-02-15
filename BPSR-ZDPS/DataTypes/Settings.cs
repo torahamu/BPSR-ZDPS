@@ -172,6 +172,7 @@ public class WindowSettingsBase : ICloneable
 public class WindowSettings : ICloneable
 {
     public MainWindowWindowSettings MainWindow { get; set; } = new();
+    public EntityInspectorWindowSettings EntityInspector { get; set; } = new();
     public RaidManagerCooldownsWindowSettings RaidManagerCooldowns { get; set; } = new();
     public EntityCacheViewerWindowSettings EntityCacheViewer { get; set; } = new();
     public SpawnTrackerWindowSettings SpawnTracker { get; set; } = new();
@@ -185,6 +186,7 @@ public class WindowSettings : ICloneable
     {
         var cloned = (WindowSettings)this.MemberwiseClone();
         cloned.MainWindow = (MainWindowWindowSettings)this.MainWindow.Clone();
+        cloned.EntityInspector = (EntityInspectorWindowSettings)this.EntityInspector.Clone();
         cloned.RaidManagerCooldowns = (RaidManagerCooldownsWindowSettings)this.RaidManagerCooldowns.Clone();
         cloned.EntityCacheViewer = (EntityCacheViewerWindowSettings)this.EntityCacheViewer.Clone();
         cloned.SpawnTracker = (SpawnTrackerWindowSettings)this.SpawnTracker.Clone();
