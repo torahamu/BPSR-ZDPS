@@ -21,7 +21,7 @@ namespace BPSR_ZDPS
     {
         private static MainWindow mainWindow;
         private static GLFWwindowPtr window;
-        private static D3D11Manager manager;
+        public static D3D11Manager manager;
 
         static void Main(string[] args)
         {            
@@ -144,6 +144,8 @@ namespace BPSR_ZDPS
                 GLFW.Terminate();
                 return;
             }
+
+            RendererImpl.Init(guiContext);
 
             // Setup resizing.
             unsafe

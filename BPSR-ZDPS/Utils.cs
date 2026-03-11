@@ -17,6 +17,8 @@ using System.Security.Policy;
 using System.IO.Hashing;
 using ZLinq;
 using System.Text.RegularExpressions;
+using System.Numerics;
+using static BPSR_ZDPS.RendererImpl;
 
 namespace BPSR_ZDPS
 {
@@ -351,6 +353,20 @@ namespace BPSR_ZDPS
         {
             viewport = viewport ?? ImGui.GetWindowViewport();
             User32.SetWindowLong((IntPtr)viewport.Value.PlatformHandleRaw, nIndex, dwNewLong);
+        }
+
+        public static void SetWindowClearColor(Vector4 clearColor, ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            if (rdata != null)
+            {
+                clearColor.X *= clearColor.W;
+                clearColor.Y *= clearColor.W;
+                clearColor.Z *= clearColor.W;
+
+                rdata->ClearColor = clearColor;
+            }
         }
 
         public static unsafe void SetCurrentWindowIcon()
