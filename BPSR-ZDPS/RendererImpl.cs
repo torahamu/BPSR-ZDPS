@@ -5,6 +5,7 @@ using Silk.NET.Core.Native;
 using Silk.NET.Direct3D11;
 using Silk.NET.DirectComposition;
 using Silk.NET.DXGI;
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -20,6 +21,7 @@ namespace BPSR_ZDPS
             public Vector4 ClearColor;
             public uint SyncInterval;
             public int DesiredRenderFPS;
+            public bool LimitFPS;
             public DateTime LastRenderTime;
 
             public void Init()
@@ -32,6 +34,7 @@ namespace BPSR_ZDPS
                     ClearColor = new Vector4(0, 0, 0, 0);
                     SyncInterval = 1;
                     DesiredRenderFPS = -1;
+                    LimitFPS = false;
                     LastRenderTime = DateTime.Now;
                 }
             }
@@ -185,15 +188,31 @@ namespace BPSR_ZDPS
         private static unsafe void RendererRenderWindow(ImGuiViewportPtr viewport, nint v)
         {
             var rdata = (ViewportRendererData*)viewport.RendererUserData;
+            var fpsMs = 1000 / rdata->DesiredRenderFPS;
 
             if (rdata != null &&
-                rdata->DesiredRenderFPS == -1 || rdata->LastRenderTime + TimeSpan.FromMilliseconds(1000 / rdata->DesiredRenderFPS) < DateTime.Now)
+                rdata->DesiredRenderFPS == -1 || rdata->LastRenderTime + TimeSpan.FromMilliseconds(fpsMs) < DateTime.Now)
             {
+                var start = Stopwatch.GetTimestamp();
+
                 Program.manager.DeviceContext.Handle->OMSetRenderTargets(1, &rdata->RTV, null);
                 Program.manager.DeviceContext.Handle->ClearRenderTargetView(rdata->RTV, (float*)&rdata->ClearColor);
 
                 ImGuiImplD3D11.RenderDrawData(viewport.DrawData);
-                rdata->LastRenderTime = DateTime.Now; // DateTime might not be the most accurate but should be good enough for this
+
+                var end = Stopwatch.GetTimestamp();
+
+                double elapsedMs = (end - start) * 1000.0 / Stopwatch.Frequency;
+                rdata->LastRenderTime = DateTime.Now;
+
+                if (rdata->LimitFPS)
+                {
+                    int sleep = (int)(fpsMs - elapsedMs);
+                    if (sleep > 0)
+                    {
+                        Thread.Sleep(sleep);
+                    }
+                }
             }
         }
 

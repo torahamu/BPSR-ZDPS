@@ -389,6 +389,16 @@ namespace BPSR_ZDPS
             }
         }
 
+        public static void SetWindowLimitFPS(bool limitFps, ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            if (rdata != null)
+            {
+                rdata->LimitFPS = limitFps;
+            }
+        }
+
         public static ViewportRendererData* GetViewportRenderData(ImGuiViewportPtr? viewport = null)
         {
             viewport = viewport ?? ImGui.GetWindowViewport();
