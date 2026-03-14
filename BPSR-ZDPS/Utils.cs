@@ -369,6 +369,43 @@ namespace BPSR_ZDPS
             }
         }
 
+        public static void SetWindowDesiredRenderFPS(int fps, ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            if (rdata != null)
+            {
+                rdata->DesiredRenderFPS = fps;
+            }
+        }
+
+        public static void SetWindowSyncInterval(uint syncInterval, ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            if (rdata != null)
+            {
+                rdata->SyncInterval = syncInterval;
+            }
+        }
+
+        public static ViewportRendererData* GetViewportRenderData(ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            return rdata;
+        }
+
+        public static void SetViewportRenderData(Func<ViewportRendererData, ViewportRendererData> func, ImGuiViewportPtr? viewport = null)
+        {
+            viewport = viewport ?? ImGui.GetWindowViewport();
+            var rdata = (ViewportRendererData*)viewport.Value.RendererUserData;
+            if (rdata != null)
+            {
+                *rdata = func(*rdata);
+            }
+        }
+
         public static unsafe void SetCurrentWindowIcon()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();

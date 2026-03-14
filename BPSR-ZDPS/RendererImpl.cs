@@ -18,6 +18,23 @@ namespace BPSR_ZDPS
             public unsafe ID3D11RenderTargetView* RTV;
             public unsafe IDCompositionTarget* CompositionTarget;
             public Vector4 ClearColor;
+            public uint SyncInterval;
+            public int DesiredRenderFPS;
+            public DateTime LastRenderTime;
+
+            public void Init()
+            {
+                unsafe
+                {
+                    SwapChain = null;
+                    RTV = null;
+                    CompositionTarget = null;
+                    ClearColor = new Vector4(0, 0, 0, 0);
+                    SyncInterval = 1;
+                    DesiredRenderFPS = -1;
+                    LastRenderTime = DateTime.Now;
+                }
+            }
         }
 
         private unsafe static void* OldRendererCreateWindow;
@@ -48,7 +65,7 @@ namespace BPSR_ZDPS
         private unsafe static void OnCreateWindow(ImGuiViewportPtr viewport)
         {
             var rdata = (ViewportRendererData*)NativeMemory.Alloc((nuint)sizeof(ViewportRendererData));
-            rdata->ClearColor = new Vector4(0, 0, 0, 0);
+            rdata->Init();
 
             SwapChainDesc1 desc = new()
             {
@@ -169,12 +186,14 @@ namespace BPSR_ZDPS
         {
             var rdata = (ViewportRendererData*)viewport.RendererUserData;
 
-            if (rdata != null)
+            if (rdata != null &&
+                rdata->DesiredRenderFPS == -1 || rdata->LastRenderTime + TimeSpan.FromMilliseconds(1000 / rdata->DesiredRenderFPS) < DateTime.Now)
             {
                 Program.manager.DeviceContext.Handle->OMSetRenderTargets(1, &rdata->RTV, null);
                 Program.manager.DeviceContext.Handle->ClearRenderTargetView(rdata->RTV, (float*)&rdata->ClearColor);
 
                 ImGuiImplD3D11.RenderDrawData(viewport.DrawData);
+                rdata->LastRenderTime = DateTime.Now; // DateTime might not be the most accurate but should be good enough for this
             }
         }
 
@@ -184,7 +203,7 @@ namespace BPSR_ZDPS
             var rdata = (ViewportRendererData*)viewport.RendererUserData;
             if (rdata != null)
             {
-                rdata->SwapChain.Present(1, 0);
+                rdata->SwapChain.Present(rdata->SyncInterval, 0);
             }
         }
     }
