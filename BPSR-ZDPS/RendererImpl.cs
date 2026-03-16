@@ -128,6 +128,12 @@ namespace BPSR_ZDPS
         private unsafe static void OnDestroyWindow(ImGuiViewportPtr viewport)
         {
             var rdata = (ViewportRendererData*)viewport.RendererUserData;
+
+            if (rdata == null)
+            {
+                return;
+            }
+
             rdata->RTV->Release();
             rdata->RTV = null;
             rdata->SwapChain.Dispose();
