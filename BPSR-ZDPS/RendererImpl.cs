@@ -228,7 +228,10 @@ namespace BPSR_ZDPS
                 double elapsedMs = (end - start) * 1000.0 / Stopwatch.Frequency;
                 rdata->LastRenderTime = DateTime.Now;
 
-                if (EnableGDIBackBufferCopyCompatibility && (rdata->FrameCount++ == rdata->CopyToGDIEveryNthFrame))
+                if (EnableGDIBackBufferCopyCompatibility &&
+                    rdata->CopyToGDIEveryNthFrame != -1 &&
+                    (viewport.Flags & ImGuiViewportFlags.NoTaskBarIcon) == 0 &&
+                    (rdata->FrameCount++ == rdata->CopyToGDIEveryNthFrame))
                 {
                     CopyBackBufferToGDI(viewport, rdata);
                     rdata->FrameCount = 0;
