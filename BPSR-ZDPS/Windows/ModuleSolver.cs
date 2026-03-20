@@ -473,6 +473,11 @@ namespace BPSR_ZDPS
                                     var mods = modsResult.ModuleSet.Mods;
                                     for (int i1 = 0; i1 < mods.Length; i1++)
                                     {
+                                        if (mods[i1] == -1)
+                                        {
+                                            break;
+                                        }
+
                                         var modId = FilteredModules[mods[i1]];
                                         var modItem = ResultsPlayerModData.ModulesPackage.Items[modId];
                                         DrawModule(ResultsPlayerModData, modId, modItem, isCtrlPressed);
