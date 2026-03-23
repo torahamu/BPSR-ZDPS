@@ -12,6 +12,7 @@ namespace BPSR_ZDPS.Managers
         public static ConcurrentDictionary<long, ChatMessage> Messages = [];
         public static ConcurrentDictionary<long, User> Senders = [];
         public static List<ChatTab> ChatTabs = [];
+        private static long SessionMsgIdSrc = 0;
 
         public static event Action<User, ChatMessage, NotifyNewestChitChatMsgs> OnChatMessage;
 
@@ -33,6 +34,9 @@ namespace BPSR_ZDPS.Managers
             var msg = NotifyNewestChitChatMsgs.Parser.ParseFrom(span);
             if (msg != null)
             {
+                // Override with a session global id as the games ids are only unique to a channel and session
+                msg.VRequest.ChatMsg.MsgId = SessionMsgIdSrc++;
+
                 var chatMsg = new ChatMessage(msg.VRequest.ChatMsg.MsgInfo, msg.VRequest.ChannelType, msg.VRequest.ChatMsg.SendCharInfo.CharId, msg.VRequest.ChatMsg.Timestamp);
                 User chatUser;
 
@@ -155,6 +159,11 @@ namespace BPSR_ZDPS.Managers
 
                 if (!isTextMsg)
                 {
+                    if (msg.Msg.MsgType == ChitChatMsgType.ChatMsgPictureEmoji && Settings.Instance.WindowSettings.ChatWindow.HideStickers)
+                    {
+                        return false;
+                    }
+
                     return isFromChannel && isOverLevel;
                 }
 

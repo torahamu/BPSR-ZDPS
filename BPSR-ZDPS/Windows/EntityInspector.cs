@@ -15,6 +15,8 @@ namespace BPSR_ZDPS.Windows
     public class EntityInspector
     {
         public const string LAYER = "EntityInspectorLayer";
+        public static string TITLE_ID = "###EntityInspectorWindow";
+        public static string TITLE = "Entity Inspector";
 
         // This entity will only be valid within the context of the current Encounter
         // TODO: Pull from a global entity storage instead of per-encounter or
@@ -29,10 +31,16 @@ namespace BPSR_ZDPS.Windows
         private int LoadedFromEncounterIdx = -1;
 
         static int RunOnceDelayed = 0;
+        bool HasInitBindings = false;
+        static Vector2 MenuBarSize;
+        static int LastPinnedOpacity = 100;
+        public bool IsPinned = false;
 
         public ETableFilterMode TableFilterMode = ETableFilterMode.SkillsDamage;
 
         static string AttributeFilter = "";
+
+        static List<long> ShowAllInstancesSkillIds = new();
 
         // Graph storage variables
         static bool HasLoadedGraphsData = false;
@@ -41,6 +49,7 @@ namespace BPSR_ZDPS.Windows
         static List<double> SkillSnapshotsDamageCumulative = new();
         static string[] SkillSnapshotsNames = [];
         static float[] SkillSnapshotsHits = [];
+        static Dictionary<string, ScatterPlotSkillMap> SkillScatterMap = new();
 
         public enum ETableFilterMode : int
         {
@@ -51,6 +60,7 @@ namespace BPSR_ZDPS.Windows
             Attributes,
             Buffs,
             Graphs,
+            SkillBook,
             Debug
         }
 
@@ -60,6 +70,7 @@ namespace BPSR_ZDPS.Windows
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
             //ImGui.OpenPopup("###EntityInspectorWindow");
             IsOpened = true;
+            IsPinned = false;
             ImGui.PopID();
         }
 
@@ -75,9 +86,13 @@ namespace BPSR_ZDPS.Windows
                 return;
             }
 
+            var windowSettings = Settings.Instance.WindowSettings.EntityInspector;
+
             var main_viewport = ImGui.GetMainViewport();
             //ImGui.SetNextWindowPos(new Vector2(main_viewport.WorkPos.X + 200, main_viewport.WorkPos.Y + 120), ImGuiCond.FirstUseEver);
-            ImGui.SetNextWindowSize(new Vector2(880, 600), ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowSize(new Vector2(900, 600), ImGuiCond.FirstUseEver);
+
+            ImGui.SetNextWindowSizeConstraints(new Vector2(400, 150), new Vector2(ImGui.GETFLTMAX()));
 
             ImGuiP.PushOverrideID(ImGuiP.ImHashStr(LAYER));
 
@@ -85,8 +100,11 @@ namespace BPSR_ZDPS.Windows
             {
                 if (EncounterManager.Current.Entities.TryGetValue(LoadedEntity.UUID, out var foundEntity))
                 {
-                    LoadEntity(foundEntity, EncounterManager.Current.StartTime);
-                    //LoadedFromEncounterIdx = EncounterManager.Encounters.Count - 1;
+                    if (LoadedEncounterStartTime != EncounterManager.Current.StartTime)
+                    {
+                        LoadEntity(foundEntity, EncounterManager.Current.StartTime);
+                        //LoadedFromEncounterIdx = EncounterManager.Encounters.Count - 1;
+                    }
                 }
             }
 
@@ -100,7 +118,13 @@ namespace BPSR_ZDPS.Windows
                 entityName = $"[{LoadedEntity.UID}]";
             }
 
-            if (ImGui.Begin($"ダメージ詳細 - {entityName}###EntityInspectorWindow", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking))
+            ImGuiWindowFlags exWindowFlags = ImGuiWindowFlags.None;
+            if (AppState.MousePassthrough && windowSettings.TopMost)
+            {
+                exWindowFlags |= ImGuiWindowFlags.NoInputs;
+            }
+
+            if (ImGui.Begin($"{TITLE} - {entityName}{TITLE_ID}", ref IsOpened, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoTitleBar | exWindowFlags))
             {
                 if (RunOnceDelayed == 0)
                 {
@@ -111,7 +135,25 @@ namespace BPSR_ZDPS.Windows
                     RunOnceDelayed++;
                     Utils.SetCurrentWindowIcon();
                     Utils.BringWindowToFront();
+
+                    if (windowSettings.TopMost && !IsPinned)
+                    {
+                        IsPinned = true;
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                    }
                 }
+                else if (RunOnceDelayed >= 2)
+                {
+                    if (windowSettings.TopMost && LastPinnedOpacity != windowSettings.Opacity)
+                    {
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                    }
+                }
+
+                DrawMenuBar();
 
                 if (ImGui.BeginTable("##EntityProperties", 2, ImGuiTableFlags.None))
                 {
@@ -172,8 +214,32 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableSetupColumn("##RightSide", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.DefaultHide | ImGuiTableColumnFlags.NoResize, 1f, 1);
 
                         ImGui.TableNextColumn();
-                        ImGui.TextUnformatted($"HP: {LoadedEntity.GetAttrKV("AttrHp") ?? "0"}");
-                        ImGui.TextUnformatted($"最大HP: {LoadedEntity.GetAttrKV("AttrMaxHp") ?? "0"}");
+
+                        var hp = LoadedEntity.Hp;
+                        if (hp == 0)
+                        {
+                            hp = LoadedEntity.GetAttrKV("AttrHp") as int? ?? 0;
+                        }
+                        var maxHp = LoadedEntity.MaxHp;
+                        if (maxHp == 0)
+                        {
+                            maxHp = LoadedEntity.GetAttrKV("AttrMaxHp") as int? ?? 0;
+                        }
+                        float hpPct = 0;
+                        if (hp >= 0 && hp <= maxHp)
+                        {
+                            if (maxHp == 0)
+                            {
+                                hpPct = 0;
+                            }
+                            else
+                            {
+                                hpPct = MathF.Round((float)hp / (float)maxHp, 2) * 100.0f;
+                            }
+                        }
+                        ImGui.TextUnformatted($"HP: {hp:N0} ({hpPct}%)");
+                        
+                        ImGui.TextUnformatted($"最大HP: {maxHp:N0}");
                         string MainStat = Professions.GetBaseProfessionMainStatName(LoadedEntity.ProfessionId);
                         if (MainStat == "Strength" || MainStat == "")
                         {
@@ -264,7 +330,7 @@ namespace BPSR_ZDPS.Windows
                         {
                             VersatilityPctValue = Math.Round((int)VersatilityPct / 100.0, 2);
                         }
-                        ImGui.TextUnformatted($"万能: {VersatilityPctValue} ({VersatilityValue})");
+                        ImGui.TextUnformatted($"万能: {VersatilityPctValue}% ({VersatilityValue})");
 
                         var BlockPct = LoadedEntity.GetAttrKV("AttrBlockPct");
                         double BlockPctValue = 0.0;
@@ -326,8 +392,8 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableNextColumn();
                         ImGui.TextUnformatted($"{valueTotalLabel} {Utils.NumberToShorthand(combatStats.ValueTotal)}");
                         ImGui.SetItemTooltip($"{combatStats.ValueTotal:N0}");
-                        ImGui.TextUnformatted($"{valueTotalPerSecondLabel} {Utils.NumberToShorthand(combatStats.ValuePerSecond)}");
-                        ImGui.SetItemTooltip($"{combatStats.ValuePerSecond:N0}");
+                        ImGui.TextUnformatted($"{valueTotalPerSecondLabel} {Utils.NumberToShorthand(combatStats.ValuePerSecondActive)} ({Utils.NumberToShorthand(combatStats.ValuePerSecond)})");
+                        ImGui.SetItemTooltip($"{combatStats.ValuePerSecondActive:N0} ({combatStats.ValuePerSecond:N0})");
                         if (TableFilterMode == ETableFilterMode.SkillsDamage)
                         {
                             ImGui.TextUnformatted($"{valueExtraTotalLabel} {Utils.NumberToShorthand(LoadedEntity.TotalShieldBreak)}");
@@ -390,7 +456,7 @@ namespace BPSR_ZDPS.Windows
 
                 ImGui.Separator();
 
-                string[] FilterButtons = { "ダメージ", "回復", "被ダメ", "被ダメ（相手別）", "属性", "バフ", "グラフ", "デバッグ" };
+                string[] FilterButtons = { "ダメージ", "回復", "被ダメ", "被ダメ（相手別）", "属性", "バフ", "グラフ", "Skill Book", "デバッグ" };
 
                 for (int filerBtnIdx = 0; filerBtnIdx < FilterButtons.Length; filerBtnIdx++)
                 {
@@ -425,18 +491,18 @@ namespace BPSR_ZDPS.Windows
                 {
                     ImGui.PushStyleVar(ImGuiStyleVar.CellPadding, new Vector2(8f, ImGui.GetStyle().CellPadding.Y));
 
-                    int columnCount = 8;
+                    int columnCount = 9;
                     if (TableFilterMode == ETableFilterMode.SkillsDamage)
                     {
-                        columnCount = 8;
+                        columnCount = 9;
                     }
                     else if (TableFilterMode == ETableFilterMode.SkillsHealing)
                     {
-                        columnCount = 8;
+                        columnCount = 9;
                     }
                     else if (TableFilterMode == ETableFilterMode.SkillsTaken)
                     {
-                        columnCount = 9;
+                        columnCount = 10;
                     }
 
                     if (ImGui.BeginTable("##SkillStatsTable", columnCount, ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingFixedFit))
@@ -480,7 +546,8 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableSetupColumn("ID");
                         ImGui.TableSetupColumn("スキル名", ImGuiTableColumnFlags.WidthStretch, 100f);
                         ImGui.TableSetupColumn(valueTotalColumnName);
-                        ImGui.TableSetupColumn(valuePerSecondColumnName);
+                        ImGui.TableSetupColumn($"a{valuePerSecondColumnName}");
+                        ImGui.TableSetupColumn($"e{valuePerSecondColumnName}");
                         ImGui.TableSetupColumn("ヒット数");
                         ImGui.TableSetupColumn("クリ率");
                         ImGui.TableSetupColumn("平均/Hit");
@@ -504,6 +571,30 @@ namespace BPSR_ZDPS.Windows
                             {
 
                             }
+                            if (ImGui.BeginPopupContextItem())
+                            {
+                                if (ImGui.MenuItem("Copy Skill ID"))
+                                {
+                                    ImGui.SetClipboardText(skillId.ToString());
+                                }
+                                if (ImGui.MenuItem("Copy Skill Name"))
+                                {
+                                    ImGui.SetClipboardText(stat.Value.Name);
+                                }
+                                if (ImGui.MenuItem("Show All Instances"))
+                                {
+                                    if (ShowAllInstancesSkillIds.Contains(skillId))
+                                    {
+                                        ShowAllInstancesSkillIds.Remove(skillId);
+                                    }
+                                    else
+                                    {
+                                        ShowAllInstancesSkillIds.Add(skillId);
+                                    }
+                                }
+                                ImGui.SetItemTooltip("Note: Skills with more than 1,000 Hits may cause lag if you show all instances");
+                                ImGui.EndPopup();
+                            }
 
                             ImGui.TableNextColumn();
                             string displayName = "";
@@ -519,7 +610,12 @@ namespace BPSR_ZDPS.Windows
 
                                     if (!string.IsNullOrEmpty(skillIconName))
                                     {
-                                        var tex = ImageArchive.LoadImage(Path.Combine("Skills", skillIconName));
+                                        string baseDir = "Skills";
+                                        if (skill.IsImagineSlot())
+                                        {
+                                            baseDir = "Skills_Imagines";
+                                        }
+                                        var tex = ImageArchive.LoadImage(Path.Combine(baseDir, skillIconName));
                                         var itemRectSize = ImGui.GetItemRectSize().Y;
                                         float texSize = itemRectSize;
                                         if (tex != null)
@@ -559,6 +655,7 @@ namespace BPSR_ZDPS.Windows
                             ulong immuneDamageTotal = stat.Value.ValueImmuneTotal;
                             if (ImGui.IsItemHovered() && ImGui.BeginTooltip())
                             {
+                                ImGui.TextUnformatted($"{stat.Value.ValueTotal:N0}");
                                 ImGui.TextUnformatted($"種類: {stat.Value.DamageMode}\n属性: {Utils.DamagePropertyToString(stat.Value.DamageElement)}");
                                 if (shieldBreakTotal > 0)
                                 {
@@ -572,7 +669,12 @@ namespace BPSR_ZDPS.Windows
                             }
 
                             ImGui.TableNextColumn();
+                            ImGui.TextUnformatted($"{Utils.NumberToShorthand(stat.Value.ValuePerSecondActive)}");
+                            ImGui.SetItemTooltip($"Active DPS: {stat.Value.ValuePerSecondActive:N0}");
+
+                            ImGui.TableNextColumn();
                             ImGui.TextUnformatted($"{Utils.NumberToShorthand(stat.Value.ValuePerSecond)}");
+                            ImGui.SetItemTooltip($"Encounter DPS: {stat.Value.ValuePerSecond:N0}");
 
                             ImGui.TableNextColumn();
                             ImGui.TextUnformatted($"{stat.Value.HitsCount}");
@@ -630,6 +732,81 @@ namespace BPSR_ZDPS.Windows
                             {
                                 ImGui.TableNextColumn();
                                 ImGui.TextUnformatted($"{stat.Value.KillCount}");
+                            }
+
+                            if (ShowAllInstancesSkillIds.Contains(skillId))
+                            {
+                                var startTime = LoadedEncounterStartTime?.ToUniversalTime() ?? LoadedEntity.DamageStats.StartTime;
+
+                                int snapshotIdx = 0;
+                                foreach (var snapshot in stat.Value.SkillSnapshots.AsValueEnumerable())
+                                {
+                                    ImGui.TableNextRow();
+                                    ImGui.TableNextColumn(); // ID Column
+
+                                    ImGui.TableNextColumn(); // Name Column
+                                    if (snapshot.IsKill)
+                                    {
+                                        ImGui.PushStyleColor(ImGuiCol.Text, Colors.LightRed);
+                                    }
+                                    ImGui.TextUnformatted(snapshot.Timestamp.Value.Subtract(startTime.Value).ToString());
+                                    if (TableFilterMode == ETableFilterMode.SkillsTaken)
+                                    {
+                                        if (ImGui.IsItemHovered() && ImGui.BeginItemTooltip())
+                                        {
+                                            if (EntityCache.Instance.Cache.Lines.TryGetValue(snapshot.OtherUUID, out var cachedOther))
+                                            {
+                                                if (!string.IsNullOrEmpty(cachedOther.Name))
+                                                {
+                                                    ImGui.TextUnformatted($"{cachedOther.Name}");
+                                                }
+                                            }
+                                            ImGui.EndTooltip();
+                                        }
+                                    }
+
+                                    ImGui.TableNextColumn();
+                                    ImGui.TextUnformatted(Utils.NumberToShorthand(snapshot.Value));
+
+                                    ImGui.TableNextColumn(); // PerSecondActive Column
+
+                                    ImGui.TableNextColumn(); // PerSecond Column
+
+                                    ImGui.TableNextColumn();
+                                    ImGui.TextUnformatted($"Hit: {snapshotIdx + 1}");
+
+                                    ImGui.TableNextColumn();
+                                    ImGui.TextUnformatted($"Crit: {snapshot.IsCrit}");
+
+                                    ImGui.TableNextColumn(); // AVG Column
+
+                                    ImGui.TableNextColumn(); // Total Column
+                                    if (TableFilterMode == ETableFilterMode.SkillsDamage)
+                                    {
+                                        if (snapshot.IsKill)
+                                        {
+                                            ImGui.TextUnformatted($"Kill");
+                                        }
+                                    }
+
+                                    if (TableFilterMode == ETableFilterMode.SkillsTaken)
+                                    {
+                                        ImGui.TableNextColumn();
+                                        if (snapshot.IsKill)
+                                        {
+                                            ImGui.TextUnformatted($"Death");
+                                        }
+                                    }
+
+                                    if (snapshot.IsKill)
+                                    {
+                                        ImGui.PopStyleColor();
+                                    }
+
+                                    snapshotIdx++;
+                                }
+                                // Force down to the next row just in case we missed a column
+                                ImGui.TableNextRow();
                             }
                         }
 
@@ -711,7 +888,12 @@ namespace BPSR_ZDPS.Windows
                             ImGui.TextUnformatted($"{Utils.NumberToShorthand(entity.Value.Taken.TotalValue)} ({totalDmgContribution}%)");
 
                             ImGui.TableNextColumn();
-                            ImGui.TextUnformatted($"{Utils.NumberToShorthand(entity.Value.Taken.TotalValue / duration.Value.TotalSeconds)}");
+                            double perSecond = entity.Value.Taken.TotalValue / duration.Value.TotalSeconds;
+                            if (perSecond < 1.0f)
+                            {
+                                perSecond = 0;
+                            }
+                            ImGui.TextUnformatted($"{Utils.NumberToShorthand(perSecond)}");
 
                             ImGui.TableNextColumn();
                             ImGui.TextUnformatted($"{Utils.NumberToShorthand(entity.Value.Taken.HitCount)}");
@@ -884,15 +1066,47 @@ namespace BPSR_ZDPS.Windows
                                 {
 
                                 }
+                                if (ImGui.BeginPopupContextItem())
+                                {
+                                    if (ImGui.MenuItem("Copy Buff Id"))
+                                    {
+                                        ImGui.SetClipboardText(buffEvent.BaseId.ToString());
+                                    }
+                                    if (ImGui.MenuItem("Copy Buff Name"))
+                                    {
+                                        ImGui.SetClipboardText(buffEvent.Name);
+                                    }
+                                    if (ImGui.MenuItem("Copy Buff Description"))
+                                    {
+                                        ImGui.SetClipboardText(buffEvent.Description);
+                                    }
+                                    if (ImGui.MenuItem("Copy Skill Id"))
+                                    {
+                                        ImGui.SetClipboardText(buffEvent.SourceConfigId.ToString());
+                                    }
+                                    ImGui.EndPopup();
+                                }
 
                                 if (buffTypeColor > -1)
                                 {
                                     ImGui.PopStyleColor();
                                 }
 
-                                if (!string.IsNullOrEmpty(buffEvent.Description))
+                                if (ImGui.BeginItemTooltip())
                                 {
-                                    ImGui.SetItemTooltip($"バフID: {buffEvent.BaseId}\n{buffEvent.Description.Replace("%", "%%")}{extraTooltip}");
+                                    if (string.IsNullOrEmpty(buffEvent.Description))
+                                    {
+                                        if (HelperMethods.DataTables.Buffs.Data.TryGetValue(buffEvent.BaseId.ToString(), out var buffTableData))
+                                        {
+                                            buffEvent.SetDescription(buffTableData.Desc);
+                                        }
+                                        else
+                                        {
+                                            buffEvent.SetDescription("");
+                                        }
+                                    }
+                                    ImGui.TextUnformatted($"Buff Id: {buffEvent.BaseId}\n{buffEvent.Description}{extraTooltip}");
+                                    ImGui.EndTooltip();
                                 }
 
                                 ImGui.TableNextColumn();
@@ -981,7 +1195,7 @@ namespace BPSR_ZDPS.Windows
                         // TODO: Give option to clamp StartTime to when the entity performed first attack (LoadedEntity.DamageStats.StartTime)
                         var startTime = LoadedEncounterStartTime?.ToUniversalTime() ?? LoadedEntity.DamageStats.StartTime;
 
-                        if (HasLoadedGraphsData && LoadedEntity.DamageStats.SkillSnapshots.Count != SkillSnapshotsDamage.Length)
+                        if (HasLoadedGraphsData && LoadedEntity.DamageStats.SkillSnapshots.Count != SkillSnapshotsDamage.Length - 1)
                         {
                             // We're likely watching an entity live so we need to keep updating their data live
                             // Currently it's going to be a very rough and poor performance mess but at least it's only executed on this one tab
@@ -1009,8 +1223,48 @@ namespace BPSR_ZDPS.Windows
                                 lastAdded = lastAdded + value;
                             }
 
-                            SkillSnapshotsNames = LoadedEntity.SkillMetrics.AsValueEnumerable().Select(x => x.Value.Damage.Name ?? "").ToArray();
-                            SkillSnapshotsHits = LoadedEntity.SkillMetrics.AsValueEnumerable().Select(x => (float)x.Value.Damage.HitsCount).ToArray();
+                            SkillSnapshotsNames = LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Damage.HitsCount > 0).Select(x => x.Value.Damage.Name ?? "").ToArray();
+                            SkillSnapshotsHits = LoadedEntity.SkillMetrics.AsValueEnumerable().Where(x => x.Value.Damage.HitsCount > 0).Select(x => (float)x.Value.Damage.HitsCount).ToArray();
+
+                            // Build Skill Hit scatter data (very expensive)
+                            var tempScatterMap = new ScatterPlotSkillMap();
+                            tempScatterMap.Time.Add(0);
+                            tempScatterMap.SkillIdentifier.Add(0);
+                            SkillScatterMap[""] = tempScatterMap;
+                            foreach (var item in LoadedEntity.DamageStats.SkillSnapshots)
+                            {
+                                string skillName = "";
+                                if (LoadedEntity.SkillMetrics.TryGetValue(item.Id, out var skillMetric))
+                                {
+                                    skillName = skillMetric.Damage.Name;
+                                }
+
+                                if (!string.IsNullOrEmpty(skillName))
+                                {
+                                    skillName += $" [{item.Id}]";
+                                }
+                                else
+                                {
+                                    skillName = $"[{item.Id}]";
+                                }
+
+                                double skillMapIdx = 0;
+                                if (!SkillScatterMap.TryGetValue(skillName, out var map))
+                                {
+                                    map = new();
+                                    //map.Time.Add(0);
+                                    //map.SkillIdentifier.Add(SkillScatterMap.Count);
+                                    skillMapIdx = SkillScatterMap.Count;
+                                }
+                                else
+                                {
+                                    skillMapIdx = map.SkillIdentifier.First();
+                                }
+                                map.Time.Add(item.Timestamp.Value.Subtract(startTime.Value).TotalSeconds);
+                                map.SkillIdentifier.Add(skillMapIdx);
+
+                                SkillScatterMap[skillName] = map;
+                            }
                         }
 
                         if (ImPlot.BeginPlot("累計ダメージ推移"))
@@ -1067,6 +1321,113 @@ namespace BPSR_ZDPS.Windows
                             ImPlot.PlotPieChart(SkillSnapshotsNames, ref SkillSnapshotsHits[0], SkillSnapshotsNames.Length, 0, 0, 1, ImPlotPieChartFlags.IgnoreHidden);
                             ImPlot.EndPlot();
                         }
+
+                        if (ImPlot.BeginPlot("Damage Skills Timeline", new Vector2(-1, 520), ImPlotFlags.None))
+                        {
+                            ImPlot.SetupAxes("Time (Encounter Duration In Seconds)", "Casts", ImPlotAxisFlags.AutoFit, ImPlotAxisFlags.AutoFit | ImPlotAxisFlags.NoTickLabels);
+
+                            foreach (var item in SkillScatterMap)
+                            {
+                                ImPlot.PlotScatter(item.Key, ref item.Value.TimeArray[0], ref item.Value.SkillIdentifierArray[0], item.Value.Time.Count);
+                            }
+
+                            ImPlot.EndPlot();
+                        }
+                    }
+                }
+                else if (TableFilterMode == ETableFilterMode.SkillBook)
+                {
+                    var skillLevelIdList = LoadedEntity.GetAttrKV("AttrSkillLevelIdList");
+                    if (skillLevelIdList != null)
+                    {
+                        if (skillLevelIdList is Newtonsoft.Json.Linq.JArray)
+                        {
+                            // This is a Historical Entity, need to restore the original object type
+                            skillLevelIdList = ((Newtonsoft.Json.Linq.JArray)skillLevelIdList).ToObject<List<DataTypes.Skills.SkillLevelInfo>>();
+                            LoadedEntity.SetAttrKV("AttrSkillLevelIdList", skillLevelIdList);
+                        }
+
+                        if (skillLevelIdList is List<DataTypes.Skills.SkillLevelInfo>)
+                        {
+                            var list = (List<DataTypes.Skills.SkillLevelInfo>)skillLevelIdList;
+
+                            ImGui.PushStyleVar(ImGuiStyleVar.CellPadding, new Vector2(8f, ImGui.GetStyle().CellPadding.Y));
+
+                            if (ImGui.BeginTable("##SkillStatsTable", 4, ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingFixedFit))
+                            {
+                                ImGui.TableSetupColumn("ID");
+                                ImGui.TableSetupColumn("Skill Name", ImGuiTableColumnFlags.WidthStretch, 100f);
+                                ImGui.TableSetupColumn("Level");
+                                ImGui.TableSetupColumn("Tier");
+
+                                ImGui.TableHeadersRow();
+
+                                foreach (var item in list)
+                                {
+                                    ImGui.TableNextColumn();
+                                    ImGui.Selectable($"{item.SkillId}", true, ImGuiSelectableFlags.SpanAllColumns);
+                                    if (ImGui.BeginPopupContextItem())
+                                    {
+                                        if (ImGui.MenuItem("Copy Skill ID"))
+                                        {
+                                            ImGui.SetClipboardText(item.SkillId.ToString());
+                                        }
+                                        if (ImGui.MenuItem("Copy Skill Name"))
+                                        {
+                                            ImGui.SetClipboardText(item.Name);
+                                        }
+                                        ImGui.EndPopup();
+                                    }
+
+                                    ImGui.TableNextColumn();
+                                    if (Settings.Instance.ShowSkillIconsInDetails)
+                                    {
+                                        var skillIconName = item.GetIconName();
+
+                                        var itemRectSize = ImGui.GetItemRectSize().Y;
+                                        float texSize = itemRectSize;
+
+                                        if (!string.IsNullOrEmpty(skillIconName))
+                                        {
+                                            string baseDir = "Skills";
+                                            if (item.IsImagineSlot())
+                                            {
+                                                baseDir = "Skills_Imagines";
+                                            }
+
+                                            var tex = ImageArchive.LoadImage(Path.Combine(baseDir, skillIconName));
+
+                                            if (tex != null)
+                                            {
+                                                ImGui.Image((ImTextureRef)tex, new Vector2(texSize, texSize));
+                                                ImGui.SameLine();
+                                            }
+                                            else
+                                            {
+                                                ImGui.Dummy(new Vector2(0, texSize));
+                                                ImGui.SameLine();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ImGui.Dummy(new Vector2(0, texSize));
+                                            ImGui.SameLine();
+                                        }
+                                    }
+                                    ImGui.TextUnformatted($"{item.Name}");
+
+                                    ImGui.TableNextColumn();
+                                    ImGui.TextUnformatted($"{item.CurrentLevel}");
+
+                                    ImGui.TableNextColumn();
+                                    ImGui.TextUnformatted($"{item.Tier}");
+                                }
+
+                                ImGui.EndTable();
+                            }
+
+                            ImGui.PopStyleVar();
+                        }
                     }
                 }
                 else if (TableFilterMode == ETableFilterMode.Debug)
@@ -1080,6 +1441,66 @@ namespace BPSR_ZDPS.Windows
             ImGui.PopID();
         }
 
+        static float MenuBarButtonWidth = 0.0f;
+        public void DrawMenuBar()
+        {
+            if (ImGui.BeginMenuBar())
+            {
+                var windowSettings = Settings.Instance.WindowSettings.EntityInspector;
+
+                MenuBarSize = ImGui.GetWindowSize();
+
+                string entityName = "";
+                if (!string.IsNullOrEmpty(LoadedEntity.Name))
+                {
+                    entityName = $"{LoadedEntity.Name} [{LoadedEntity.UID}]";
+                }
+                else
+                {
+                    entityName = $"[{LoadedEntity.UID}]";
+                }
+
+                ImGui.Text($"{TITLE} - {entityName}");
+
+                ImGui.SetCursorPosX(MenuBarSize.X - (MenuBarButtonWidth * 2));
+                ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, AppState.MousePassthrough ? 0.0f : 1.0f, AppState.MousePassthrough ? 0.0f : 1.0f, windowSettings.TopMost ? 1.0f : 0.5f));
+                if (ImGui.MenuItem($"{FASIcons.Thumbtack}##TopMostBtn"))
+                {
+                    if (!windowSettings.TopMost)
+                    {
+                        Utils.SetWindowTopmost();
+                        Utils.SetWindowOpacity(windowSettings.Opacity * 0.01f);
+                        LastPinnedOpacity = windowSettings.Opacity;
+                        windowSettings.TopMost = true;
+                        IsPinned = true;
+                    }
+                    else
+                    {
+                        Utils.UnsetWindowTopmost();
+                        Utils.SetWindowOpacity(1.0f);
+                        windowSettings.TopMost = false;
+                        IsPinned = false;
+                    }
+                }
+                ImGui.PopStyleColor();
+                ImGui.PopFont();
+                ImGui.SetItemTooltip("Pin Window As Top Most");
+
+                ImGui.SetCursorPosX(MenuBarSize.X - (MenuBarButtonWidth));
+                ImGui.PushFont(HelperMethods.Fonts["FASIcons"], ImGui.GetFontSize());
+                if (ImGui.MenuItem($"X##CloseBtn"))
+                {
+                    IsOpened = false;
+                }
+                ImGui.PopFont();
+
+                MenuBarButtonWidth = ImGui.GetItemRectSize().X;
+
+                ImGui.EndMenuBar();
+            }
+        }
+
         public void LoadEntity(Entity entity, DateTime encounterStartTime)
         {
             LoadedEntity = entity;
@@ -1091,6 +1512,22 @@ namespace BPSR_ZDPS.Windows
             SkillSnapshotsDamageCumulative = new();
             SkillSnapshotsNames = [];
             SkillSnapshotsHits = [];
+            SkillScatterMap.Clear();
+            ShowAllInstancesSkillIds = new();
         }
+    }
+
+    public class EntityInspectorWindowSettings : WindowSettingsBase
+    {
+
+    }
+
+    public class ScatterPlotSkillMap
+    {
+        public List<double> Time = new(); // X Axis
+        public List<double> SkillIdentifier = new(); // Y Axis (Index of Skill based on appearance order, used for deprojection mapping)
+
+        public Span<double> TimeArray => System.Runtime.InteropServices.CollectionsMarshal.AsSpan(Time);
+        public Span<double> SkillIdentifierArray => System.Runtime.InteropServices.CollectionsMarshal.AsSpan(SkillIdentifier);
     }
 }

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Serilog;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,7 @@ namespace BPSR_ZDPS
         public static long BenchmarkSingleTargetUUID { get; set; }
 
         public static bool IsEncounterSavingPaused { get; set; } = false;
+        public static bool WasEncounterSavingPaused { get; set; } = false; // For restoring Pause state after being in an Active Dungeon State
 
         public static bool MousePassthrough { get; set; } = false;
 
@@ -40,6 +42,9 @@ namespace BPSR_ZDPS
 
         public static long PartyTeamId = 0;
 
+        public static Encounter? ActiveEncounter = null;
+        public static Encounter? OpenedHistoricalEncounter = null;
+
         public static void LoadDataTables()
         {
             // Load table data for resolving with in the future
@@ -47,7 +52,7 @@ namespace BPSR_ZDPS
             if (File.Exists(appStringsFile))
             {
                 var appStrings = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(File.ReadAllText(appStringsFile));
-                AppStrings.Strings = appStrings;
+                AppStrings.Strings = appStrings.ToFrozenDictionary();
                 Log.Information("Loaded AppStrings.json");
             }
 
@@ -114,6 +119,15 @@ namespace BPSR_ZDPS
                     {
                         skill.Name = string.IsNullOrEmpty(item.Value.Name) ? skill.Name : item.Value.Name;
                         skill.Icon = string.IsNullOrEmpty(item.Value.Icon) ? skill.Icon : item.Value.Icon;
+                        if (item.Value.SkillLevelGroup > 0)
+                        {
+                            skill.SkillLevelGroup = item.Value.SkillLevelGroup;
+                        }
+                        if (item.Value.SlotPositionId != null && item.Value.SlotPositionId.Count > 0)
+                        {
+                            skill.SlotPositionId = new();
+                            skill.SlotPositionId.AddRange(item.Value.SlotPositionId);
+                        }
                     }
                     else
                     {
@@ -130,6 +144,15 @@ namespace BPSR_ZDPS
                             {
                                 skill.Id = newId;
                             }
+                        }
+                        if (item.Value.SkillLevelGroup > 0)
+                        {
+                            skill.SkillLevelGroup = item.Value.SkillLevelGroup;
+                        }
+                        if (item.Value.SlotPositionId != null && item.Value.SlotPositionId.Count > 0)
+                        {
+                            skill.SlotPositionId = new();
+                            skill.SlotPositionId.AddRange(item.Value.SlotPositionId);
                         }
                         HelperMethods.DataTables.Skills.Data.Add(item.Key, skill);
                     }

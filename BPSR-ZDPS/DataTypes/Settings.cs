@@ -26,14 +26,20 @@ public class Settings
     public bool UseAutomaticWipeDetection { get; set; } = true;
     public bool SkipTeleportStateCheckInAutomaticWipeDetection { get; set; } = false;
     public bool DisableWipeRecalculationOverwriting { get; set; } = false;
+    public bool UseLegacyWipeDetection { get; set; } = false;
     public bool SplitEncountersOnNewPhases { get; set; } = true;
+    public bool SkipSkillSnapshotSavingInOpenWorld { get; set; } = false;
     public bool DisplayTruePerSecondValuesInMeters { get; set; } = false;
     public bool AllowGamepadNavigationInputInZDPS { get; set; } = false;
     public bool KeepPastEncounterInMeterUntilNextDamage { get; set; } = false;
+    public bool ShowChannelLineNumberInStatus { get; set; } = false;
     public bool UseDatabaseForEncounterHistory { get; set; } = true;
     public int DatabaseRetentionPolicyDays { get; set; } = 0;
-    public bool LimitEncounterBuffTrackingWithoutDatabase { get; set; } = false;
+    public bool SkipSavingEncountersWithNoCombatData { get; set; } = false;
+    public bool LimitEncounterBuffTrackingInOpenWorld { get; set; } = false;
     public bool AllowEncounterSavingPausingInOpenWorld { get; set; } = false;
+    public bool PersistEncounterSavingPauseStateBetweenMaps { get; set; } = false;
+    public bool MinimalProcessingWhileEncounterSavingPaused { get; set; } = false;
 
     public bool MeterSettingsTankingShowDeaths { get; set; } = false;
     public bool MeterSettingsNpcTakenShowHpData { get; set; } = false;
@@ -78,6 +84,8 @@ public class Settings
 
     public uint HotkeysEncounterReset { get; set; }
     public uint HotkeysPinnedWindowClickthrough { get; set; }
+
+    public uint FixedFramerateScale { get; set; } = 1;
 
     public ChatSettings Chat { get; set; } = new();
 
@@ -130,6 +138,8 @@ public enum EGameCapturePreference
     Epic,
     HaoPlaySea,
     XDG,
+    HaoPlaySeaSteam,
+    XDGSteam,
     Custom = 200
 }
 
@@ -162,6 +172,7 @@ public class WindowSettingsBase : ICloneable
 public class WindowSettings : ICloneable
 {
     public MainWindowWindowSettings MainWindow { get; set; } = new();
+    public EntityInspectorWindowSettings EntityInspector { get; set; } = new();
     public RaidManagerCooldownsWindowSettings RaidManagerCooldowns { get; set; } = new();
     public EntityCacheViewerWindowSettings EntityCacheViewer { get; set; } = new();
     public SpawnTrackerWindowSettings SpawnTracker { get; set; } = new();
@@ -178,6 +189,7 @@ public class WindowSettings : ICloneable
     {
         var cloned = (WindowSettings)this.MemberwiseClone();
         cloned.MainWindow = (MainWindowWindowSettings)this.MainWindow.Clone();
+        cloned.EntityInspector = (EntityInspectorWindowSettings)this.EntityInspector.Clone();
         cloned.RaidManagerCooldowns = (RaidManagerCooldownsWindowSettings)this.RaidManagerCooldowns.Clone();
         cloned.EntityCacheViewer = (EntityCacheViewerWindowSettings)this.EntityCacheViewer.Clone();
         cloned.SpawnTracker = (SpawnTrackerWindowSettings)this.SpawnTracker.Clone();

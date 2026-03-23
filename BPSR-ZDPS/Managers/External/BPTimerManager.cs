@@ -112,6 +112,11 @@ namespace BPSR_ZDPS.Managers.External
                 return;
             }
 
+            if (string.IsNullOrEmpty(AppState.AccountId))
+            {
+                Log.Error("AccountId is Null! BPTimer SendHpReport is likely going to fail");
+            }
+
             if (canReport)
             {
                 // We'll assume (0, 0, 0) means no position has been set yet
@@ -156,6 +161,11 @@ namespace BPSR_ZDPS.Managers.External
             {
                 Log.Error("Error in BPTimerManager: API_KEY was not set!");
                 return;
+            }
+
+            if (string.IsNullOrEmpty(AppState.AccountId))
+            {
+                Log.Error("AccountId is Null! BPTimer SendHpReport is likely going to fail");
             }
 
             if (canReport)

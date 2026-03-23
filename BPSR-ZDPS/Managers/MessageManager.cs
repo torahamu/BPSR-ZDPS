@@ -595,7 +595,7 @@ namespace BPSR_ZDPS
         {
             System.Diagnostics.Debug.WriteLine($"ProcessSyncHitInfo");
         }
-
+        public static bool IsWipeCheckQueued = false;
         public static void ProcessAttrs(long uuid, RepeatedField<Attr> attrs)
         {
             foreach (var attr in attrs)
@@ -670,7 +670,7 @@ namespace BPSR_ZDPS
 
                         if (uuid == currentUserUuid)
                         {
-                            CheckForWipe();
+                            IsWipeCheckQueued = true;
                         }
                         
                         break;
@@ -736,9 +736,9 @@ namespace BPSR_ZDPS
                         EncounterManager.Current.SetAttrKV(uuid, "AttrHateList", hateList);
                         break;
                     case EAttrType.AttrSkillLevelIdList:
-                        EncounterManager.Current.SetAttrKV(uuid, "AttrSkillLevelIdList", reader.ReadInt32());
+                        //EncounterManager.Current.SetAttrKV(uuid, "AttrSkillLevelIdList", reader.ReadInt32());
                         // TODO: Enable this when we want to track every skill level and tier for players when they appear
-                        /*List<SkillLevelInfo> skillLevelInfoList = new();
+                        List<DataTypes.Skills.SkillLevelInfo> skillLevelInfoList = new();
                         while (!reader.IsAtEnd)
                         {
                             int len = reader.ReadLength();
@@ -746,12 +746,21 @@ namespace BPSR_ZDPS
                             SkillLevelInfo info = new();
 
                             reader.ReadMessage(info);
-                            skillLevelInfoList.Add(info);
-                        }*/
-                        
+                            skillLevelInfoList.Add(new DataTypes.Skills.SkillLevelInfo(info));
+                        }
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrSkillLevelIdList", skillLevelInfoList);
                         break;
                     case EAttrType.AttrTeamId:
                         EncounterManager.Current.SetAttrKV(uuid, "AttrTeamId", reader.ReadInt64());
+                        break;
+                    case EAttrType.AttrStateTime:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrStateTime", reader.ReadInt64());
+                        break;
+                    case EAttrType.AttrRideUuid:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrRideUuid", reader.ReadInt64());
+                        break;
+                    case EAttrType.AttrDeadTime:
+                        EncounterManager.Current.SetAttrKV(uuid, "AttrDeadTime", reader.ReadInt64());
                         break;
                     default:
                         string attr_name = ((EAttrType)attr.Id).ToString();
@@ -812,6 +821,12 @@ namespace BPSR_ZDPS
                 }*/
             }
 
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
+            }
+
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
             BattleStateMachine.CheckDeferredCalls();
         }
@@ -828,6 +843,12 @@ namespace BPSR_ZDPS
             foreach (var aoiSyncDelta in syncNearDeltaInfo.DeltaInfos)
             {
                 ProcessAoiSyncDelta(aoiSyncDelta, extraData);
+            }
+
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
             }
 
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
@@ -859,6 +880,12 @@ namespace BPSR_ZDPS
             if (delta.TempAttrs != null && delta.TempAttrs.Attrs.Any())
             {
                 //System.Diagnostics.Debug.WriteLine($"delta.TempAttrs.Attrs.count = {delta.TempAttrs.Attrs.Count}");
+            }
+
+            if (AppState.IsEncounterSavingPaused && Settings.Instance.MinimalProcessingWhileEncounterSavingPaused)
+            {
+                BattleStateMachine.CheckDeferredCalls();
+                return;
             }
 
             long buffBasedShieldBreakValue = 0;
@@ -1004,9 +1031,24 @@ namespace BPSR_ZDPS
                 {
                     damage = syncDamageInfo.LuckyValue;
                 }
+
                 // If damage is 0, the target was likely Immune and the DamageType value will reflect that
                 // We will still pass it on so it can be properly registered in the encounter/entity
                 // Note: There are some rare cases where an Immune event occurs but the damage is not 0, HpLessen however will be null
+
+                // If Damage was negative, the hit entity had their HP limits increase within the same frame of damage, causing a game bug where the damage is just "-"
+                // This will workaround that problem by deferring the requested damage to the hp lessen (actual damage) or negating it entirely
+                if (damage < 0)
+                {
+                    if (syncDamageInfo.HpLessenValue > 0)
+                    {
+                        damage = syncDamageInfo.HpLessenValue;
+                    }
+                    else
+                    {
+                        damage = 0;
+                    }
+                }
 
                 bool isCrit = syncDamageInfo.TypeFlag != null && ((syncDamageInfo.TypeFlag & 1) == 1);
                 bool isHeal = syncDamageInfo.Type == EDamageType.Heal;
@@ -1090,7 +1132,10 @@ namespace BPSR_ZDPS
                 }
                 else
                 {
-                    EncounterManager.Current.AddDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
+                    if (attackerUuid != targetUuid)
+                    {
+                        EncounterManager.Current.AddDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
+                    }
 
                     EncounterManager.Current.AddTakenDamage(attackerUuid, targetUuid, skillId, syncDamageInfo.OwnerLevel, damage, hpLessen, shieldBreak, syncDamageInfo.Property, syncDamageInfo.Type, syncDamageInfo.DamageMode, isCrit, isLucky, isCauseLucky, isMiss, isDead, syncDamageInfo.DamagePos, extraData);
                 }
@@ -1121,6 +1166,12 @@ namespace BPSR_ZDPS
                 return;
             }
             ProcessAoiSyncDelta(aoiSyncDelta, extraData);
+
+            if (IsWipeCheckQueued)
+            {
+                IsWipeCheckQueued = false;
+                CheckForWipe();
+            }
 
             // We do this at the end in case we need to capture an entity Attr before a potential Start/End call happens
             BattleStateMachine.CheckDeferredCalls();
@@ -1160,7 +1211,10 @@ namespace BPSR_ZDPS
             long playerUuid = Utils.EntityIdToUuid(vData.CharId, (long)EEntityType.EntChar, false, false);
 
             AppState.PlayerUID = vData.CharId;
-            AppState.AccountId = vData.CharBase.AccountId;
+            if (!string.IsNullOrEmpty(vData.CharBase.AccountId))
+            {
+                AppState.AccountId = vData.CharBase.AccountId;
+            }
             long playerUid = vData.CharId;
 
             if (vData.RoleLevel?.Level != 0)
@@ -1384,7 +1438,14 @@ namespace BPSR_ZDPS
             {
                 if (EncounterManager.Current.IsWipe)
                 {
+                    // TODO: This is a workaround for some encounters instantly running the wipe detection while still in a dead state
+                    if (EncounterManager.Current.GetDuration().TotalSeconds < 2)
+                    {
+                        System.Diagnostics.Debug.WriteLine("EncounterManager.Current Duration was under 2 seconds, correcting the Wipe State to false");
+                        EncounterManager.Current.SetWipeState(false);
+                    }
                     // This Encounter already has been reported as a wipe and should be in the processing of ending already
+                    System.Diagnostics.Debug.WriteLine("EncounterManager.Current.IsWipe already true");
                     return;
                 }
 
@@ -1415,6 +1476,34 @@ namespace BPSR_ZDPS
                 }
                 else
                 {
+                    return;
+                }
+
+                if (!Settings.Instance.UseLegacyWipeDetection)
+                {
+                    var currentEncounterDuration = EncounterManager.Current.GetDuration();
+                    var characterList = EncounterManager.Current.Entities.AsValueEnumerable().Where(x => x.Value.EntityType == EEntityType.EntChar);
+                    foreach (var character in characterList)
+                    {
+                        if (character.Value.RecentBuffEventHistory.Count > 0)
+                        {
+                            foreach (var recentBuff in character.Value.RecentBuffEventHistory)
+                            {
+                                if (recentBuff.Value.BaseId == 510072)
+                                {
+                                    // This buff indicates a wipe is actively occurring.
+                                    // There are a few events that will occur over the next 3 seconds so we delay to let them register into the current event
+                                    if (recentBuff.Value.EventAddTime.Add(TimeSpan.FromSeconds(3.1)).TotalSeconds <= currentEncounterDuration.TotalSeconds)
+                                    {
+                                        Log.Debug($"Encounter Wipe Reset buff was found and duration was hit, creating a new Encounter now");
+                                        EncounterManager.Current.SetWipeState(true);
+                                        EncounterManager.StartEncounter(false, EncounterStartReason.Wipe);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return;
                 }
 
@@ -1461,14 +1550,41 @@ namespace BPSR_ZDPS
                         var charState = character.Value.GetAttrKV("AttrState");
                         if (charState != null)
                         {
-                            if ((EActorState)charState != EActorState.ActorStateDead && character.Value.Hp > 0)
+                            EActorState actorState = (EActorState)charState;
+                            if (actorState != EActorState.ActorStateDead && actorState != EActorState.ActorStateResurrection && character.Value.Hp > 0)
                             {
+                                // Sometimes characters go directly from their last state into TelePort (skipping Dead and Resurrection) when a wipe happens
+                                // Since all characters also go into the TelePort state for regular group teleport events, like entering a raid boss room, we need special handling
+                                // Unfortunately we cannot rely on current HP values as they are often times already reset to max when this state happens
+                                if (actorState == EActorState.ActorStateTelePort && character.Value.RecentHpHistory.Count > 0)
+                                {
+                                    long lowestHp = character.Value.MaxHp;
+
+                                    int stackSize = character.Value.RecentHpHistory.Count > 3 ? 3 : character.Value.RecentHpHistory.Count;
+                                    for (int i = 0; i < stackSize; i++)
+                                    {
+                                        long historicalHp = character.Value.RecentHpHistory.ElementAt(i);
+                                        if (historicalHp < lowestHp)
+                                        {
+                                            lowestHp = historicalHp;
+                                        }
+                                    }
+
+                                    if (lowestHp == 0)
+                                    {
+                                        // Character is actually dead
+                                        continue;
+                                    }
+                                }
+
                                 areAllCharactersDead = false;
+                                //Log.Debug($"Character {character.Value.Name} AttrState={charState} HP={character.Value.Hp}, MaxHP={character.Value.MaxHp}; areAllCharactersDead = false");
                             }
                         }
                         else if (character.Value.Hp > 0 || character.Value.MaxHp == 0)
                         {
                             areAllCharactersDead = false;
+                            //Log.Debug($"Character {character.Value.Name} HP={character.Value.Hp}, MaxHP={character.Value.MaxHp}; areAllCharactersDead = false");
                         }
                     }
                     if (areAllCharactersDead && !isStateWipePattern)
@@ -1480,6 +1596,15 @@ namespace BPSR_ZDPS
                     {
                         Log.Debug($"Not all characters were reported as actively dead in current Encounter. Overriding isStateWipePattern to false.");
                         isStateWipePattern = false;
+                    }
+                }
+                else
+                {
+                    // There's no combat data recorded for the Encounter, we don't need to worry about wipe logic yet
+                    isStateWipePattern = false;
+                    if (EncounterManager.Current.IsWipe)
+                    {
+                        EncounterManager.Current.SetWipeState(false);
                     }
                 }
 
@@ -1500,16 +1625,17 @@ namespace BPSR_ZDPS
                             // If all bosses are full HP, then let's call it a wipe
                             long? hp = boss.Value.GetAttrKV("AttrHp") as long?;
                             long? maxHp = boss.Value.GetAttrKV("AttrMaxHp") as long?;
+                            var bossState = boss.Value.GetAttrKV("AttrState");
                             // Might need to use MaxHpTotal?
-                            if (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp)
+                            if ((bossState != null && (EActorState)bossState == EActorState.ActorStateBorn) || (boss.Value.RecentHpHistory.Count > 1 && (hp != null && maxHp != null && hp > 0 && maxHp > 0 && hp >= maxHp)))
                             {
                                 EncounterManager.Current.SetWipeState(true);
-                                //System.Diagnostics.Debug.WriteLine($"We've hit a wipe (bossesAtMaxHp = {bossesAtMaxHp})! Start up a new encounter");
+                                System.Diagnostics.Debug.WriteLine($"We've hit a wipe (bossesAtMaxHp = {bossesAtMaxHp})! Start up a new encounter");
                                 EncounterManager.StartEncounter(false, EncounterStartReason.Wipe);
                             }
                             else
                             {
-                                //System.Diagnostics.Debug.WriteLine($"We didn't hit a wipe yet {boss.UUID} - {boss.Name} {hp} / {maxHp}");
+                                System.Diagnostics.Debug.WriteLine($"We didn't hit a wipe yet {boss.Value.UUID} - {boss.Value.Name} {hp} / {maxHp}");
                             }
                         }
                     }
@@ -1570,15 +1696,19 @@ namespace BPSR_ZDPS
 
             if (dun?.DungeonVar?.Data != null)
             {
+                BattleStateMachine.DungeonVarHistoryAdd(dun.DungeonVar);
+
                 if (dun?.DungeonVar?.Data.Count > 1)
                 {
-                    System.Diagnostics.Debug.WriteLine("DungeonVar.Data.Count > 1!!");
+                    //System.Diagnostics.Debug.WriteLine("DungeonVar.Data.Count > 1!!");
                 }
-
+                // Season 2 dungeons (once again) do not all follow a common design practice such as some are missing the Kill Boss objective
+                // TODO: Send this over to the BattleStateMachine
+                // TODO: If Encounter has an End time, and DungeonVarData.IsFinishTarget == 1, and at least 1 enemy is alive, trigger EncounterStart for New Objective
                 int dungeonVarDataIdx = 0;
                 foreach (var dungeonVarData in dun.DungeonVar.Data)
                 {
-                    System.Diagnostics.Debug.WriteLine($"dun.DungeonVar.Data.dungeonVarData[{dungeonVarDataIdx}] = {dungeonVarData.Name}, {dungeonVarData.Value}");
+                    //System.Diagnostics.Debug.WriteLine($"dun.DungeonVar.Data.dungeonVarData[{dungeonVarDataIdx}] = {dungeonVarData.Name}, {dungeonVarData.Value}");
 
                     dungeonVarDataIdx++;
                 }

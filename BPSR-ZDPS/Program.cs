@@ -21,7 +21,7 @@ namespace BPSR_ZDPS
     {
         private static MainWindow mainWindow;
         private static GLFWwindowPtr window;
-        private static D3D11Manager manager;
+        public static D3D11Manager manager;
 
         static void Main(string[] args)
         {            
@@ -145,6 +145,8 @@ namespace BPSR_ZDPS
                 return;
             }
 
+            RendererImpl.Init(guiContext);
+
             // Setup resizing.
             unsafe
             {
@@ -220,7 +222,14 @@ namespace BPSR_ZDPS
                 // Double of framerate is controlled in the D3D11Manager by the SwapChain's BufferCount
                 //manager.Present((uint)isMouseDragging ? 0 : 1, 0);
 
+                if (!Settings.Instance.LowPerformanceMode)
+                {
+                    manager.Present(Settings.Instance.FixedFramerateScale, 0);
+                }
+                else
+                {
                 manager.Present(1, 0);
+                }
 
                 if (HelperMethods.DeferredImGuiRenderAction != null)
                 {

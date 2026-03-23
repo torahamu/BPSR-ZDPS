@@ -357,6 +357,14 @@ namespace BPSR_ZDPS.Windows
                 ImGui.Checkbox("##ShowTimeAsXAgo", ref showTimeAsXAgo);
                 chatWindowSettings.ShowTimeAsXAgo = showTimeAsXAgo;
 
+                var hideStickers = chatWindowSettings.HideStickers;
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Hide stickers in chat:");
+                ImGui.SameLine();
+                ImGui.Checkbox("##HideStickers", ref hideStickers);
+                ImGui.SetItemTooltip("With this enabled stickers Ex. [Image(2001)] won't show in chat.");
+                chatWindowSettings.HideStickers = hideStickers;
+
                 var maxChatHistory = Settings.Instance.Chat.MaxChatHistory;
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_MaxChatHistory"));
@@ -831,6 +839,7 @@ namespace BPSR_ZDPS.Windows
         public bool CompactMode { get; set; } = true;
         public bool ShowTime { get; set; } = true;
         public bool ShowTimeAsXAgo { get; set; } = true;
+        public bool HideStickers { get; set; } = false;
         public List<ChatTabConfig> ChatTabs { get; set; } = [];
     }
 }

@@ -143,6 +143,19 @@ namespace BPSR_ZDPS
                         sb.AppendLine($"Level: {item.Value.Level} (+ {item.Value.SeasonLevel})");
 
                         ImGui.Selectable($"{sb}");
+                        if (ImGui.BeginPopupContextItem())
+                        {
+                            if (ImGui.MenuItem("Copy Name"))
+                            {
+                                ImGui.SetClipboardText(item.Value.Name);
+                            }
+                            ImGui.SetItemTooltip($"Copy '{item.Value.Name}' to the clipboard");
+                            if (ImGui.MenuItem("Copy UID"))
+                            {
+                                ImGui.SetClipboardText(item.Value.UID.ToString());
+                            }
+                            ImGui.EndPopup();
+                        }
                         ImGui.EndGroup();
                     }
 

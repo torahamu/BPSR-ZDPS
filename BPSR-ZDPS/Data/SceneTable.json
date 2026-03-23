@@ -78,7 +78,10 @@
     "EPFlowId": 10010141,
     "ShowMiniMap": 0,
     "MiniMapRatio": 50,
-    "SubScene": "",
+    "SubScene": [
+      6,
+      7
+    ],
     "AmbEvent": "",
     "ReverEvent": "Reverb_Normal",
     "DefaultSceneArea": 0,
@@ -121,7 +124,11 @@
     "EPFlowId": 10010142,
     "ShowMiniMap": 0,
     "MiniMapRatio": 50,
-    "SubScene": "",
+    "SubScene": [
+      8,
+      9,
+      10
+    ],
     "AmbEvent": "",
     "ReverEvent": "Reverb_Normal",
     "DefaultSceneArea": 0,
@@ -164,7 +171,9 @@
     "EPFlowId": 0,
     "ShowMiniMap": 0,
     "MiniMapRatio": 50,
-    "SubScene": "",
+    "SubScene": [
+      11
+    ],
     "AmbEvent": "",
     "ReverEvent": "Reverb_Normal",
     "DefaultSceneArea": 0,
@@ -4944,6 +4953,51 @@
     "DefaultSceneArea": 0,
     "MoveSyncConfigId": 0
   },
+  "9002": {
+    "Id": 9002,
+    "Name": "Defeat the Year Demon",
+    "SceneType": 2,
+    "SceneSubType": 5,
+    "ParentId": 0,
+    "IsShareParentSceneData": false,
+    "SceneResourceId": 3,
+    "SceneUi": [],
+    "MapSize": {
+      "x": 128.0,
+      "y": 128.0
+    },
+    "MapOffset": {
+      "x": -253.0,
+      "y": 99.0
+    },
+    "MapEntryCondition": [],
+    "AudioBank": [],
+    "BornId": 210,
+    "ReviveTableId": [
+      102,
+      200
+    ],
+    "Bgm": [],
+    "LoadingBgm": "",
+    "FallDis": 1.0,
+    "Weather": -1,
+    "DayAndNight": 1,
+    "CutsceneId": 0,
+    "MainUi": 2,
+    "CanChangeLayer": false,
+    "PreloadCutscenes": [],
+    "PreloadEPFlows": [],
+    "EPFlowId": 0,
+    "ShowMiniMap": 1,
+    "MiniMapRatio": 0,
+    "SubScene": [],
+    "AmbEvent": "",
+    "ReverEvent": "Reverb_Normal",
+    "DefaultSceneArea": 0,
+    "MoveSyncConfigId": 0,
+    "HaveWater": false,
+    "FootstepFxOverride": []
+  },
   "9200": {
     "Id": 9200,
     "Name": "Dragon Shackles: Adept's Trial",
@@ -5835,6 +5889,50 @@
     "ReverEvent": "Reverb_Normal",
     "DefaultSceneArea": 0,
     "MoveSyncConfigId": 0
+  },
+  "12100": {
+    "Id": 12100,
+    "Name": "Echoing Dungeon",
+    "SceneType": 2,
+    "SceneSubType": 5,
+    "ParentId": 0,
+    "IsShareParentSceneData": false,
+    "SceneResourceId": 8002,
+    "SceneUi": [],
+    "MapSize": {
+      "x": 1024.0,
+      "y": 1024.0
+    },
+    "MapOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "MapEntryCondition": [],
+    "AudioBank": [],
+    "BornId": 385,
+    "ReviveTableId": [
+      5
+    ],
+    "Bgm": [],
+    "LoadingBgm": "",
+    "FallDis": 1.0,
+    "Weather": 0,
+    "DayAndNight": 0,
+    "CutsceneId": 0,
+    "MainUi": 2,
+    "CanChangeLayer": false,
+    "PreloadCutscenes": [],
+    "PreloadEPFlows": [],
+    "EPFlowId": 0,
+    "ShowMiniMap": 1,
+    "MiniMapRatio": 0,
+    "SubScene": [],
+    "AmbEvent": "",
+    "ReverEvent": "Reverb_Normal",
+    "DefaultSceneArea": 0,
+    "MoveSyncConfigId": 0,
+    "HaveWater": true,
+    "FootstepFxOverride": []
   },
   "13001": {
     "Id": 13001,
