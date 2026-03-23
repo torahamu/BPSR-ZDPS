@@ -59,7 +59,7 @@
   },
   "5500104": {
     "Id": 5500104,
-    "Name": "EXT - Excellent Guard Module",
+    "Name": "EXC攻撃型モジュール・精選",
     "ModType": 1,
     "EffectLibId": [
       311,
@@ -140,7 +140,7 @@
   },
   "5500204": {
     "Id": 5500204,
-    "Name": "EXT - Excellent Guard Module",
+    "Name": "EXC支援型モジュール・精選",
     "ModType": 2,
     "EffectLibId": [
       321,
@@ -221,7 +221,7 @@
   },
   "5500304": {
     "Id": 5500304,
-    "Name": "EXT - Excellent Guard Module",
+    "Name": "EXC防御型モジュール・精選",
     "ModType": 3,
     "EffectLibId": [
       331,

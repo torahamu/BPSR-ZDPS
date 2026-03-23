@@ -278,7 +278,7 @@ namespace BPSR_ZDPS.Windows
             ImGui.SetNextWindowPos(ImGui.GetWindowPos() + new Vector2(ImGui.GetWindowSize().X - 350, 30f));
             if (ImGui.BeginPopup("SettingsPopup"))
             {
-                ImGui.TextUnformatted("Chat Settings");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_Title"));
                 ImGui.Separator();
 
                 /*
@@ -298,7 +298,7 @@ namespace BPSR_ZDPS.Windows
                 */
                 int opacity = chatWindowSettings.Opacity;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Window Opacity:");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_WindowOpacity"));
                 ImGui.SameLine();
                 ImGui.Dummy(new Vector2(17, 0));
                 ImGui.SameLine();
@@ -314,7 +314,7 @@ namespace BPSR_ZDPS.Windows
 
                 var isTopMost = chatWindowSettings.TopMost;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Top Most: ");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_TopMost"));
                 ImGui.SameLine();
                 if (ImGui.Checkbox("##TopMost", ref isTopMost))
                 {
@@ -336,14 +336,14 @@ namespace BPSR_ZDPS.Windows
 
                 var compactMode = chatWindowSettings.CompactMode;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Compact Mode:");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_CompactMode"));
                 ImGui.SameLine();
                 ImGui.Checkbox("##CompactMode", ref compactMode);
                 chatWindowSettings.CompactMode = compactMode;
 
                 var showTime = chatWindowSettings.ShowTime;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Show Time:");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_ShowTime"));
                 ImGui.SameLine();
                 ImGui.Checkbox("##ShowTime", ref showTime);
                 chatWindowSettings.ShowTime = showTime;
@@ -352,14 +352,15 @@ namespace BPSR_ZDPS.Windows
 
                 var showTimeAsXAgo = chatWindowSettings.ShowTimeAsXAgo;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Show Time as X seconds ago:");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_ShowTimeAsXAgo"));
                 ImGui.SameLine();
                 ImGui.Checkbox("##ShowTimeAsXAgo", ref showTimeAsXAgo);
                 chatWindowSettings.ShowTimeAsXAgo = showTimeAsXAgo;
 
                 var maxChatHistory = Settings.Instance.Chat.MaxChatHistory;
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Max Chat History:");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_MaxChatHistory"));
+
                 ImGui.SameLine();
                 ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.GetColorU32(ImGuiCol.FrameBgHovered, 0.55f));
                 ImGui.PushStyleColor(ImGuiCol.FrameBgActive, ImGui.GetColorU32(ImGuiCol.FrameBgActive, 0.55f));
@@ -375,13 +376,13 @@ namespace BPSR_ZDPS.Windows
 
                 ImGui.Dummy(new Vector2(0, 5));
                 ImGui.Separator();
-                if (ImGui.Button("Manage Blocked Users", new Vector2(-1, 0)))
+                if (ImGui.Button(AppStrings.GetLocalized("ChatSettings_ManageBlockedUsers"), new Vector2(-1, 0)))
                 {
                     openBlockedUsersPopup = true;
                 }
 
                 ImGui.Separator();
-                if (ImGui.MenuItem("Close Chat Window"))
+                if (ImGui.MenuItem(AppStrings.GetLocalized("ChatSettings_CloseChatWindow")))
                 {
                     chatWindowSettings.WindowPosition = ImGui.GetWindowPos();
                     chatWindowSettings.WindowSize = ImGui.GetWindowSize();
@@ -399,7 +400,7 @@ namespace BPSR_ZDPS.Windows
             ImGui.SetNextWindowPos(ImGui.GetWindowPos() + new Vector2(ImGui.GetWindowSize().X - 550, 30f));
             if (ImGui.BeginPopup("BlockedUsersPopup"))
             {
-                ImGui.TextUnformatted("Blocked Users");
+                ImGui.TextUnformatted(AppStrings.GetLocalized("ChatSettings_BlockedUsers_Title"));
                 ImGui.Separator();
 
                 var height = windowViewport.Size.Y - 100;

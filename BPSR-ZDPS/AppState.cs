@@ -104,7 +104,7 @@ namespace BPSR_ZDPS
             }
 
             // TODO: Every language can have its own 'Overrides' file
-            string skillOverrivesFile = Path.Combine(Utils.DATA_DIR_NAME, "SkillOverrides.en.json");
+            string skillOverrivesFile = Path.Combine(Utils.DATA_DIR_NAME, "SkillOverrides.ja.json");
             if (File.Exists(skillOverrivesFile))
             {
                 var overrides = JsonConvert.DeserializeObject<Dictionary<string, Skill>>(File.ReadAllText(skillOverrivesFile));

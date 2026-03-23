@@ -133,5 +133,45 @@
     "en": "Wildpack",
     "zh": "狼弓",
     "jp": "狼弓"
+  },
+  "ChatSettings_Title": {
+    "en": "Chat Settings",
+    "jp": "チャット設定"
+  },
+  "ChatSettings_WindowOpacity": {
+    "en": "Window Opacity:",
+    "jp": "ウィンドウ透明度:"
+  },
+  "ChatSettings_TopMost": {
+    "en": "Top Most:",
+    "jp": "最前面:"
+  },
+  "ChatSettings_CompactMode": {
+    "en": "Compact Mode:",
+    "jp": "コンパクト表示:"
+  },
+  "ChatSettings_ShowTime": {
+    "en": "Show Time:",
+    "jp": "時刻表示:"
+  },
+  "ChatSettings_ShowTimeAsXAgo": {
+    "en": "Show Time as X seconds ago:",
+    "jp": "「X秒前」で表示:"
+  },
+  "ChatSettings_MaxChatHistory": {
+    "en": "Max Chat History:",
+    "jp": "チャット履歴上限:"
+  },
+  "ChatSettings_ManageBlockedUsers": {
+    "en": "Manage Blocked Users",
+    "jp": "ブロックユーザー管理"
+  },
+  "ChatSettings_CloseChatWindow": {
+    "en": "Close Chat Window",
+    "jp": "チャットウィンドウを閉じる"
+  },
+  "ChatSettings_BlockedUsers_Title": {
+    "en": "Blocked Users",
+    "jp": "ブロック中ユーザー"
   }
 }

@@ -174,19 +174,21 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableNextColumn();
                         ImGui.TextUnformatted($"HP: {LoadedEntity.GetAttrKV("AttrHp") ?? "0"}");
                         ImGui.TextUnformatted($"最大HP: {LoadedEntity.GetAttrKV("AttrMaxHp") ?? "0"}");
-                        ImGui.TextUnformatted($"攻撃力: {LoadedEntity.GetAttrKV("AttrAttack") ?? "0"}");
                         string MainStat = Professions.GetBaseProfessionMainStatName(LoadedEntity.ProfessionId);
                         if (MainStat == "Strength" || MainStat == "")
                         {
                             ImGui.TextUnformatted($"筋力: {LoadedEntity.GetAttrKV("AttrStrength") ?? "0"}");
+                            ImGui.TextUnformatted($"攻撃力: {LoadedEntity.GetAttrKV("AttrAttack") ?? "0"}");
                         }
                         else if (MainStat == "Agility")
                         {
-                            ImGui.TextUnformatted($"敏捷: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
+                            ImGui.TextUnformatted($"敏捷: {LoadedEntity.GetAttrKV("AttrDexterity") ?? "0"}");
+                            ImGui.TextUnformatted($"攻撃力: {LoadedEntity.GetAttrKV("AttrAttack") ?? "0"}");
                         }
                         else if (MainStat == "Intellect")
                         {
-                            ImGui.TextUnformatted($"敏捷: {LoadedEntity.GetAttrKV("AttrAgility") ?? "0"}");
+                            ImGui.TextUnformatted($"知力: {LoadedEntity.GetAttrKV("AttrIntelligence") ?? "0"}");
+                            ImGui.TextUnformatted($"攻撃力: {LoadedEntity.GetAttrKV("AttrMattack") ?? "0"}");
                         }
 
                         ImGui.TextUnformatted($"耐久: {LoadedEntity.GetAttrKV("AttrVitality") ?? "0"}");

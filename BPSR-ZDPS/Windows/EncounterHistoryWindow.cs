@@ -355,7 +355,7 @@ namespace BPSR_ZDPS.Windows
                         ImGui.TableSetupColumn("クリダメ");
                         ImGui.TableSetupColumn("ラッキーダメ");
                         ImGui.TableSetupColumn("クリラッキーダメ");
-                        ImGui.TableSetupColumn("最大瞬間DPS");
+                        ImGui.TableSetupColumn("最大単発ダメ");
                         ImGui.TableSetupColumn("シールド獲得");
                         ImGui.TableSetupColumn("総回復");
                         ImGui.TableSetupColumn("平均HPS");

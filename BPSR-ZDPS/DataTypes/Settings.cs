@@ -171,6 +171,9 @@ public class WindowSettings : ICloneable
     public RaidManagerThreatWindowSettings RaidManagerThreat { get; set; } = new();
     public ChatWindowSettings ChatWindow { get; set; } = new();
 
+    public CharacterStatusWindowSettings CharacterStatusWindow { get; set; } = new();
+
+
     public object Clone()
     {
         var cloned = (WindowSettings)this.MemberwiseClone();

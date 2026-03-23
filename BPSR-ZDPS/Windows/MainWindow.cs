@@ -66,6 +66,8 @@ namespace BPSR_ZDPS.Windows
             RaidManagerCountdownWindow.Draw(this);
             RaidManagerThreatWindow.Draw(this);
             ChatWindow.Draw(this);
+            //CharacterStatusWindow.Draw(this);
+
         }
 
         static bool p_open = true;
@@ -574,7 +576,10 @@ namespace BPSR_ZDPS.Windows
                     {
                         ChatWindow.Open();
                     }
-
+                    if (ImGui.MenuItem("キャラクターステータス"))
+                    {
+                        CharacterStatusWindow.Open();
+                    }
                     ImGui.Separator();
                     if (ImGui.MenuItem("設定"))
                     {
